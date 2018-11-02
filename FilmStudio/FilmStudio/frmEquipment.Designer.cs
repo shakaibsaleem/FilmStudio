@@ -167,7 +167,7 @@
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(12, 219);
+            this.btnClose.Location = new System.Drawing.Point(498, 219);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
             this.btnClose.TabIndex = 14;
@@ -177,7 +177,7 @@
             // 
             // btnPrevious
             // 
-            this.btnPrevious.Location = new System.Drawing.Point(93, 219);
+            this.btnPrevious.Location = new System.Drawing.Point(174, 219);
             this.btnPrevious.Name = "btnPrevious";
             this.btnPrevious.Size = new System.Drawing.Size(75, 23);
             this.btnPrevious.TabIndex = 15;
@@ -186,7 +186,7 @@
             // 
             // btnNext
             // 
-            this.btnNext.Location = new System.Drawing.Point(174, 219);
+            this.btnNext.Location = new System.Drawing.Point(255, 219);
             this.btnNext.Name = "btnNext";
             this.btnNext.Size = new System.Drawing.Size(75, 23);
             this.btnNext.TabIndex = 16;
@@ -195,7 +195,7 @@
             // 
             // btnEdit
             // 
-            this.btnEdit.Location = new System.Drawing.Point(255, 219);
+            this.btnEdit.Location = new System.Drawing.Point(12, 219);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Size = new System.Drawing.Size(75, 23);
             this.btnEdit.TabIndex = 17;
@@ -222,7 +222,7 @@
             // 
             // btnAdd
             // 
-            this.btnAdd.Location = new System.Drawing.Point(498, 219);
+            this.btnAdd.Location = new System.Drawing.Point(93, 219);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(75, 23);
             this.btnAdd.TabIndex = 20;
@@ -262,9 +262,9 @@
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnEdit);
+            this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnNext);
             this.Controls.Add(this.btnPrevious);
-            this.Controls.Add(this.btnClose);
             this.Name = "frmEquipment";
             this.Text = "Equipment Form";
             this.Load += new System.EventHandler(this.frmEquipment_Load);
