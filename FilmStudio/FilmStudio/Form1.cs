@@ -10,16 +10,11 @@ using System.Windows.Forms;
 
 namespace FilmStudio
 {
-    public partial class Equipment : Form
+    public partial class Form1 : Form
     {
-        public Equipment()
+        public Form1()
         {
             InitializeComponent();
-        }
-
-        private void Equipment_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }
