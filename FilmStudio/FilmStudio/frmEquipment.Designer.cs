@@ -1,6 +1,6 @@
 ﻿namespace FilmStudio
 {
-    partial class Form1
+    partial class frmEquipment
     {
         /// <summary>
         /// Required designer variable.
@@ -30,13 +30,14 @@
         {
             this.SuspendLayout();
             // 
-            // Form1
+            // frmEquipment
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Name = "Form1";
-            this.Text = "Menu";
+            this.ClientSize = new System.Drawing.Size(873, 461);
+            this.Name = "frmEquipment";
+            this.Text = "Equipment Form";
+            this.Load += new System.EventHandler(this.frmEquipment_Load);
             this.ResumeLayout(false);
 
         }
