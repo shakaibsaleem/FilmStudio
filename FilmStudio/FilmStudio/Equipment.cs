@@ -9,11 +9,17 @@ namespace FilmStudio
     class Equipment
     {
         private int Id, QtyAvailable, QtyBooked;
-        private String Description, Make, Mode, Remarks;
+        private String Description, Make, Model, Remarks;
 
         public Equipment()
         {
             Id = 0;
+            QtyAvailable = 0;
+            QtyBooked = 0;
+            Description = "";
+            Make = "";
+            Model = "";
+            Remarks = "";
         }
     }
 }
