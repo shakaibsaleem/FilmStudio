@@ -1,0 +1,14 @@
+Equipment Management System in C# backend SQL Server
+
+====================================================
+
+admin can add new user to system
+user can login
+add new items
+issue a booking. may contain one or more items
+Return items. if returned late, overdue strike for student. blacklist the student when 3 strikes
+view available items
+view students bookings
+view items bookings
+view current bookings calendar
+view currently booked items. issued items.
