@@ -8,8 +8,8 @@ namespace FilmStudio
 {
     class Equipment
     {
-        private int Id, QtyAvailable, QtyBooked;
-        private String Description, Make, Model, Remarks;
+        public int Id, QtyAvailable, QtyBooked;
+        public string Description, Make, Model, Remarks;
 
         public Equipment()
         {
