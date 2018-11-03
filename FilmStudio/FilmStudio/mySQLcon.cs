@@ -11,12 +11,16 @@ namespace FilmStudio
     public class mySQLcon
     {
         public SqlConnection con;
+        const string conString = "Data Source = .\\SQLEXPRESS;Initial Catalog = FilmStudio; Persist Security Info=True;User ID = sa; Password=uiop7890;";
 
         public mySQLcon()
         {
-            const string conString = "Data Source = .\\SQLEXPRESS;Initial Catalog = FilmStudio; Persist Security Info=True;User ID = sa; Password=uiop7890;";
             con = new SqlConnection();
             con.ConnectionString = conString;
+            if (con.State == System.Data.ConnectionState.Open)
+            {
+                con.Close();
+            }
             con.Open();
         }
     }
