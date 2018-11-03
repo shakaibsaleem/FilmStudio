@@ -37,9 +37,9 @@ GO
 CREATE TABLE Users (
   UserID INTEGER  NOT NULL   IDENTITY ,
   Name VARCHAR(20)    ,
+  Username VARCHAR(20)  NOT NULL    ,
   Passkey VARCHAR(20)  NOT NULL  ,
   isAdmin BIT  NOT NULL  ,
-  Username INTEGER  NOT NULL    ,
 PRIMARY KEY(UserID));
 GO
 
