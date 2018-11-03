@@ -32,15 +32,15 @@
             this.txtItemId = new System.Windows.Forms.TextBox();
             this.txtDescription = new System.Windows.Forms.TextBox();
             this.lblDescription = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.txtMake = new System.Windows.Forms.TextBox();
+            this.txtModel = new System.Windows.Forms.TextBox();
+            this.txtQtyAvailable = new System.Windows.Forms.TextBox();
+            this.txtQtyBooked = new System.Windows.Forms.TextBox();
+            this.txtRemarks = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
+            this.lblQtyAvailable = new System.Windows.Forms.Label();
+            this.lblQtyBooked = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.btnClose = new System.Windows.Forms.Button();
             this.btnPrevious = new System.Windows.Forms.Button();
@@ -64,17 +64,17 @@
             // 
             // txtItemId
             // 
-            this.txtItemId.Location = new System.Drawing.Point(75, 19);
+            this.txtItemId.Location = new System.Drawing.Point(107, 19);
             this.txtItemId.Name = "txtItemId";
             this.txtItemId.Size = new System.Drawing.Size(75, 20);
             this.txtItemId.TabIndex = 1;
             // 
             // txtDescription
             // 
-            this.txtDescription.Location = new System.Drawing.Point(75, 97);
+            this.txtDescription.Location = new System.Drawing.Point(107, 97);
             this.txtDescription.Multiline = true;
             this.txtDescription.Name = "txtDescription";
-            this.txtDescription.Size = new System.Drawing.Size(480, 46);
+            this.txtDescription.Size = new System.Drawing.Size(448, 46);
             this.txtDescription.TabIndex = 2;
             // 
             // lblDescription
@@ -86,46 +86,46 @@
             this.lblDescription.TabIndex = 3;
             this.lblDescription.Text = "Description:";
             // 
-            // textBox1
+            // txtMake
             // 
-            this.textBox1.Location = new System.Drawing.Point(75, 45);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(298, 20);
-            this.textBox1.TabIndex = 4;
+            this.txtMake.Location = new System.Drawing.Point(233, 45);
+            this.txtMake.Name = "txtMake";
+            this.txtMake.Size = new System.Drawing.Size(322, 20);
+            this.txtMake.TabIndex = 4;
             // 
-            // textBox2
+            // txtModel
             // 
-            this.textBox2.Location = new System.Drawing.Point(75, 71);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(298, 20);
-            this.textBox2.TabIndex = 5;
+            this.txtModel.Location = new System.Drawing.Point(233, 71);
+            this.txtModel.Name = "txtModel";
+            this.txtModel.Size = new System.Drawing.Size(322, 20);
+            this.txtModel.TabIndex = 5;
             // 
-            // textBox3
+            // txtQtyAvailable
             // 
-            this.textBox3.Location = new System.Drawing.Point(480, 45);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(75, 20);
-            this.textBox3.TabIndex = 6;
+            this.txtQtyAvailable.Location = new System.Drawing.Point(107, 45);
+            this.txtQtyAvailable.Name = "txtQtyAvailable";
+            this.txtQtyAvailable.Size = new System.Drawing.Size(75, 20);
+            this.txtQtyAvailable.TabIndex = 6;
             // 
-            // textBox4
+            // txtQtyBooked
             // 
-            this.textBox4.Location = new System.Drawing.Point(480, 71);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(75, 20);
-            this.textBox4.TabIndex = 7;
+            this.txtQtyBooked.Location = new System.Drawing.Point(107, 71);
+            this.txtQtyBooked.Name = "txtQtyBooked";
+            this.txtQtyBooked.Size = new System.Drawing.Size(75, 20);
+            this.txtQtyBooked.TabIndex = 7;
             // 
-            // textBox5
+            // txtRemarks
             // 
-            this.textBox5.Location = new System.Drawing.Point(75, 149);
-            this.textBox5.Multiline = true;
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(480, 46);
-            this.textBox5.TabIndex = 8;
+            this.txtRemarks.Location = new System.Drawing.Point(107, 149);
+            this.txtRemarks.Multiline = true;
+            this.txtRemarks.Name = "txtRemarks";
+            this.txtRemarks.Size = new System.Drawing.Size(448, 46);
+            this.txtRemarks.TabIndex = 8;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 48);
+            this.label1.Location = new System.Drawing.Point(188, 48);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(37, 13);
             this.label1.TabIndex = 9;
@@ -134,29 +134,29 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 74);
+            this.label2.Location = new System.Drawing.Point(188, 74);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(39, 13);
             this.label2.TabIndex = 10;
             this.label2.Text = "Model:";
             // 
-            // label3
+            // lblQtyAvailable
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(379, 48);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(95, 13);
-            this.label3.TabIndex = 11;
-            this.label3.Text = "Quantity Available:";
+            this.lblQtyAvailable.AutoSize = true;
+            this.lblQtyAvailable.Location = new System.Drawing.Point(6, 48);
+            this.lblQtyAvailable.Name = "lblQtyAvailable";
+            this.lblQtyAvailable.Size = new System.Drawing.Size(95, 13);
+            this.lblQtyAvailable.TabIndex = 11;
+            this.lblQtyAvailable.Text = "Quantity Available:";
             // 
-            // label4
+            // lblQtyBooked
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(379, 74);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(89, 13);
-            this.label4.TabIndex = 12;
-            this.label4.Text = "Quantity Booked:";
+            this.lblQtyBooked.AutoSize = true;
+            this.lblQtyBooked.Location = new System.Drawing.Point(6, 74);
+            this.lblQtyBooked.Name = "lblQtyBooked";
+            this.lblQtyBooked.Size = new System.Drawing.Size(89, 13);
+            this.lblQtyBooked.TabIndex = 12;
+            this.lblQtyBooked.Text = "Quantity Booked:";
             // 
             // label5
             // 
@@ -237,15 +237,15 @@
             this.groupBoxItem.Controls.Add(this.txtItemId);
             this.groupBoxItem.Controls.Add(this.txtDescription);
             this.groupBoxItem.Controls.Add(this.lblDescription);
-            this.groupBoxItem.Controls.Add(this.textBox1);
-            this.groupBoxItem.Controls.Add(this.textBox2);
-            this.groupBoxItem.Controls.Add(this.textBox3);
-            this.groupBoxItem.Controls.Add(this.textBox4);
+            this.groupBoxItem.Controls.Add(this.txtMake);
+            this.groupBoxItem.Controls.Add(this.txtModel);
+            this.groupBoxItem.Controls.Add(this.txtQtyAvailable);
+            this.groupBoxItem.Controls.Add(this.txtQtyBooked);
             this.groupBoxItem.Controls.Add(this.label5);
-            this.groupBoxItem.Controls.Add(this.textBox5);
-            this.groupBoxItem.Controls.Add(this.label4);
+            this.groupBoxItem.Controls.Add(this.txtRemarks);
+            this.groupBoxItem.Controls.Add(this.lblQtyBooked);
             this.groupBoxItem.Controls.Add(this.label1);
-            this.groupBoxItem.Controls.Add(this.label3);
+            this.groupBoxItem.Controls.Add(this.lblQtyAvailable);
             this.groupBoxItem.Controls.Add(this.label2);
             this.groupBoxItem.Location = new System.Drawing.Point(12, 12);
             this.groupBoxItem.Name = "groupBoxItem";
@@ -282,15 +282,15 @@
         private System.Windows.Forms.TextBox txtItemId;
         private System.Windows.Forms.TextBox txtDescription;
         private System.Windows.Forms.Label lblDescription;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.TextBox txtMake;
+        private System.Windows.Forms.TextBox txtModel;
+        private System.Windows.Forms.TextBox txtQtyAvailable;
+        private System.Windows.Forms.TextBox txtQtyBooked;
+        private System.Windows.Forms.TextBox txtRemarks;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label lblQtyAvailable;
+        private System.Windows.Forms.Label lblQtyBooked;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Button btnPrevious;

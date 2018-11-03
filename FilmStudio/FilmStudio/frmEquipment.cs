@@ -12,13 +12,32 @@ namespace FilmStudio
 {
     public partial class frmEquipment : Form
     {
+        private Equipment myEquipment;
+
         public frmEquipment()
         {
             InitializeComponent();
+            myEquipment = new Equipment();
+        }
+
+        public frmEquipment(Equipment eq)
+        {
+            InitializeComponent();
+            myEquipment = new Equipment(
+                eq.Id,
+                eq.QtyAvailable,
+                eq.QtyBooked,
+                eq.Description,
+                eq.Make,
+                eq.Model,
+                eq.Remarks
+                );
         }
 
         private void frmEquipment_Load(object sender, EventArgs e)
         {
+            txtItemId.Text = myEquipment.Id.ToString();
+            txtQ
 
         }
 
