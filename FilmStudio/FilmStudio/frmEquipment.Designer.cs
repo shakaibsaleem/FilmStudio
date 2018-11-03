@@ -41,7 +41,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.lblQtyAvailable = new System.Windows.Forms.Label();
             this.lblQtyBooked = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
+            this.lblRemarks = new System.Windows.Forms.Label();
             this.btnClose = new System.Windows.Forms.Button();
             this.btnPrevious = new System.Windows.Forms.Button();
             this.btnNext = new System.Windows.Forms.Button();
@@ -158,14 +158,14 @@
             this.lblQtyBooked.TabIndex = 12;
             this.lblQtyBooked.Text = "Quantity Booked:";
             // 
-            // label5
+            // lblRemarks
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 152);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(52, 13);
-            this.label5.TabIndex = 13;
-            this.label5.Text = "Remarks:";
+            this.lblRemarks.AutoSize = true;
+            this.lblRemarks.Location = new System.Drawing.Point(6, 152);
+            this.lblRemarks.Name = "lblRemarks";
+            this.lblRemarks.Size = new System.Drawing.Size(52, 13);
+            this.lblRemarks.TabIndex = 13;
+            this.lblRemarks.Text = "Remarks:";
             // 
             // btnClose
             // 
@@ -241,7 +241,7 @@
             this.groupBoxItem.Controls.Add(this.txtModel);
             this.groupBoxItem.Controls.Add(this.txtQtyAvailable);
             this.groupBoxItem.Controls.Add(this.txtQtyBooked);
-            this.groupBoxItem.Controls.Add(this.label5);
+            this.groupBoxItem.Controls.Add(this.lblRemarks);
             this.groupBoxItem.Controls.Add(this.txtRemarks);
             this.groupBoxItem.Controls.Add(this.lblQtyBooked);
             this.groupBoxItem.Controls.Add(this.label1);
@@ -291,7 +291,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label lblQtyAvailable;
         private System.Windows.Forms.Label lblQtyBooked;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label lblRemarks;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Button btnPrevious;
         private System.Windows.Forms.Button btnNext;

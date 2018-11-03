@@ -17,7 +17,7 @@ namespace FilmStudio
         public frmEquipment()
         {
             InitializeComponent();
-            myEquipment = new Equipment();
+            myEquipment = new Equipment(1,2,0, "Black Magic 4K cinema", "Blackmagic Design", "CINECAMPROD4KEF","");
         }
 
         public frmEquipment(Equipment eq)
@@ -37,8 +37,12 @@ namespace FilmStudio
         private void frmEquipment_Load(object sender, EventArgs e)
         {
             txtItemId.Text = myEquipment.Id.ToString();
-            txtQ
-
+            txtQtyAvailable.Text = myEquipment.QtyAvailable.ToString();
+            txtQtyBooked.Text = myEquipment.QtyBooked.ToString();
+            txtMake.Text = myEquipment.Make.ToString();
+            txtModel.Text = myEquipment.Model.ToString();
+            txtDescription.Text = myEquipment.Description.ToString();
+            txtRemarks.Text = myEquipment.Remarks.ToString();
         }
 
         private void btnClose_Click(object sender, EventArgs e)
