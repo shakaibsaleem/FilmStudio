@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FilmStudio
 {
-    class Equipment
+    public class Equipment
     {
         public int Id, QtyAvailable, QtyBooked;
         public string Description, Make, Model, Remarks;
@@ -20,6 +20,17 @@ namespace FilmStudio
             Make = "";
             Model = "";
             Remarks = "";
+        }
+
+        public Equipment(int id, int qtyAvailable, int qtyBooked, string description, string make, string model, string remarks)
+        {
+            Id = id;
+            QtyAvailable = qtyAvailable;
+            QtyBooked = qtyBooked;
+            Description = description ?? throw new ArgumentNullException(nameof(description));
+            Make = make ?? throw new ArgumentNullException(nameof(make));
+            Model = model ?? throw new ArgumentNullException(nameof(model));
+            Remarks = remarks ?? throw new ArgumentNullException(nameof(remarks));
         }
     }
 }
