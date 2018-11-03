@@ -14,8 +14,9 @@ namespace FilmStudio
 
         public mySQLcon()
         {
+            const string conString = "Data Source = .\\SQLEXPRESS;Initial Catalog = FilmStudio; Persist Security Info=True;User ID = sa; Password=uiop7890;";
             con = new SqlConnection();
-            con.ConnectionString = "Data Source = SHAKAIBLAPTOP\SQLEXPRESS;Initial Catalog = FilmStudio; Persist Security Info=True;User ID = sa; Password=uiop7890;";
+            con.ConnectionString = conString;
             con.Open();
         }
     }
