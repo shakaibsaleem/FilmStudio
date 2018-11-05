@@ -16,8 +16,8 @@ namespace FilmStudio
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new frmEquipment());
             Application.Run(new frmLogin());
+            //Application.Run(new frmEquipment());
         }
     }
 }
