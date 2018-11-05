@@ -1,0 +1,4 @@
+do we need to distinguish equipment in terms of type? camera, lens, tripod or light
+
+what are remarks? are they needed? optional?
+what is Sr. Inventory? is this different from Sr. ?
