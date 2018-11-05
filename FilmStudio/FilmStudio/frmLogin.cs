@@ -44,6 +44,8 @@ namespace FilmStudio
             }
             else
             {
+                string s = "Welcome, "+txtUsername.Text+"!";
+                MessageBox.Show(s);
                 frmEquipment f = new frmEquipment();
                 f.Show();
             }
