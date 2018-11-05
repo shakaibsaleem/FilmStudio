@@ -1,4 +1,25 @@
+
 do we need to distinguish equipment in terms of type? camera, lens, tripod or light
+make just 1 category
 
 what are remarks? are they needed? optional?
+keep remarks
+
 what is Sr. Inventory? is this different from Sr. ?
+dont keep sr inventory
+
+show student details next to time date in bookings form
+dont need address. need contact. get system date time for booking
+
+st id, st name, equipment, qty booked, 
+
+calendar view. shows events summarised like in pic
+
+send approval email when booked
+
+when typing equipment name in booking, show suggestions
+
+get id when name of student entered in booking
+
+show history of student's bookings when name entered
+
