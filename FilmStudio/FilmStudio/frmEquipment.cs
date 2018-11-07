@@ -12,7 +12,7 @@ namespace FilmStudio
 {
     public partial class frmEquipment : Form
     {
-        private Equipment myEquipment;
+        public Equipment myEquipment;
 
         public frmEquipment()
         {
