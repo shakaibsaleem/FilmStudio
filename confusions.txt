@@ -1,4 +1,13 @@
 
+-how to keep track of late returns? what to do when an item is returned? update system?
+otherwise, quantity may be incorrectly shown
+?
+
+
+
+
+
+
 -do we need to distinguish equipment in terms of type? camera, lens, tripod or light
 make just 1 category
 
