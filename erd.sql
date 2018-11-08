@@ -56,10 +56,42 @@ GO
 
 
 
+CREATE TABLE Enrolments (
+  EnrolmentID INTEGER  NOT NULL   IDENTITY ,
+  CourseID INTEGER  NOT NULL  ,
+  StudentID INTEGER  NOT NULL  ,
+  InstructorID INTEGER  NOT NULL  ,
+  Term VARCHAR(10)      ,
+PRIMARY KEY(EnrolmentID)      ,
+  FOREIGN KEY(CourseID)
+    REFERENCES Courses(CourseID),
+  FOREIGN KEY(StudentID)
+    REFERENCES Students(StudentID),
+  FOREIGN KEY(InstructorID)
+    REFERENCES Instructors(InstructorID));
+GO
+
+
+CREATE INDEX Enrolments_FKIndex1 ON Enrolments (CourseID);
+GO
+CREATE INDEX Enrolments_FKIndex2 ON Enrolments (StudentID);
+GO
+CREATE INDEX Enrolments_FKIndex3 ON Enrolments (InstructorID);
+GO
+
+
+CREATE INDEX IFK_Rel_08 ON Enrolments (CourseID);
+GO
+CREATE INDEX IFK_Rel_09 ON Enrolments (StudentID);
+GO
+CREATE INDEX IFK_Rel_10 ON Enrolments (InstructorID);
+GO
+
+
 CREATE TABLE Bookings (
   BookingID INTEGER  NOT NULL   IDENTITY ,
+  EnrolmentID INTEGER  NOT NULL  ,
   UserID INTEGER  NOT NULL  ,
-  StudentID INTEGER  NOT NULL  ,
   IssuedOn DATETIME    ,
   DueOn DATETIME  NOT NULL  ,
   ReturnedOn DATETIME    ,
@@ -69,51 +101,20 @@ CREATE TABLE Bookings (
 PRIMARY KEY(BookingID)    ,
   FOREIGN KEY(UserID)
     REFERENCES Users(UserID),
-  FOREIGN KEY(StudentID)
-    REFERENCES Students(StudentID));
+  FOREIGN KEY(EnrolmentID)
+    REFERENCES Enrolments(EnrolmentID));
 GO
 
 
 CREATE INDEX Bookings_FKIndex1 ON Bookings (UserID);
 GO
-CREATE INDEX Bookings_FKIndex2 ON Bookings (StudentID);
+CREATE INDEX Bookings_FKIndex2 ON Bookings (EnrolmentID);
 GO
 
 
 CREATE INDEX IFK_Rel_11 ON Bookings (UserID);
 GO
-CREATE INDEX IFK_Rel_12 ON Bookings (StudentID);
-GO
-
-
-CREATE TABLE Enrolments (
-  CourseID INTEGER  NOT NULL  ,
-  InstructorID INTEGER  NOT NULL  ,
-  StudentID INTEGER  NOT NULL  ,
-  Term VARCHAR(10)  NOT NULL    ,
-PRIMARY KEY(CourseID, InstructorID, StudentID)      ,
-  FOREIGN KEY(InstructorID)
-    REFERENCES Instructors(InstructorID),
-  FOREIGN KEY(CourseID)
-    REFERENCES Courses(CourseID),
-  FOREIGN KEY(StudentID)
-    REFERENCES Students(StudentID));
-GO
-
-
-CREATE INDEX Enrolments_FKIndex1 ON Enrolments (InstructorID);
-GO
-CREATE INDEX Enrolments_FKIndex2 ON Enrolments (CourseID);
-GO
-CREATE INDEX Enrolments_FKIndex3 ON Enrolments (StudentID);
-GO
-
-
-CREATE INDEX IFK_Rel_08 ON Enrolments (InstructorID);
-GO
-CREATE INDEX IFK_Rel_09 ON Enrolments (CourseID);
-GO
-CREATE INDEX IFK_Rel_10 ON Enrolments (StudentID);
+CREATE INDEX IFK_Rel_12 ON Bookings (EnrolmentID);
 GO
 
 
