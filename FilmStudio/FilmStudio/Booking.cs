@@ -29,7 +29,7 @@ namespace FilmStudio
 
         public Booking(Enrolment currentEnrolment, User currentUser, int iD, DateTime issuedOn, DateTime dueOn, DateTime returnedOn, DateTime bookedOn, string notes, string project)
         {
-            CurrentEnrolment = currentEnrolment ?? throw new ArgumentNullException(nameof(bookingStudent));
+            CurrentEnrolment = currentEnrolment ?? throw new ArgumentNullException(nameof(currentEnrolment));
             CurrentUser = currentUser ?? throw new ArgumentNullException(nameof(currentUser));
             ID = iD;
             IssuedOn = issuedOn;
