@@ -16,10 +16,10 @@ namespace FilmStudio
             Id = 0;
             QtyAvailable = 0;
             QtyBooked = 0;
-            Description = "";
-            Make = "";
-            Model = "";
-            Remarks = "";
+            Description = "New Equipment";
+            Make = "Make";
+            Model = "Model";
+            Remarks = "No remarks";
         }
 
         public Equipment(int id, int qtyAvailable, int qtyBooked, string description, string make, string model, string remarks)
