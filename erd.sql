@@ -89,7 +89,8 @@ GO
 CREATE TABLE Enrolments (
   CourseID INTEGER  NOT NULL  ,
   InstructorID INTEGER  NOT NULL  ,
-  StudentID INTEGER  NOT NULL    ,
+  StudentID INTEGER  NOT NULL  ,
+  Term VARCHAR(10)  NOT NULL    ,
 PRIMARY KEY(CourseID, InstructorID, StudentID)      ,
   FOREIGN KEY(InstructorID)
     REFERENCES Instructors(InstructorID),
