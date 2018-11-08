@@ -17,7 +17,7 @@ namespace FilmStudio
             UserID = 9211;
             Name = "Shakaib Saleem";
             Username = "shakaib";
-            Passkey = "admin";
+            Passkey = "passkey";
             IsAdmin = false;
         }
 

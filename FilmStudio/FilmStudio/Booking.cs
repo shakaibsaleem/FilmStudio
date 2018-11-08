@@ -8,14 +8,16 @@ namespace FilmStudio
 {
     public class Booking
     {
-        //Student student;
-        //User user;
+        public Enrolment CurrentEnrolment;
+        public User CurrentUser;
         public int ID;
         public DateTime IssuedOn, DueOn, ReturnedOn, BookedOn;
         public string Notes, Project;
 
         public Booking()
         {
+            CurrentEnrolment = new Enrolment();
+            CurrentUser = new User();
             ID = 0;
             IssuedOn = new DateTime(2018,11,8,9,0,0,0);
             DueOn = new DateTime(2018, 11, 11, 9, 0, 0, 0);
@@ -25,8 +27,10 @@ namespace FilmStudio
             Project = "";
         }
 
-        public Booking(int iD, DateTime issuedOn, DateTime dueOn, DateTime returnedOn, DateTime bookedOn, string notes, string project)
+        public Booking(Enrolment currentEnrolment, User currentUser, int iD, DateTime issuedOn, DateTime dueOn, DateTime returnedOn, DateTime bookedOn, string notes, string project)
         {
+            CurrentEnrolment = currentEnrolment ?? throw new ArgumentNullException(nameof(bookingStudent));
+            CurrentUser = currentUser ?? throw new ArgumentNullException(nameof(currentUser));
             ID = iD;
             IssuedOn = issuedOn;
             DueOn = dueOn;

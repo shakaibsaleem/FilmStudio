@@ -10,8 +10,6 @@ namespace FilmStudio
     {
         public int StudentID;
         public string HUID, FirstName, MiddleName, LastName, Contact;
-        public Course StdCourse;
-        public Instructor StdInstructor;
 
         public Student()
         {
@@ -21,11 +19,9 @@ namespace FilmStudio
             MiddleName = "Rukh";
             LastName = "Khan";
             Contact = "923001234567";
-            StdCourse = new Course();
-            StdInstructor = new Instructor();
         }
 
-        public Student(int studentID, string hUID, string firstName, string middleName, string lastName, string contact, Course stdCourse, Instructor stdInstructor)
+        public Student(int studentID, string hUID, string firstName, string middleName, string lastName, string contact)
         {
             StudentID = studentID;
             HUID = hUID ?? throw new ArgumentNullException(nameof(hUID));
@@ -33,8 +29,6 @@ namespace FilmStudio
             MiddleName = middleName ?? throw new ArgumentNullException(nameof(middleName));
             LastName = lastName ?? throw new ArgumentNullException(nameof(lastName));
             Contact = contact ?? throw new ArgumentNullException(nameof(contact));
-            StdCourse = stdCourse;
-            StdInstructor = stdInstructor;
         }
     }
 }
