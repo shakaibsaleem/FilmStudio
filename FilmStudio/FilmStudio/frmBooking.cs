@@ -13,10 +13,12 @@ namespace FilmStudio
     public partial class frmBooking : Form
     {
         public Booking myBooking;
+        public Equipment myEquipment;
 
         public frmBooking()
         {
             InitializeComponent();
+            myEquipment = new Equipment();
             myBooking = new Booking(
                 currentEnrolment: new Enrolment(),
                 currentUser: new User(),
@@ -32,6 +34,7 @@ namespace FilmStudio
 
         public frmBooking(Booking bk)
         {
+            myEquipment = new Equipment();
             myBooking = new Booking(
                 currentEnrolment: new Enrolment(),
                 currentUser: new User(),
@@ -47,7 +50,18 @@ namespace FilmStudio
 
         private void frmBooking_Load(object sender, EventArgs e)
         {
-
+            txtStudentID.Text = myBooking.CurrentEnrolment.MyStudent.HUID;
+            txtName.Text = myBooking.CurrentEnrolment.MyStudent.FirstName + " "
+                + myBooking.CurrentEnrolment.MyStudent.MiddleName + " "
+                + myBooking.CurrentEnrolment.MyStudent.LastName;
+            txtContact.Text = myBooking.CurrentEnrolment.MyStudent.Contact;
+            dateTimeIssued.Value = myBooking.IssuedOn;
+            dateTimeDue.Value = myBooking.DueOn;
+            txtAssignment.Text = "Enter Assignment";
+            txtCourse.Text = myBooking.CurrentEnrolment.MyCourse.CourseName;
+            txtInstructor.Text = myBooking.CurrentEnrolment.MyInstructor.InstructorName;
+            txtEquipment.Text = myEquipment.Description;
+            txtQuantity.Text = 12.ToString();
         }
     }
 }

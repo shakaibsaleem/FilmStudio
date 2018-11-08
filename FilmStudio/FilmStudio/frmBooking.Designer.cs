@@ -44,6 +44,10 @@
             this.txtAssignment = new System.Windows.Forms.TextBox();
             this.txtCourse = new System.Windows.Forms.TextBox();
             this.txtInstructor = new System.Windows.Forms.TextBox();
+            this.lblEquipment = new System.Windows.Forms.Label();
+            this.txtEquipment = new System.Windows.Forms.TextBox();
+            this.lblQuantity = new System.Windows.Forms.Label();
+            this.txtQuantity = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // txtStudentID
@@ -58,14 +62,14 @@
             this.txtName.Location = new System.Drawing.Point(184, 12);
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(197, 20);
-            this.txtName.TabIndex = 0;
+            this.txtName.TabIndex = 1;
             // 
             // txtContact
             // 
             this.txtContact.Location = new System.Drawing.Point(440, 12);
             this.txtContact.Name = "txtContact";
             this.txtContact.Size = new System.Drawing.Size(100, 20);
-            this.txtContact.TabIndex = 0;
+            this.txtContact.TabIndex = 2;
             // 
             // lblStudentID
             // 
@@ -73,7 +77,7 @@
             this.lblStudentID.Location = new System.Drawing.Point(12, 15);
             this.lblStudentID.Name = "lblStudentID";
             this.lblStudentID.Size = new System.Drawing.Size(61, 13);
-            this.lblStudentID.TabIndex = 1;
+            this.lblStudentID.TabIndex = 10;
             this.lblStudentID.Text = "Student ID:";
             // 
             // lblName
@@ -82,7 +86,7 @@
             this.lblName.Location = new System.Drawing.Point(140, 15);
             this.lblName.Name = "lblName";
             this.lblName.Size = new System.Drawing.Size(38, 13);
-            this.lblName.TabIndex = 2;
+            this.lblName.TabIndex = 10;
             this.lblName.Text = "Name:";
             // 
             // lblContact
@@ -91,7 +95,7 @@
             this.lblContact.Location = new System.Drawing.Point(387, 15);
             this.lblContact.Name = "lblContact";
             this.lblContact.Size = new System.Drawing.Size(47, 13);
-            this.lblContact.TabIndex = 3;
+            this.lblContact.TabIndex = 10;
             this.lblContact.Text = "Contact:";
             // 
             // dateTimeIssued
@@ -101,7 +105,7 @@
             this.dateTimeIssued.Location = new System.Drawing.Point(79, 38);
             this.dateTimeIssued.Name = "dateTimeIssued";
             this.dateTimeIssued.Size = new System.Drawing.Size(158, 20);
-            this.dateTimeIssued.TabIndex = 4;
+            this.dateTimeIssued.TabIndex = 3;
             this.dateTimeIssued.Value = new System.DateTime(2018, 11, 8, 12, 30, 0, 0);
             // 
             // lblIssued
@@ -110,7 +114,7 @@
             this.lblIssued.Location = new System.Drawing.Point(12, 44);
             this.lblIssued.Name = "lblIssued";
             this.lblIssued.Size = new System.Drawing.Size(58, 13);
-            this.lblIssued.TabIndex = 5;
+            this.lblIssued.TabIndex = 10;
             this.lblIssued.Text = "Issued On:";
             // 
             // lblDue
@@ -119,7 +123,7 @@
             this.lblDue.Location = new System.Drawing.Point(243, 44);
             this.lblDue.Name = "lblDue";
             this.lblDue.Size = new System.Drawing.Size(47, 13);
-            this.lblDue.TabIndex = 6;
+            this.lblDue.TabIndex = 10;
             this.lblDue.Text = "Due On:";
             // 
             // dateTimeDue
@@ -129,7 +133,7 @@
             this.dateTimeDue.Location = new System.Drawing.Point(296, 38);
             this.dateTimeDue.Name = "dateTimeDue";
             this.dateTimeDue.Size = new System.Drawing.Size(158, 20);
-            this.dateTimeDue.TabIndex = 7;
+            this.dateTimeDue.TabIndex = 4;
             this.dateTimeDue.Value = new System.DateTime(2018, 11, 9, 13, 0, 0, 0);
             // 
             // lblAssignment
@@ -138,7 +142,7 @@
             this.lblAssignment.Location = new System.Drawing.Point(12, 67);
             this.lblAssignment.Name = "lblAssignment";
             this.lblAssignment.Size = new System.Drawing.Size(64, 13);
-            this.lblAssignment.TabIndex = 8;
+            this.lblAssignment.TabIndex = 10;
             this.lblAssignment.Text = "Assignment:";
             // 
             // lblCourse
@@ -147,7 +151,7 @@
             this.lblCourse.Location = new System.Drawing.Point(188, 67);
             this.lblCourse.Name = "lblCourse";
             this.lblCourse.Size = new System.Drawing.Size(43, 13);
-            this.lblCourse.TabIndex = 8;
+            this.lblCourse.TabIndex = 10;
             this.lblCourse.Text = "Course:";
             // 
             // lblInstructor
@@ -155,36 +159,72 @@
             this.lblInstructor.AutoSize = true;
             this.lblInstructor.Location = new System.Drawing.Point(343, 67);
             this.lblInstructor.Name = "lblInstructor";
-            this.lblInstructor.Size = new System.Drawing.Size(51, 13);
-            this.lblInstructor.TabIndex = 8;
-            this.lblInstructor.Text = "Instructor";
+            this.lblInstructor.Size = new System.Drawing.Size(54, 13);
+            this.lblInstructor.TabIndex = 10;
+            this.lblInstructor.Text = "Instructor:";
             // 
             // txtAssignment
             // 
             this.txtAssignment.Location = new System.Drawing.Point(82, 64);
             this.txtAssignment.Name = "txtAssignment";
             this.txtAssignment.Size = new System.Drawing.Size(100, 20);
-            this.txtAssignment.TabIndex = 9;
+            this.txtAssignment.TabIndex = 5;
             // 
             // txtCourse
             // 
             this.txtCourse.Location = new System.Drawing.Point(237, 64);
             this.txtCourse.Name = "txtCourse";
             this.txtCourse.Size = new System.Drawing.Size(100, 20);
-            this.txtCourse.TabIndex = 9;
+            this.txtCourse.TabIndex = 6;
             // 
             // txtInstructor
             // 
             this.txtInstructor.Location = new System.Drawing.Point(400, 64);
             this.txtInstructor.Name = "txtInstructor";
             this.txtInstructor.Size = new System.Drawing.Size(100, 20);
-            this.txtInstructor.TabIndex = 9;
+            this.txtInstructor.TabIndex = 7;
+            // 
+            // lblEquipment
+            // 
+            this.lblEquipment.AutoSize = true;
+            this.lblEquipment.Location = new System.Drawing.Point(12, 93);
+            this.lblEquipment.Name = "lblEquipment";
+            this.lblEquipment.Size = new System.Drawing.Size(60, 13);
+            this.lblEquipment.TabIndex = 10;
+            this.lblEquipment.Text = "Equipment:";
+            // 
+            // txtEquipment
+            // 
+            this.txtEquipment.Location = new System.Drawing.Point(82, 90);
+            this.txtEquipment.Name = "txtEquipment";
+            this.txtEquipment.Size = new System.Drawing.Size(255, 20);
+            this.txtEquipment.TabIndex = 8;
+            // 
+            // lblQuantity
+            // 
+            this.lblQuantity.AutoSize = true;
+            this.lblQuantity.Location = new System.Drawing.Point(343, 93);
+            this.lblQuantity.Name = "lblQuantity";
+            this.lblQuantity.Size = new System.Drawing.Size(49, 13);
+            this.lblQuantity.TabIndex = 10;
+            this.lblQuantity.Text = "Quantity:";
+            // 
+            // txtQuantity
+            // 
+            this.txtQuantity.Location = new System.Drawing.Point(400, 91);
+            this.txtQuantity.Name = "txtQuantity";
+            this.txtQuantity.Size = new System.Drawing.Size(100, 20);
+            this.txtQuantity.TabIndex = 9;
             // 
             // frmBooking
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(585, 254);
+            this.Controls.Add(this.txtQuantity);
+            this.Controls.Add(this.lblQuantity);
+            this.Controls.Add(this.txtEquipment);
+            this.Controls.Add(this.lblEquipment);
             this.Controls.Add(this.txtInstructor);
             this.Controls.Add(this.txtCourse);
             this.Controls.Add(this.txtAssignment);
@@ -227,5 +267,9 @@
         private System.Windows.Forms.TextBox txtAssignment;
         private System.Windows.Forms.TextBox txtCourse;
         private System.Windows.Forms.TextBox txtInstructor;
+        private System.Windows.Forms.Label lblEquipment;
+        private System.Windows.Forms.TextBox txtEquipment;
+        private System.Windows.Forms.Label lblQuantity;
+        private System.Windows.Forms.TextBox txtQuantity;
     }
 }
