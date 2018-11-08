@@ -38,6 +38,12 @@
             this.lblIssued = new System.Windows.Forms.Label();
             this.lblDue = new System.Windows.Forms.Label();
             this.dateTimeDue = new System.Windows.Forms.DateTimePicker();
+            this.lblAssignment = new System.Windows.Forms.Label();
+            this.lblCourse = new System.Windows.Forms.Label();
+            this.lblInstructor = new System.Windows.Forms.Label();
+            this.txtAssignment = new System.Windows.Forms.TextBox();
+            this.txtCourse = new System.Windows.Forms.TextBox();
+            this.txtInstructor = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // txtStudentID
@@ -126,11 +132,65 @@
             this.dateTimeDue.TabIndex = 7;
             this.dateTimeDue.Value = new System.DateTime(2018, 11, 9, 13, 0, 0, 0);
             // 
+            // lblAssignment
+            // 
+            this.lblAssignment.AutoSize = true;
+            this.lblAssignment.Location = new System.Drawing.Point(12, 67);
+            this.lblAssignment.Name = "lblAssignment";
+            this.lblAssignment.Size = new System.Drawing.Size(64, 13);
+            this.lblAssignment.TabIndex = 8;
+            this.lblAssignment.Text = "Assignment:";
+            // 
+            // lblCourse
+            // 
+            this.lblCourse.AutoSize = true;
+            this.lblCourse.Location = new System.Drawing.Point(188, 67);
+            this.lblCourse.Name = "lblCourse";
+            this.lblCourse.Size = new System.Drawing.Size(43, 13);
+            this.lblCourse.TabIndex = 8;
+            this.lblCourse.Text = "Course:";
+            // 
+            // lblInstructor
+            // 
+            this.lblInstructor.AutoSize = true;
+            this.lblInstructor.Location = new System.Drawing.Point(343, 67);
+            this.lblInstructor.Name = "lblInstructor";
+            this.lblInstructor.Size = new System.Drawing.Size(51, 13);
+            this.lblInstructor.TabIndex = 8;
+            this.lblInstructor.Text = "Instructor";
+            // 
+            // txtAssignment
+            // 
+            this.txtAssignment.Location = new System.Drawing.Point(82, 64);
+            this.txtAssignment.Name = "txtAssignment";
+            this.txtAssignment.Size = new System.Drawing.Size(100, 20);
+            this.txtAssignment.TabIndex = 9;
+            // 
+            // txtCourse
+            // 
+            this.txtCourse.Location = new System.Drawing.Point(237, 64);
+            this.txtCourse.Name = "txtCourse";
+            this.txtCourse.Size = new System.Drawing.Size(100, 20);
+            this.txtCourse.TabIndex = 9;
+            // 
+            // txtInstructor
+            // 
+            this.txtInstructor.Location = new System.Drawing.Point(400, 64);
+            this.txtInstructor.Name = "txtInstructor";
+            this.txtInstructor.Size = new System.Drawing.Size(100, 20);
+            this.txtInstructor.TabIndex = 9;
+            // 
             // frmBooking
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(585, 254);
+            this.Controls.Add(this.txtInstructor);
+            this.Controls.Add(this.txtCourse);
+            this.Controls.Add(this.txtAssignment);
+            this.Controls.Add(this.lblInstructor);
+            this.Controls.Add(this.lblCourse);
+            this.Controls.Add(this.lblAssignment);
             this.Controls.Add(this.dateTimeDue);
             this.Controls.Add(this.lblDue);
             this.Controls.Add(this.lblIssued);
@@ -161,5 +221,11 @@
         private System.Windows.Forms.Label lblIssued;
         private System.Windows.Forms.Label lblDue;
         private System.Windows.Forms.DateTimePicker dateTimeDue;
+        private System.Windows.Forms.Label lblAssignment;
+        private System.Windows.Forms.Label lblCourse;
+        private System.Windows.Forms.Label lblInstructor;
+        private System.Windows.Forms.TextBox txtAssignment;
+        private System.Windows.Forms.TextBox txtCourse;
+        private System.Windows.Forms.TextBox txtInstructor;
     }
 }

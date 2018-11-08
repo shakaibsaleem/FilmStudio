@@ -17,19 +17,31 @@ namespace FilmStudio
         public frmBooking()
         {
             InitializeComponent();
-            myBooking = new Booking(1, issuedOn: DateTime.Now, dueOn: DateTime.Now, returnedOn: DateTime.Now, bookedOn: DateTime.Now, notes: "No Notes", project: "ProjectX");
+            myBooking = new Booking(
+                currentEnrolment: new Enrolment(),
+                currentUser: new User(),
+                iD: 1,
+                issuedOn: DateTime.Now,
+                dueOn: DateTime.Now,
+                returnedOn: DateTime.Now,
+                bookedOn: DateTime.Now,
+                notes: "No Notes", 
+                project: "ProjectX"
+                );
         }
 
         public frmBooking(Booking bk)
         {
             myBooking = new Booking(
-                bk.ID,
-                bk.IssuedOn,
-                bk.DueOn,
-                bk.ReturnedOn,
-                bk.BookedOn,
-                bk.Notes,
-                bk.Project
+                currentEnrolment: new Enrolment(),
+                currentUser: new User(),
+                iD: bk.ID,
+                issuedOn: bk.IssuedOn,
+                dueOn: bk.DueOn,
+                returnedOn: bk.ReturnedOn,
+                bookedOn: bk.BookedOn,
+                notes: bk.Notes,
+                project: bk.Project
                 );
         }
 
