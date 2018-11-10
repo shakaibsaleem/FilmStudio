@@ -27,7 +27,7 @@ namespace FilmStudio
                 dueOn: DateTime.Now,
                 returnedOn: DateTime.Now,
                 bookedOn: DateTime.Now,
-                notes: "No Notes", 
+                notes: "No Notes",
                 project: "ProjectX"
                 );
         }
@@ -57,11 +57,24 @@ namespace FilmStudio
             txtContact.Text = myBooking.CurrentEnrolment.MyStudent.Contact;
             dateTimeIssued.Value = myBooking.IssuedOn;
             dateTimeDue.Value = myBooking.DueOn;
-            txtAssignment.Text = "Enter Assignment";
+            txtAssignment.Text = "FYP";
             txtCourse.Text = myBooking.CurrentEnrolment.MyCourse.CourseName;
             txtInstructor.Text = myBooking.CurrentEnrolment.MyInstructor.InstructorName;
+
             txtEquipment.Text = myEquipment.Description;
             txtQuantity.Text = 12.ToString();
+        }
+
+        private void btnAddEquipment_Click(object sender, EventArgs e)
+        {
+            // Adding values from text boxes to list view
+            ListViewItem listViewItem = new ListViewItem(txtEquipment.Text);
+            listViewItem.SubItems.Add(txtQuantity.Text);
+            listViewBooking.Items.Add(listViewItem);
+            txtEquipment.Clear();
+            txtQuantity.Clear();
+            // stop it from adding emoty items
+            // check for duplication, update quantity instead of addidng the existing item again
         }
     }
 }
