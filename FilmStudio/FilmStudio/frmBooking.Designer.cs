@@ -83,7 +83,7 @@
             this.lblStudentID.Location = new System.Drawing.Point(6, 19);
             this.lblStudentID.Name = "lblStudentID";
             this.lblStudentID.Size = new System.Drawing.Size(61, 13);
-            this.lblStudentID.TabIndex = 10;
+            this.lblStudentID.TabIndex = 103;
             this.lblStudentID.Text = "Student ID:";
             // 
             // lblName
@@ -92,7 +92,7 @@
             this.lblName.Location = new System.Drawing.Point(137, 19);
             this.lblName.Name = "lblName";
             this.lblName.Size = new System.Drawing.Size(38, 13);
-            this.lblName.TabIndex = 10;
+            this.lblName.TabIndex = 104;
             this.lblName.Text = "Name:";
             // 
             // lblContact
@@ -101,7 +101,7 @@
             this.lblContact.Location = new System.Drawing.Point(337, 19);
             this.lblContact.Name = "lblContact";
             this.lblContact.Size = new System.Drawing.Size(47, 13);
-            this.lblContact.TabIndex = 10;
+            this.lblContact.TabIndex = 105;
             this.lblContact.Text = "Contact:";
             // 
             // dateTimeIssued
@@ -111,7 +111,7 @@
             this.dateTimeIssued.Location = new System.Drawing.Point(88, 12);
             this.dateTimeIssued.Name = "dateTimeIssued";
             this.dateTimeIssued.Size = new System.Drawing.Size(181, 20);
-            this.dateTimeIssued.TabIndex = 6;
+            this.dateTimeIssued.TabIndex = 50;
             this.dateTimeIssued.Value = new System.DateTime(2018, 11, 8, 12, 30, 0, 0);
             // 
             // lblIssued
@@ -120,7 +120,7 @@
             this.lblIssued.Location = new System.Drawing.Point(18, 18);
             this.lblIssued.Name = "lblIssued";
             this.lblIssued.Size = new System.Drawing.Size(58, 13);
-            this.lblIssued.TabIndex = 10;
+            this.lblIssued.TabIndex = 100;
             this.lblIssued.Text = "Issued On:";
             // 
             // lblDue
@@ -129,7 +129,7 @@
             this.lblDue.Location = new System.Drawing.Point(275, 18);
             this.lblDue.Name = "lblDue";
             this.lblDue.Size = new System.Drawing.Size(47, 13);
-            this.lblDue.TabIndex = 10;
+            this.lblDue.TabIndex = 101;
             this.lblDue.Text = "Due On:";
             // 
             // lblAssignment
@@ -138,7 +138,7 @@
             this.lblAssignment.Location = new System.Drawing.Point(6, 45);
             this.lblAssignment.Name = "lblAssignment";
             this.lblAssignment.Size = new System.Drawing.Size(64, 13);
-            this.lblAssignment.TabIndex = 10;
+            this.lblAssignment.TabIndex = 106;
             this.lblAssignment.Text = "Assignment:";
             // 
             // lblCourse
@@ -147,7 +147,7 @@
             this.lblCourse.Location = new System.Drawing.Point(137, 45);
             this.lblCourse.Name = "lblCourse";
             this.lblCourse.Size = new System.Drawing.Size(43, 13);
-            this.lblCourse.TabIndex = 10;
+            this.lblCourse.TabIndex = 107;
             this.lblCourse.Text = "Course:";
             // 
             // lblInstructor
@@ -156,7 +156,7 @@
             this.lblInstructor.Location = new System.Drawing.Point(337, 45);
             this.lblInstructor.Name = "lblInstructor";
             this.lblInstructor.Size = new System.Drawing.Size(54, 13);
-            this.lblInstructor.TabIndex = 10;
+            this.lblInstructor.TabIndex = 108;
             this.lblInstructor.Text = "Instructor:";
             // 
             // txtAssignment
@@ -186,7 +186,7 @@
             this.lblEquipment.Location = new System.Drawing.Point(18, 117);
             this.lblEquipment.Name = "lblEquipment";
             this.lblEquipment.Size = new System.Drawing.Size(60, 13);
-            this.lblEquipment.TabIndex = 10;
+            this.lblEquipment.TabIndex = 109;
             this.lblEquipment.Text = "Equipment:";
             // 
             // txtEquipment
@@ -194,7 +194,8 @@
             this.txtEquipment.Location = new System.Drawing.Point(88, 114);
             this.txtEquipment.Name = "txtEquipment";
             this.txtEquipment.Size = new System.Drawing.Size(255, 20);
-            this.txtEquipment.TabIndex = 8;
+            this.txtEquipment.TabIndex = 6;
+            this.txtEquipment.TextChanged += new System.EventHandler(this.txtEquipment_TextChanged);
             // 
             // lblQuantity
             // 
@@ -202,15 +203,17 @@
             this.lblQuantity.Location = new System.Drawing.Point(349, 117);
             this.lblQuantity.Name = "lblQuantity";
             this.lblQuantity.Size = new System.Drawing.Size(49, 13);
-            this.lblQuantity.TabIndex = 10;
+            this.lblQuantity.TabIndex = 110;
             this.lblQuantity.Text = "Quantity:";
             // 
             // txtQuantity
             // 
             this.txtQuantity.Location = new System.Drawing.Point(409, 114);
             this.txtQuantity.Name = "txtQuantity";
-            this.txtQuantity.Size = new System.Drawing.Size(30, 20);
-            this.txtQuantity.TabIndex = 9;
+            this.txtQuantity.Size = new System.Drawing.Size(100, 20);
+            this.txtQuantity.TabIndex = 7;
+            this.txtQuantity.TextChanged += new System.EventHandler(this.txtQuantity_TextChanged);
+            this.txtQuantity.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtQuantity_KeyPress);
             // 
             // groupBoxBooking
             // 
@@ -229,7 +232,7 @@
             this.groupBoxBooking.Location = new System.Drawing.Point(12, 38);
             this.groupBoxBooking.Name = "groupBoxBooking";
             this.groupBoxBooking.Size = new System.Drawing.Size(503, 68);
-            this.groupBoxBooking.TabIndex = 11;
+            this.groupBoxBooking.TabIndex = 102;
             this.groupBoxBooking.TabStop = false;
             this.groupBoxBooking.Text = "Booking Details";
             // 
@@ -238,17 +241,21 @@
             this.listViewBooking.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.colHeadEquipment,
             this.colHeadQuantity});
-            this.listViewBooking.Location = new System.Drawing.Point(21, 140);
+            this.listViewBooking.FullRowSelect = true;
+            this.listViewBooking.GridLines = true;
+            this.listViewBooking.HideSelection = false;
+            this.listViewBooking.Location = new System.Drawing.Point(21, 169);
+            this.listViewBooking.MultiSelect = false;
             this.listViewBooking.Name = "listViewBooking";
             this.listViewBooking.Size = new System.Drawing.Size(488, 97);
-            this.listViewBooking.TabIndex = 12;
+            this.listViewBooking.TabIndex = 9;
             this.listViewBooking.UseCompatibleStateImageBehavior = false;
             this.listViewBooking.View = System.Windows.Forms.View.Details;
             // 
             // colHeadEquipment
             // 
             this.colHeadEquipment.Text = "Equipment";
-            this.colHeadEquipment.Width = 424;
+            this.colHeadEquipment.Width = 407;
             // 
             // colHeadQuantity
             // 
@@ -261,15 +268,15 @@
             this.dateTimeDue.Location = new System.Drawing.Point(328, 12);
             this.dateTimeDue.Name = "dateTimeDue";
             this.dateTimeDue.Size = new System.Drawing.Size(181, 20);
-            this.dateTimeDue.TabIndex = 7;
+            this.dateTimeDue.TabIndex = 51;
             this.dateTimeDue.Value = new System.DateTime(2018, 11, 8, 12, 30, 0, 0);
             // 
             // btnAddEquipment
             // 
-            this.btnAddEquipment.Location = new System.Drawing.Point(445, 112);
+            this.btnAddEquipment.Location = new System.Drawing.Point(453, 140);
             this.btnAddEquipment.Name = "btnAddEquipment";
-            this.btnAddEquipment.Size = new System.Drawing.Size(64, 23);
-            this.btnAddEquipment.TabIndex = 13;
+            this.btnAddEquipment.Size = new System.Drawing.Size(56, 23);
+            this.btnAddEquipment.TabIndex = 8;
             this.btnAddEquipment.Text = "Add";
             this.btnAddEquipment.UseVisualStyleBackColor = true;
             this.btnAddEquipment.Click += new System.EventHandler(this.btnAddEquipment_Click);
