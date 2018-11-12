@@ -2,9 +2,9 @@
 -how to keep track of late returns? what to do when an item is returned? update system?
 otherwise, quantity may be incorrectly shown
 ?
+proposed solution: the payments like scene. when item returned, do another form
 
-
-
+-how does the booking form currently feel? what more to be added?
 
 
 
