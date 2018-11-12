@@ -183,7 +183,7 @@
             // lblEquipment
             // 
             this.lblEquipment.AutoSize = true;
-            this.lblEquipment.Location = new System.Drawing.Point(18, 117);
+            this.lblEquipment.Location = new System.Drawing.Point(18, 115);
             this.lblEquipment.Name = "lblEquipment";
             this.lblEquipment.Size = new System.Drawing.Size(60, 13);
             this.lblEquipment.TabIndex = 109;
@@ -191,7 +191,7 @@
             // 
             // txtEquipment
             // 
-            this.txtEquipment.Location = new System.Drawing.Point(88, 114);
+            this.txtEquipment.Location = new System.Drawing.Point(88, 112);
             this.txtEquipment.Name = "txtEquipment";
             this.txtEquipment.Size = new System.Drawing.Size(255, 20);
             this.txtEquipment.TabIndex = 6;
@@ -200,7 +200,7 @@
             // lblQuantity
             // 
             this.lblQuantity.AutoSize = true;
-            this.lblQuantity.Location = new System.Drawing.Point(349, 117);
+            this.lblQuantity.Location = new System.Drawing.Point(349, 115);
             this.lblQuantity.Name = "lblQuantity";
             this.lblQuantity.Size = new System.Drawing.Size(49, 13);
             this.lblQuantity.TabIndex = 110;
@@ -208,7 +208,7 @@
             // 
             // txtQuantity
             // 
-            this.txtQuantity.Location = new System.Drawing.Point(409, 114);
+            this.txtQuantity.Location = new System.Drawing.Point(409, 112);
             this.txtQuantity.Name = "txtQuantity";
             this.txtQuantity.Size = new System.Drawing.Size(100, 20);
             this.txtQuantity.TabIndex = 7;
@@ -244,7 +244,7 @@
             this.listViewBooking.FullRowSelect = true;
             this.listViewBooking.GridLines = true;
             this.listViewBooking.HideSelection = false;
-            this.listViewBooking.Location = new System.Drawing.Point(21, 169);
+            this.listViewBooking.Location = new System.Drawing.Point(21, 167);
             this.listViewBooking.MultiSelect = false;
             this.listViewBooking.Name = "listViewBooking";
             this.listViewBooking.Size = new System.Drawing.Size(488, 97);
@@ -273,7 +273,7 @@
             // 
             // btnAddEquipment
             // 
-            this.btnAddEquipment.Location = new System.Drawing.Point(453, 140);
+            this.btnAddEquipment.Location = new System.Drawing.Point(453, 138);
             this.btnAddEquipment.Name = "btnAddEquipment";
             this.btnAddEquipment.Size = new System.Drawing.Size(56, 23);
             this.btnAddEquipment.TabIndex = 8;
@@ -285,7 +285,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(654, 314);
+            this.ClientSize = new System.Drawing.Size(527, 503);
             this.Controls.Add(this.btnAddEquipment);
             this.Controls.Add(this.listViewBooking);
             this.Controls.Add(this.groupBoxBooking);
