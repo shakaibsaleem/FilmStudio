@@ -6,6 +6,7 @@ proposed solution: the payments like scene. when item returned, do another form
 
 -how does the booking form currently feel? what more to be added?
 
+-discrepencies between booking form picture and excel. what to put, note down
 
 
 -do we need to distinguish equipment in terms of type? camera, lens, tripod or light
