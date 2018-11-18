@@ -1,8 +1,9 @@
 
 how to run app on mac??
+-will get windows laptop from IT for this
 
+bookings can be made for staff or faculty as well.
 
-bookings can be made by staff or faculty as well.
 3 different colors in calendar for std purple, stff yellow, faculty white
 
 mention color and booking type on bookings form
