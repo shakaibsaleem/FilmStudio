@@ -1,19 +1,68 @@
+Issues:
 
-how to run app on mac??
--will get windows laptop from IT for this
+-how to: show bookings calendar online/ smart tv showing what is when booked
+-proposed solution: save screenshot image in dropbox
+-can we print on mac???
+
+-how to keep track of late returns? what to do when an item is returned? update system?
+otherwise, quantity may be incorrectly shown
+rejected solution: the payments like scene. when item returned, do another form
+proposed solution: keep check for returned in system. when item is returned, open form and update it to tell the database that it has been returned.
+for items not returned, or late, keep track. emails, prints, reports.
+
+
+Changes:
+
+return time at 9am. penalty.
+booking starts at noon.
+
+allow extension of due date
+
+disclaimer
+dropdowns
 
 bookings can be made for staff or faculty as well.
+out of campus or in campus bookings: for off campus: email Ali Dad Shah for gatepass issuance
+if on campus, only notify talha and student
+
+categorised as brand name followed by model no
+
+mark late bookings. mark received items. list of items to be returned daily
+
+keep margin for late return and charging time
+
+
+Additions:
+
+for multiple similar bookings, allow option to save as a new booking with slight changes in issuance dates
+
+mark late bookings. mark received items. list of items to be returned daily
+
+allow extension of due date
+
+for booking form buttons:
+save, print, notify std and mgr when booked
+
+each camera has battery, charger, card must, plus some extra bags
+when add camera, add battery, and card
+can have extra cards batteries too
+
+printing
+
+calendar view. for all bookings summary
 
 3 different colors in calendar for std purple, stff yellow, faculty white
+
+calendar sends reminder email to film studio address and std. 15 mins before booking
+out of campus or in campus bookings: for off campus: email Ali Dad Shah for gatepass issuance
+if on campus, only notify talha and student
 
 mention color and booking type on bookings form
 
 another form for booking spaces: 3 studios: production studio, sound studio, color grading room
 when book sound room: book sound related equipment
 when book production room: book lights equipment
-
-no prints needed. show in calendar
- 
+no prints needed for room. show in calendar
 basic booking: slots
 9-12
 12-3
@@ -22,67 +71,42 @@ date
 who books it? std/staff/ faculty
 show in calendar
 
-
-calendar sends reminder email to film studio address and std. 15 mins before booking
-
-
-out of campus or in campus bookings: for off campus: email Ali Dad Shah for gatepass issuance
-if on campus, only notify talha and student
-
-
-for booking form buttons:
-save, print, notify std and mgr when booked
-
-calendar view. for all bookings summary
-
-add notes
-add equipment, sd, batteries
-printing
-disclaimer
-dropdowns
-
-
-categorised as brand name followed by model no
-each camera has battery, charger, card must, plus some extra bags
-
-when add camera, add battery, and card
-can have extra cards batteries too
-
-return time at 9am. penalty.
-booking starts at noon.
-
-mark late bookings. mark received items. list of items to be returned daily
-
-keep margin for late return and charging time
-
--how to keep track of late returns? what to do when an item is returned? update system?
-otherwise, quantity may be incorrectly shown
-?
-proposed solution: the payments like scene. when item returned, do another form
-
-allow extension of due date
-
-show bookings calendar online/ smart tv showing what is when booked
-
-can we print on mac???
-
-for multiple similar bookings, allow option to save as a new booking with slight changes in issuance dates
-
-
 students database maintained by us
 
 update courses and instructors lists from ro
 
 generate reports for bookings between dates. who what when isReturned?
 
+-calendar view. shows events summarised like in pic
+
+-send approval email when booked
+
+-when typing equipment name in booking, show suggestions
+
+-get id when name of student entered in booking
+
+-show history of student's bookings when name entered
+
+
+Queries:
+
+
+Other:
+
+-how to run app on mac??
+will get windows laptop from IT for this
+
+add notes
+add equipment, sd, batteries
 
 -how does the booking form currently feel? what more to be added?
+discussed
 
 -discrepencies between booking form picture and excel. what to put, note down
-
+form is correct. ignore others like excel or that pic of a form
 
 -do we need to distinguish equipment in terms of type? camera, lens, tripod or light
-make just 1 category
+no, make just 1 category. will track by model
 
 -what are remarks? are they needed? optional?
 keep remarks
@@ -94,13 +118,3 @@ dont keep sr inventory
 dont need address. need contact. get system date time for booking
 
 -st id, st name, equipment, qty booked, 
-
--calendar view. shows events summarised like in pic
-
--send approval email when booked
-
--when typing equipment name in booking, show suggestions
-
--get id when name of student entered in booking
-
--show history of student's bookings when name entered
