@@ -53,6 +53,7 @@ namespace FilmStudio
             txtAssignment.Text = "FYP";
             txtEquipment.Text = myEquipment.Description;
             txtQuantity.Text = 12.ToString();
+            rbtnStudent.Select();
         }
 
         private void btnAddEquipment_Click(object sender, EventArgs e)
