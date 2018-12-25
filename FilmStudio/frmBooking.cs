@@ -20,7 +20,6 @@ namespace FilmStudio
             InitializeComponent();
             myEquipment = new Equipment();
             myBooking = new Booking(
-                currentEnrolment: new Enrolment(),
                 currentUser: new User(),
                 iD: 1,
                 issuedOn: DateTime.Now,
@@ -28,7 +27,7 @@ namespace FilmStudio
                 returnedOn: DateTime.Now,
                 bookedOn: DateTime.Now,
                 notes: "No Notes",
-                project: "ProjectX"
+                BookedBy: "Student"
                 );
         }
 
@@ -36,7 +35,6 @@ namespace FilmStudio
         {
             myEquipment = new Equipment();
             myBooking = new Booking(
-                currentEnrolment: new Enrolment(),
                 currentUser: new User(),
                 iD: bk.ID,
                 issuedOn: bk.IssuedOn,
@@ -44,24 +42,15 @@ namespace FilmStudio
                 returnedOn: bk.ReturnedOn,
                 bookedOn: bk.BookedOn,
                 notes: bk.Notes,
-                project: bk.Project
+                BookedBy: bk.BookedBy
                 );
         }
 
         private void frmBooking_Load(object sender, EventArgs e)
         {
-            txtStudentID.Text = myBooking.CurrentEnrolment.MyStudent.HUID;
-            txtStudentID.Select();
-            txtName.Text = myBooking.CurrentEnrolment.MyStudent.FirstName + " "
-                + myBooking.CurrentEnrolment.MyStudent.MiddleName + " "
-                + myBooking.CurrentEnrolment.MyStudent.LastName;
-            txtContact.Text = myBooking.CurrentEnrolment.MyStudent.Contact;
             dateTimeIssued.Value = myBooking.IssuedOn;
             dateTimeDue.Value = myBooking.DueOn;
             txtAssignment.Text = "FYP";
-            txtCourse.Text = myBooking.CurrentEnrolment.MyCourse.CourseName;
-            txtInstructor.Text = myBooking.CurrentEnrolment.MyInstructor.InstructorName;
-
             txtEquipment.Text = myEquipment.Description;
             txtQuantity.Text = 12.ToString();
         }

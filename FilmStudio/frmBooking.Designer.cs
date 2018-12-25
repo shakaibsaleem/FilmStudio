@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.txtStudentID = new System.Windows.Forms.TextBox();
+            this.txtHabibID = new System.Windows.Forms.TextBox();
             this.txtName = new System.Windows.Forms.TextBox();
             this.txtContact = new System.Windows.Forms.TextBox();
-            this.lblStudentID = new System.Windows.Forms.Label();
+            this.lblHabibID = new System.Windows.Forms.Label();
             this.lblName = new System.Windows.Forms.Label();
             this.lblContact = new System.Windows.Forms.Label();
             this.dateTimeIssued = new System.Windows.Forms.DateTimePicker();
@@ -47,21 +47,26 @@
             this.txtEquipment = new System.Windows.Forms.TextBox();
             this.lblQuantity = new System.Windows.Forms.Label();
             this.txtQuantity = new System.Windows.Forms.TextBox();
-            this.groupBoxBooking = new System.Windows.Forms.GroupBox();
+            this.groupBoxDetails = new System.Windows.Forms.GroupBox();
             this.listViewBooking = new System.Windows.Forms.ListView();
             this.colHeadEquipment = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colHeadQuantity = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.dateTimeDue = new System.Windows.Forms.DateTimePicker();
             this.btnAddEquipment = new System.Windows.Forms.Button();
-            this.groupBoxBooking.SuspendLayout();
+            this.groupBoxBookedFor = new System.Windows.Forms.GroupBox();
+            this.rbtnStudent = new System.Windows.Forms.RadioButton();
+            this.rbtnInstructor = new System.Windows.Forms.RadioButton();
+            this.rbtnStaff = new System.Windows.Forms.RadioButton();
+            this.groupBoxDetails.SuspendLayout();
+            this.groupBoxBookedFor.SuspendLayout();
             this.SuspendLayout();
             // 
-            // txtStudentID
+            // txtHabibID
             // 
-            this.txtStudentID.Location = new System.Drawing.Point(76, 16);
-            this.txtStudentID.Name = "txtStudentID";
-            this.txtStudentID.Size = new System.Drawing.Size(55, 20);
-            this.txtStudentID.TabIndex = 0;
+            this.txtHabibID.Location = new System.Drawing.Point(76, 16);
+            this.txtHabibID.Name = "txtHabibID";
+            this.txtHabibID.Size = new System.Drawing.Size(55, 20);
+            this.txtHabibID.TabIndex = 0;
             // 
             // txtName
             // 
@@ -77,14 +82,14 @@
             this.txtContact.Size = new System.Drawing.Size(100, 20);
             this.txtContact.TabIndex = 2;
             // 
-            // lblStudentID
+            // lblHabibID
             // 
-            this.lblStudentID.AutoSize = true;
-            this.lblStudentID.Location = new System.Drawing.Point(6, 19);
-            this.lblStudentID.Name = "lblStudentID";
-            this.lblStudentID.Size = new System.Drawing.Size(61, 13);
-            this.lblStudentID.TabIndex = 103;
-            this.lblStudentID.Text = "Student ID:";
+            this.lblHabibID.AutoSize = true;
+            this.lblHabibID.Location = new System.Drawing.Point(6, 19);
+            this.lblHabibID.Name = "lblHabibID";
+            this.lblHabibID.Size = new System.Drawing.Size(52, 13);
+            this.lblHabibID.TabIndex = 103;
+            this.lblHabibID.Text = "Habib ID:";
             // 
             // lblName
             // 
@@ -183,7 +188,7 @@
             // lblEquipment
             // 
             this.lblEquipment.AutoSize = true;
-            this.lblEquipment.Location = new System.Drawing.Point(18, 115);
+            this.lblEquipment.Location = new System.Drawing.Point(18, 163);
             this.lblEquipment.Name = "lblEquipment";
             this.lblEquipment.Size = new System.Drawing.Size(60, 13);
             this.lblEquipment.TabIndex = 109;
@@ -191,7 +196,7 @@
             // 
             // txtEquipment
             // 
-            this.txtEquipment.Location = new System.Drawing.Point(88, 112);
+            this.txtEquipment.Location = new System.Drawing.Point(88, 160);
             this.txtEquipment.Name = "txtEquipment";
             this.txtEquipment.Size = new System.Drawing.Size(255, 20);
             this.txtEquipment.TabIndex = 6;
@@ -200,7 +205,7 @@
             // lblQuantity
             // 
             this.lblQuantity.AutoSize = true;
-            this.lblQuantity.Location = new System.Drawing.Point(349, 115);
+            this.lblQuantity.Location = new System.Drawing.Point(349, 163);
             this.lblQuantity.Name = "lblQuantity";
             this.lblQuantity.Size = new System.Drawing.Size(49, 13);
             this.lblQuantity.TabIndex = 110;
@@ -208,33 +213,33 @@
             // 
             // txtQuantity
             // 
-            this.txtQuantity.Location = new System.Drawing.Point(409, 112);
+            this.txtQuantity.Location = new System.Drawing.Point(409, 160);
             this.txtQuantity.Name = "txtQuantity";
             this.txtQuantity.Size = new System.Drawing.Size(100, 20);
             this.txtQuantity.TabIndex = 7;
             this.txtQuantity.TextChanged += new System.EventHandler(this.txtQuantity_TextChanged);
             this.txtQuantity.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtQuantity_KeyPress);
             // 
-            // groupBoxBooking
+            // groupBoxDetails
             // 
-            this.groupBoxBooking.Controls.Add(this.lblStudentID);
-            this.groupBoxBooking.Controls.Add(this.txtStudentID);
-            this.groupBoxBooking.Controls.Add(this.txtName);
-            this.groupBoxBooking.Controls.Add(this.txtContact);
-            this.groupBoxBooking.Controls.Add(this.lblName);
-            this.groupBoxBooking.Controls.Add(this.txtInstructor);
-            this.groupBoxBooking.Controls.Add(this.lblContact);
-            this.groupBoxBooking.Controls.Add(this.txtCourse);
-            this.groupBoxBooking.Controls.Add(this.txtAssignment);
-            this.groupBoxBooking.Controls.Add(this.lblInstructor);
-            this.groupBoxBooking.Controls.Add(this.lblCourse);
-            this.groupBoxBooking.Controls.Add(this.lblAssignment);
-            this.groupBoxBooking.Location = new System.Drawing.Point(12, 38);
-            this.groupBoxBooking.Name = "groupBoxBooking";
-            this.groupBoxBooking.Size = new System.Drawing.Size(503, 68);
-            this.groupBoxBooking.TabIndex = 102;
-            this.groupBoxBooking.TabStop = false;
-            this.groupBoxBooking.Text = "Booking Details";
+            this.groupBoxDetails.Controls.Add(this.lblHabibID);
+            this.groupBoxDetails.Controls.Add(this.txtHabibID);
+            this.groupBoxDetails.Controls.Add(this.txtName);
+            this.groupBoxDetails.Controls.Add(this.txtContact);
+            this.groupBoxDetails.Controls.Add(this.lblName);
+            this.groupBoxDetails.Controls.Add(this.txtInstructor);
+            this.groupBoxDetails.Controls.Add(this.lblContact);
+            this.groupBoxDetails.Controls.Add(this.txtCourse);
+            this.groupBoxDetails.Controls.Add(this.txtAssignment);
+            this.groupBoxDetails.Controls.Add(this.lblInstructor);
+            this.groupBoxDetails.Controls.Add(this.lblCourse);
+            this.groupBoxDetails.Controls.Add(this.lblAssignment);
+            this.groupBoxDetails.Location = new System.Drawing.Point(12, 86);
+            this.groupBoxDetails.Name = "groupBoxDetails";
+            this.groupBoxDetails.Size = new System.Drawing.Size(503, 68);
+            this.groupBoxDetails.TabIndex = 102;
+            this.groupBoxDetails.TabStop = false;
+            this.groupBoxDetails.Text = "Booking Details";
             // 
             // listViewBooking
             // 
@@ -244,7 +249,7 @@
             this.listViewBooking.FullRowSelect = true;
             this.listViewBooking.GridLines = true;
             this.listViewBooking.HideSelection = false;
-            this.listViewBooking.Location = new System.Drawing.Point(21, 167);
+            this.listViewBooking.Location = new System.Drawing.Point(21, 215);
             this.listViewBooking.MultiSelect = false;
             this.listViewBooking.Name = "listViewBooking";
             this.listViewBooking.Size = new System.Drawing.Size(488, 97);
@@ -273,7 +278,7 @@
             // 
             // btnAddEquipment
             // 
-            this.btnAddEquipment.Location = new System.Drawing.Point(453, 138);
+            this.btnAddEquipment.Location = new System.Drawing.Point(453, 186);
             this.btnAddEquipment.Name = "btnAddEquipment";
             this.btnAddEquipment.Size = new System.Drawing.Size(56, 23);
             this.btnAddEquipment.TabIndex = 8;
@@ -281,14 +286,60 @@
             this.btnAddEquipment.UseVisualStyleBackColor = true;
             this.btnAddEquipment.Click += new System.EventHandler(this.btnAddEquipment_Click);
             // 
+            // groupBoxBookedFor
+            // 
+            this.groupBoxBookedFor.Controls.Add(this.rbtnStaff);
+            this.groupBoxBookedFor.Controls.Add(this.rbtnInstructor);
+            this.groupBoxBookedFor.Controls.Add(this.rbtnStudent);
+            this.groupBoxBookedFor.Location = new System.Drawing.Point(12, 38);
+            this.groupBoxBookedFor.Name = "groupBoxBookedFor";
+            this.groupBoxBookedFor.Size = new System.Drawing.Size(503, 42);
+            this.groupBoxBookedFor.TabIndex = 111;
+            this.groupBoxBookedFor.TabStop = false;
+            this.groupBoxBookedFor.Text = "Booked For";
+            // 
+            // rbtnStudent
+            // 
+            this.rbtnStudent.AutoSize = true;
+            this.rbtnStudent.Location = new System.Drawing.Point(6, 19);
+            this.rbtnStudent.Name = "rbtnStudent";
+            this.rbtnStudent.Size = new System.Drawing.Size(62, 17);
+            this.rbtnStudent.TabIndex = 0;
+            this.rbtnStudent.TabStop = true;
+            this.rbtnStudent.Text = "Student";
+            this.rbtnStudent.UseVisualStyleBackColor = true;
+            // 
+            // rbtnInstructor
+            // 
+            this.rbtnInstructor.AutoSize = true;
+            this.rbtnInstructor.Location = new System.Drawing.Point(95, 19);
+            this.rbtnInstructor.Name = "rbtnInstructor";
+            this.rbtnInstructor.Size = new System.Drawing.Size(69, 17);
+            this.rbtnInstructor.TabIndex = 1;
+            this.rbtnInstructor.TabStop = true;
+            this.rbtnInstructor.Text = "Instructor";
+            this.rbtnInstructor.UseVisualStyleBackColor = true;
+            // 
+            // rbtnStaff
+            // 
+            this.rbtnStaff.AutoSize = true;
+            this.rbtnStaff.Location = new System.Drawing.Point(190, 19);
+            this.rbtnStaff.Name = "rbtnStaff";
+            this.rbtnStaff.Size = new System.Drawing.Size(47, 17);
+            this.rbtnStaff.TabIndex = 2;
+            this.rbtnStaff.TabStop = true;
+            this.rbtnStaff.Text = "Staff";
+            this.rbtnStaff.UseVisualStyleBackColor = true;
+            // 
             // frmBooking
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(527, 503);
+            this.Controls.Add(this.groupBoxBookedFor);
             this.Controls.Add(this.btnAddEquipment);
             this.Controls.Add(this.listViewBooking);
-            this.Controls.Add(this.groupBoxBooking);
+            this.Controls.Add(this.groupBoxDetails);
             this.Controls.Add(this.txtQuantity);
             this.Controls.Add(this.lblQuantity);
             this.Controls.Add(this.txtEquipment);
@@ -300,8 +351,10 @@
             this.Name = "frmBooking";
             this.Text = "Booking Form";
             this.Load += new System.EventHandler(this.frmBooking_Load);
-            this.groupBoxBooking.ResumeLayout(false);
-            this.groupBoxBooking.PerformLayout();
+            this.groupBoxDetails.ResumeLayout(false);
+            this.groupBoxDetails.PerformLayout();
+            this.groupBoxBookedFor.ResumeLayout(false);
+            this.groupBoxBookedFor.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -309,10 +362,10 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox txtStudentID;
+        private System.Windows.Forms.TextBox txtHabibID;
         private System.Windows.Forms.TextBox txtName;
         private System.Windows.Forms.TextBox txtContact;
-        private System.Windows.Forms.Label lblStudentID;
+        private System.Windows.Forms.Label lblHabibID;
         private System.Windows.Forms.Label lblName;
         private System.Windows.Forms.Label lblContact;
         private System.Windows.Forms.DateTimePicker dateTimeIssued;
@@ -328,11 +381,15 @@
         private System.Windows.Forms.TextBox txtEquipment;
         private System.Windows.Forms.Label lblQuantity;
         private System.Windows.Forms.TextBox txtQuantity;
-        private System.Windows.Forms.GroupBox groupBoxBooking;
+        private System.Windows.Forms.GroupBox groupBoxDetails;
         private System.Windows.Forms.ListView listViewBooking;
         private System.Windows.Forms.ColumnHeader colHeadEquipment;
         private System.Windows.Forms.ColumnHeader colHeadQuantity;
         private System.Windows.Forms.DateTimePicker dateTimeDue;
         private System.Windows.Forms.Button btnAddEquipment;
+        private System.Windows.Forms.GroupBox groupBoxBookedFor;
+        private System.Windows.Forms.RadioButton rbtnStaff;
+        private System.Windows.Forms.RadioButton rbtnInstructor;
+        private System.Windows.Forms.RadioButton rbtnStudent;
     }
 }

@@ -8,15 +8,13 @@ namespace FilmStudio
 {
     public class Booking
     {
-        public Enrolment CurrentEnrolment;
         public User CurrentUser;
         public int ID;
         public DateTime IssuedOn, DueOn, ReturnedOn, BookedOn;
-        public string Notes, Project;
+        public string Notes, BookedBy;
 
         public Booking()
         {
-            CurrentEnrolment = new Enrolment();
             CurrentUser = new User();
             ID = 0;
             IssuedOn = new DateTime(2018,11,8,9,0,0,0);
@@ -24,12 +22,11 @@ namespace FilmStudio
             ReturnedOn = new DateTime(2018, 11, 10, 10, 0, 0, 0);
             BookedOn = new DateTime(2018, 11, 7, 9, 41, 15, 2);
             Notes = "";
-            Project = "";
+            BookedBy = "";
         }
 
-        public Booking(Enrolment currentEnrolment, User currentUser, int iD, DateTime issuedOn, DateTime dueOn, DateTime returnedOn, DateTime bookedOn, string notes, string project)
+        public Booking(User currentUser, int iD, DateTime issuedOn, DateTime dueOn, DateTime returnedOn, DateTime bookedOn, string notes, string BookedBy)
         {
-            CurrentEnrolment = currentEnrolment ?? throw new ArgumentNullException(nameof(currentEnrolment));
             CurrentUser = currentUser ?? throw new ArgumentNullException(nameof(currentUser));
             ID = iD;
             IssuedOn = issuedOn;
@@ -37,7 +34,7 @@ namespace FilmStudio
             ReturnedOn = returnedOn;
             BookedOn = bookedOn;
             Notes = notes ?? throw new ArgumentNullException(nameof(notes));
-            Project = project ?? throw new ArgumentNullException(nameof(project));
+            BookedBy = BookedBy ?? throw new ArgumentNullException(nameof(BookedBy));
         }
     }
 }

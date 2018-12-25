@@ -1,7 +1,8 @@
 Issues:
 
 -how to: show bookings calendar online/ smart tv showing what is when booked
--proposed solution: save screenshot image in dropbox
+proposed solution: save screenshot image in dropbox
+
 -can we print on mac???
 
 -how to keep track of late returns? what to do when an item is returned? update system?

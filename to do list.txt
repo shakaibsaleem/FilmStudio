@@ -1,0 +1,4 @@
+remove bug of login trick. strip password string till second last " starting scanning from right to left
+
+change bookings to allow booking to be made for faculty or staff too
+enrolment id k baghair

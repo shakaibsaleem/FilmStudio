@@ -9,7 +9,7 @@ namespace FilmStudio
     public class Student
     {
         public int StudentID;
-        public string HUID, FirstName, MiddleName, LastName, Contact;
+        public string HUID, FirstName, MiddleName, LastName, Contact, Email;
 
         public Student()
         {
@@ -19,9 +19,10 @@ namespace FilmStudio
             MiddleName = "Rukh";
             LastName = "Khan";
             Contact = "923001234567";
+            Email = "ab01234@st.habib.edu.pk";
         }
 
-        public Student(int studentID, string hUID, string firstName, string middleName, string lastName, string contact)
+        public Student(int studentID, string hUID, string firstName, string middleName, string lastName, string contact, string email)
         {
             StudentID = studentID;
             HUID = hUID ?? throw new ArgumentNullException(nameof(hUID));
@@ -29,6 +30,7 @@ namespace FilmStudio
             MiddleName = middleName ?? throw new ArgumentNullException(nameof(middleName));
             LastName = lastName ?? throw new ArgumentNullException(nameof(lastName));
             Contact = contact ?? throw new ArgumentNullException(nameof(contact));
+            Email = email ?? throw new ArgumentNullException(nameof(email));
         }
     }
 }
