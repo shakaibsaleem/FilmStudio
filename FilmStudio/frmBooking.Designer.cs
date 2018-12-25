@@ -54,9 +54,16 @@
             this.dateTimeDue = new System.Windows.Forms.DateTimePicker();
             this.btnAddEquipment = new System.Windows.Forms.Button();
             this.groupBoxBookedFor = new System.Windows.Forms.GroupBox();
-            this.rbtnStudent = new System.Windows.Forms.RadioButton();
-            this.rbtnInstructor = new System.Windows.Forms.RadioButton();
             this.rbtnStaff = new System.Windows.Forms.RadioButton();
+            this.rbtnInstructor = new System.Windows.Forms.RadioButton();
+            this.rbtnStudent = new System.Windows.Forms.RadioButton();
+            this.btnClose = new System.Windows.Forms.Button();
+            this.btnPrevious = new System.Windows.Forms.Button();
+            this.btnNext = new System.Windows.Forms.Button();
+            this.btnEdit = new System.Windows.Forms.Button();
+            this.btnSave = new System.Windows.Forms.Button();
+            this.btnDelete = new System.Windows.Forms.Button();
+            this.btnAdd = new System.Windows.Forms.Button();
             this.groupBoxDetails.SuspendLayout();
             this.groupBoxBookedFor.SuspendLayout();
             this.SuspendLayout();
@@ -65,19 +72,19 @@
             // 
             this.txtHabibID.Location = new System.Drawing.Point(76, 16);
             this.txtHabibID.Name = "txtHabibID";
-            this.txtHabibID.Size = new System.Drawing.Size(55, 20);
+            this.txtHabibID.Size = new System.Drawing.Size(100, 20);
             this.txtHabibID.TabIndex = 0;
             // 
             // txtName
             // 
-            this.txtName.Location = new System.Drawing.Point(186, 16);
+            this.txtName.Location = new System.Drawing.Point(231, 16);
             this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(145, 20);
+            this.txtName.Size = new System.Drawing.Size(158, 20);
             this.txtName.TabIndex = 1;
             // 
             // txtContact
             // 
-            this.txtContact.Location = new System.Drawing.Point(397, 16);
+            this.txtContact.Location = new System.Drawing.Point(455, 16);
             this.txtContact.Name = "txtContact";
             this.txtContact.Size = new System.Drawing.Size(100, 20);
             this.txtContact.TabIndex = 2;
@@ -94,7 +101,7 @@
             // lblName
             // 
             this.lblName.AutoSize = true;
-            this.lblName.Location = new System.Drawing.Point(137, 19);
+            this.lblName.Location = new System.Drawing.Point(182, 19);
             this.lblName.Name = "lblName";
             this.lblName.Size = new System.Drawing.Size(38, 13);
             this.lblName.TabIndex = 104;
@@ -103,7 +110,7 @@
             // lblContact
             // 
             this.lblContact.AutoSize = true;
-            this.lblContact.Location = new System.Drawing.Point(337, 19);
+            this.lblContact.Location = new System.Drawing.Point(395, 19);
             this.lblContact.Name = "lblContact";
             this.lblContact.Size = new System.Drawing.Size(47, 13);
             this.lblContact.TabIndex = 105;
@@ -115,7 +122,7 @@
             this.dateTimeIssued.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dateTimeIssued.Location = new System.Drawing.Point(88, 12);
             this.dateTimeIssued.Name = "dateTimeIssued";
-            this.dateTimeIssued.Size = new System.Drawing.Size(181, 20);
+            this.dateTimeIssued.Size = new System.Drawing.Size(210, 20);
             this.dateTimeIssued.TabIndex = 50;
             this.dateTimeIssued.Value = new System.DateTime(2018, 11, 8, 12, 30, 0, 0);
             // 
@@ -131,7 +138,7 @@
             // lblDue
             // 
             this.lblDue.AutoSize = true;
-            this.lblDue.Location = new System.Drawing.Point(275, 18);
+            this.lblDue.Location = new System.Drawing.Point(304, 18);
             this.lblDue.Name = "lblDue";
             this.lblDue.Size = new System.Drawing.Size(47, 13);
             this.lblDue.TabIndex = 101;
@@ -149,7 +156,7 @@
             // lblCourse
             // 
             this.lblCourse.AutoSize = true;
-            this.lblCourse.Location = new System.Drawing.Point(137, 45);
+            this.lblCourse.Location = new System.Drawing.Point(182, 45);
             this.lblCourse.Name = "lblCourse";
             this.lblCourse.Size = new System.Drawing.Size(43, 13);
             this.lblCourse.TabIndex = 107;
@@ -158,7 +165,7 @@
             // lblInstructor
             // 
             this.lblInstructor.AutoSize = true;
-            this.lblInstructor.Location = new System.Drawing.Point(337, 45);
+            this.lblInstructor.Location = new System.Drawing.Point(395, 45);
             this.lblInstructor.Name = "lblInstructor";
             this.lblInstructor.Size = new System.Drawing.Size(54, 13);
             this.lblInstructor.TabIndex = 108;
@@ -168,19 +175,19 @@
             // 
             this.txtAssignment.Location = new System.Drawing.Point(76, 42);
             this.txtAssignment.Name = "txtAssignment";
-            this.txtAssignment.Size = new System.Drawing.Size(55, 20);
+            this.txtAssignment.Size = new System.Drawing.Size(100, 20);
             this.txtAssignment.TabIndex = 3;
             // 
             // txtCourse
             // 
-            this.txtCourse.Location = new System.Drawing.Point(186, 42);
+            this.txtCourse.Location = new System.Drawing.Point(231, 42);
             this.txtCourse.Name = "txtCourse";
-            this.txtCourse.Size = new System.Drawing.Size(145, 20);
+            this.txtCourse.Size = new System.Drawing.Size(158, 20);
             this.txtCourse.TabIndex = 4;
             // 
             // txtInstructor
             // 
-            this.txtInstructor.Location = new System.Drawing.Point(397, 42);
+            this.txtInstructor.Location = new System.Drawing.Point(455, 42);
             this.txtInstructor.Name = "txtInstructor";
             this.txtInstructor.Size = new System.Drawing.Size(100, 20);
             this.txtInstructor.TabIndex = 5;
@@ -198,14 +205,14 @@
             // 
             this.txtEquipment.Location = new System.Drawing.Point(88, 160);
             this.txtEquipment.Name = "txtEquipment";
-            this.txtEquipment.Size = new System.Drawing.Size(255, 20);
+            this.txtEquipment.Size = new System.Drawing.Size(313, 20);
             this.txtEquipment.TabIndex = 6;
             this.txtEquipment.TextChanged += new System.EventHandler(this.txtEquipment_TextChanged);
             // 
             // lblQuantity
             // 
             this.lblQuantity.AutoSize = true;
-            this.lblQuantity.Location = new System.Drawing.Point(349, 163);
+            this.lblQuantity.Location = new System.Drawing.Point(407, 163);
             this.lblQuantity.Name = "lblQuantity";
             this.lblQuantity.Size = new System.Drawing.Size(49, 13);
             this.lblQuantity.TabIndex = 110;
@@ -213,7 +220,7 @@
             // 
             // txtQuantity
             // 
-            this.txtQuantity.Location = new System.Drawing.Point(409, 160);
+            this.txtQuantity.Location = new System.Drawing.Point(467, 160);
             this.txtQuantity.Name = "txtQuantity";
             this.txtQuantity.Size = new System.Drawing.Size(100, 20);
             this.txtQuantity.TabIndex = 7;
@@ -236,7 +243,7 @@
             this.groupBoxDetails.Controls.Add(this.lblAssignment);
             this.groupBoxDetails.Location = new System.Drawing.Point(12, 86);
             this.groupBoxDetails.Name = "groupBoxDetails";
-            this.groupBoxDetails.Size = new System.Drawing.Size(503, 68);
+            this.groupBoxDetails.Size = new System.Drawing.Size(561, 68);
             this.groupBoxDetails.TabIndex = 102;
             this.groupBoxDetails.TabStop = false;
             this.groupBoxDetails.Text = "Booking Details";
@@ -252,7 +259,7 @@
             this.listViewBooking.Location = new System.Drawing.Point(21, 215);
             this.listViewBooking.MultiSelect = false;
             this.listViewBooking.Name = "listViewBooking";
-            this.listViewBooking.Size = new System.Drawing.Size(488, 97);
+            this.listViewBooking.Size = new System.Drawing.Size(546, 97);
             this.listViewBooking.TabIndex = 9;
             this.listViewBooking.UseCompatibleStateImageBehavior = false;
             this.listViewBooking.View = System.Windows.Forms.View.Details;
@@ -260,7 +267,7 @@
             // colHeadEquipment
             // 
             this.colHeadEquipment.Text = "Equipment";
-            this.colHeadEquipment.Width = 407;
+            this.colHeadEquipment.Width = 460;
             // 
             // colHeadQuantity
             // 
@@ -270,15 +277,15 @@
             // 
             this.dateTimeDue.CustomFormat = "dd/MM/yy ddd hh:mm tt";
             this.dateTimeDue.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimeDue.Location = new System.Drawing.Point(328, 12);
+            this.dateTimeDue.Location = new System.Drawing.Point(357, 12);
             this.dateTimeDue.Name = "dateTimeDue";
-            this.dateTimeDue.Size = new System.Drawing.Size(181, 20);
+            this.dateTimeDue.Size = new System.Drawing.Size(210, 20);
             this.dateTimeDue.TabIndex = 51;
             this.dateTimeDue.Value = new System.DateTime(2018, 11, 8, 12, 30, 0, 0);
             // 
             // btnAddEquipment
             // 
-            this.btnAddEquipment.Location = new System.Drawing.Point(453, 186);
+            this.btnAddEquipment.Location = new System.Drawing.Point(511, 186);
             this.btnAddEquipment.Name = "btnAddEquipment";
             this.btnAddEquipment.Size = new System.Drawing.Size(56, 23);
             this.btnAddEquipment.TabIndex = 8;
@@ -293,32 +300,10 @@
             this.groupBoxBookedFor.Controls.Add(this.rbtnStudent);
             this.groupBoxBookedFor.Location = new System.Drawing.Point(12, 38);
             this.groupBoxBookedFor.Name = "groupBoxBookedFor";
-            this.groupBoxBookedFor.Size = new System.Drawing.Size(503, 42);
+            this.groupBoxBookedFor.Size = new System.Drawing.Size(561, 42);
             this.groupBoxBookedFor.TabIndex = 111;
             this.groupBoxBookedFor.TabStop = false;
             this.groupBoxBookedFor.Text = "Booked For";
-            // 
-            // rbtnStudent
-            // 
-            this.rbtnStudent.AutoSize = true;
-            this.rbtnStudent.Location = new System.Drawing.Point(6, 19);
-            this.rbtnStudent.Name = "rbtnStudent";
-            this.rbtnStudent.Size = new System.Drawing.Size(62, 17);
-            this.rbtnStudent.TabIndex = 0;
-            this.rbtnStudent.TabStop = true;
-            this.rbtnStudent.Text = "Student";
-            this.rbtnStudent.UseVisualStyleBackColor = true;
-            // 
-            // rbtnInstructor
-            // 
-            this.rbtnInstructor.AutoSize = true;
-            this.rbtnInstructor.Location = new System.Drawing.Point(95, 19);
-            this.rbtnInstructor.Name = "rbtnInstructor";
-            this.rbtnInstructor.Size = new System.Drawing.Size(69, 17);
-            this.rbtnInstructor.TabIndex = 1;
-            this.rbtnInstructor.TabStop = true;
-            this.rbtnInstructor.Text = "Instructor";
-            this.rbtnInstructor.UseVisualStyleBackColor = true;
             // 
             // rbtnStaff
             // 
@@ -331,11 +316,104 @@
             this.rbtnStaff.Text = "Staff";
             this.rbtnStaff.UseVisualStyleBackColor = true;
             // 
+            // rbtnInstructor
+            // 
+            this.rbtnInstructor.AutoSize = true;
+            this.rbtnInstructor.Location = new System.Drawing.Point(95, 19);
+            this.rbtnInstructor.Name = "rbtnInstructor";
+            this.rbtnInstructor.Size = new System.Drawing.Size(69, 17);
+            this.rbtnInstructor.TabIndex = 1;
+            this.rbtnInstructor.TabStop = true;
+            this.rbtnInstructor.Text = "Instructor";
+            this.rbtnInstructor.UseVisualStyleBackColor = true;
+            // 
+            // rbtnStudent
+            // 
+            this.rbtnStudent.AutoSize = true;
+            this.rbtnStudent.Location = new System.Drawing.Point(6, 19);
+            this.rbtnStudent.Name = "rbtnStudent";
+            this.rbtnStudent.Size = new System.Drawing.Size(62, 17);
+            this.rbtnStudent.TabIndex = 0;
+            this.rbtnStudent.TabStop = true;
+            this.rbtnStudent.Text = "Student";
+            this.rbtnStudent.UseVisualStyleBackColor = true;
+            // 
+            // btnClose
+            // 
+            this.btnClose.Location = new System.Drawing.Point(12, 318);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(75, 23);
+            this.btnClose.TabIndex = 112;
+            this.btnClose.Text = "Close";
+            this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            // 
+            // btnPrevious
+            // 
+            this.btnPrevious.Location = new System.Drawing.Point(93, 318);
+            this.btnPrevious.Name = "btnPrevious";
+            this.btnPrevious.Size = new System.Drawing.Size(75, 23);
+            this.btnPrevious.TabIndex = 113;
+            this.btnPrevious.Text = "Previous";
+            this.btnPrevious.UseVisualStyleBackColor = true;
+            // 
+            // btnNext
+            // 
+            this.btnNext.Location = new System.Drawing.Point(174, 318);
+            this.btnNext.Name = "btnNext";
+            this.btnNext.Size = new System.Drawing.Size(75, 23);
+            this.btnNext.TabIndex = 114;
+            this.btnNext.Text = "Next";
+            this.btnNext.UseVisualStyleBackColor = true;
+            // 
+            // btnEdit
+            // 
+            this.btnEdit.Location = new System.Drawing.Point(255, 318);
+            this.btnEdit.Name = "btnEdit";
+            this.btnEdit.Size = new System.Drawing.Size(75, 23);
+            this.btnEdit.TabIndex = 115;
+            this.btnEdit.Text = "Edit";
+            this.btnEdit.UseVisualStyleBackColor = true;
+            // 
+            // btnSave
+            // 
+            this.btnSave.Location = new System.Drawing.Point(336, 318);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(75, 23);
+            this.btnSave.TabIndex = 116;
+            this.btnSave.Text = "Save";
+            this.btnSave.UseVisualStyleBackColor = true;
+            // 
+            // btnDelete
+            // 
+            this.btnDelete.Location = new System.Drawing.Point(417, 318);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(75, 23);
+            this.btnDelete.TabIndex = 117;
+            this.btnDelete.Text = "Delete";
+            this.btnDelete.UseVisualStyleBackColor = true;
+            // 
+            // btnAdd
+            // 
+            this.btnAdd.Location = new System.Drawing.Point(498, 318);
+            this.btnAdd.Name = "btnAdd";
+            this.btnAdd.Size = new System.Drawing.Size(75, 23);
+            this.btnAdd.TabIndex = 118;
+            this.btnAdd.Text = "Add";
+            this.btnAdd.UseVisualStyleBackColor = true;
+            // 
             // frmBooking
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(527, 503);
+            this.ClientSize = new System.Drawing.Size(585, 353);
+            this.Controls.Add(this.btnAdd);
+            this.Controls.Add(this.btnDelete);
+            this.Controls.Add(this.btnSave);
+            this.Controls.Add(this.btnEdit);
+            this.Controls.Add(this.btnNext);
+            this.Controls.Add(this.btnPrevious);
+            this.Controls.Add(this.btnClose);
             this.Controls.Add(this.groupBoxBookedFor);
             this.Controls.Add(this.btnAddEquipment);
             this.Controls.Add(this.listViewBooking);
@@ -391,5 +469,12 @@
         private System.Windows.Forms.RadioButton rbtnStaff;
         private System.Windows.Forms.RadioButton rbtnInstructor;
         private System.Windows.Forms.RadioButton rbtnStudent;
+        private System.Windows.Forms.Button btnClose;
+        private System.Windows.Forms.Button btnPrevious;
+        private System.Windows.Forms.Button btnNext;
+        private System.Windows.Forms.Button btnEdit;
+        private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.Button btnDelete;
+        private System.Windows.Forms.Button btnAdd;
     }
 }

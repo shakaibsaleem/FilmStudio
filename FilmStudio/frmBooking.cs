@@ -107,5 +107,10 @@ namespace FilmStudio
                 btnAddEquipment.PerformClick();
             }
         }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
     }
 }
