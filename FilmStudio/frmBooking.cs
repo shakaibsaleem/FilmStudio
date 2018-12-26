@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Data.SqlClient;
 
 namespace FilmStudio
 {
@@ -14,6 +15,8 @@ namespace FilmStudio
     {
         public Booking myBooking;
         public Equipment myEquipment;
+        mySQLcon myCon;
+        SqlConnection con;
 
         public frmBooking()
         {
@@ -48,6 +51,9 @@ namespace FilmStudio
 
         private void frmBooking_Load(object sender, EventArgs e)
         {
+            myCon = new mySQLcon();
+            con = myCon.con;
+
             dateTimeIssued.Value = myBooking.IssuedOn;
             dateTimeDue.Value = myBooking.DueOn;
             txtAssignment.Text = "FYP";
@@ -112,6 +118,12 @@ namespace FilmStudio
         private void btnClose_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            SqlCommand cmd = con.CreateCommand();
+            cmd.CommandType = CommandType.Text;
         }
     }
 }

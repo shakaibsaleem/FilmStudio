@@ -7,12 +7,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Data.SqlClient;
 
 namespace FilmStudio
 {
     public partial class frmEquipment : Form
     {
         public Equipment myEquipment;
+        mySQLcon myCon;
+        SqlConnection con;
 
         public frmEquipment()
         {
@@ -36,6 +39,9 @@ namespace FilmStudio
 
         private void frmEquipment_Load(object sender, EventArgs e)
         {
+            myCon = new mySQLcon();
+            con = myCon.con;
+
             txtItemId.Text = myEquipment.Id.ToString();
             txtQtyAvailable.Text = myEquipment.QtyAvailable.ToString();
             txtQtyBooked.Text = myEquipment.QtyBooked.ToString();
@@ -48,6 +54,12 @@ namespace FilmStudio
         private void btnClose_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            SqlCommand cmd = con.CreateCommand();
+            cmd.CommandType = CommandType.Text;
         }
     }
 }
