@@ -124,6 +124,8 @@ namespace FilmStudio
         {
             SqlCommand cmd = con.CreateCommand();
             cmd.CommandType = CommandType.Text;
+            cmd.CommandText = "insert into Bookings (Name, Passkey, isAdmin, Username) values('Shakaib Saleem', 'admin', 1, 'shakaib')";
+            cmd.ExecuteNonQuery();
         }
     }
 }
