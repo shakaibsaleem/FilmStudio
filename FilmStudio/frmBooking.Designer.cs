@@ -315,6 +315,7 @@
             this.rbtnStaff.TabStop = true;
             this.rbtnStaff.Text = "Staff";
             this.rbtnStaff.UseVisualStyleBackColor = true;
+            this.rbtnStaff.CheckedChanged += new System.EventHandler(this.rbtnStaff_CheckedChanged);
             // 
             // rbtnInstructor
             // 
@@ -326,6 +327,7 @@
             this.rbtnInstructor.TabStop = true;
             this.rbtnInstructor.Text = "Instructor";
             this.rbtnInstructor.UseVisualStyleBackColor = true;
+            this.rbtnInstructor.CheckedChanged += new System.EventHandler(this.rbtnInstructor_CheckedChanged);
             // 
             // rbtnStudent
             // 
@@ -337,6 +339,7 @@
             this.rbtnStudent.TabStop = true;
             this.rbtnStudent.Text = "Student";
             this.rbtnStudent.UseVisualStyleBackColor = true;
+            this.rbtnStudent.CheckedChanged += new System.EventHandler(this.rbtnStudent_CheckedChanged);
             // 
             // btnClose
             // 
