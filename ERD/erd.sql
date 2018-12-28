@@ -75,14 +75,14 @@ CREATE TABLE Bookings (
   UserID INTEGER  NOT NULL  ,
   Notes VARCHAR(50)    ,
   BookedBy VARCHAR(10)  NOT NULL  ,
+  BookingDate DATE  NOT NULL  ,
+  BookingTime TIME  NOT NULL  ,
   IssueDate DATE    ,
   IssueTime TIME    ,
   DueDate DATE  NOT NULL  ,
   DueTime TIME  NOT NULL  ,
   ReturnDate DATE    ,
-  ReturnTime TIME    ,
-  BookingDate DATE  NOT NULL  ,
-  BookingTime INTEGER  NOT NULL    ,
+  ReturnTime TIME      ,
 PRIMARY KEY(BookingID)  ,
   FOREIGN KEY(UserID)
     REFERENCES Users(UserID));
@@ -221,5 +221,6 @@ CREATE INDEX IFK_Rel_11 ON BookingsByStudents (EnrolmentID);
 GO
 CREATE INDEX IFK_Rel_12 ON BookingsByStudents (BookingID);
 GO
+
 
 
