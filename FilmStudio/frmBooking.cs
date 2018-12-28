@@ -124,8 +124,52 @@ namespace FilmStudio
         {
             SqlCommand cmd = con.CreateCommand();
             cmd.CommandType = CommandType.Text;
-            cmd.CommandText = "insert into Bookings (Name, Passkey, isAdmin, Username) values('Shakaib Saleem', 'admin', 1, 'shakaib')";
+            cmd.CommandText = "insert into Bookings " +
+                "(UserID,Notes,BookedBy,BookingDate,BookingTime,IssueDate,IssueTime,DueDate,DueTime,ReturnDate,ReturnTime) " + 
+                "values(" + myBooking.CurrentUser.UserID + ",'" + myBooking.Notes + "','" + myBooking.BookedBy + "','" + 
+                DateOf(myBooking.BookedOn) + "','" + TimeOf(myBooking.BookedOn) + "','" + 
+                DateOf(myBooking.IssuedOn) + "','" + TimeOf(myBooking.IssuedOn) + "','" + 
+                DateOf(myBooking.DueOn) + "','" + TimeOf(myBooking.DueOn) + "','" + 
+                DateOf(myBooking.ReturnedOn) + "','" + TimeOf(myBooking.ReturnedOn) + "')";
             cmd.ExecuteNonQuery();
+            MessageBox.Show("The record has been added successfully. Press OK to continue","Booking Created");
+            btnAdd.Enabled = false;
+        }
+
+        public string DateOf(DateTime dateTime)
+        {
+            string str = dateTime.Year + "-" + dateTime.Month + "-" + dateTime.Day;
+            return str;
+        }
+
+        public string TimeOf(DateTime dateTime)
+        {
+            string str = dateTime.Hour + ":" + dateTime.Minute + ":" + dateTime.Second;
+            return str;
+        }
+
+        private void rbtnStudent_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbtnStudent.Checked)
+            {
+                myBooking.BookedBy = "Student";
+            }
+        }
+
+        private void rbtnInstructor_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbtnInstructor.Checked)
+            {
+                myBooking.BookedBy = "Instructor";
+            }
+        }
+
+        private void rbtnStaff_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbtnStaff.Checked)
+            {
+                myBooking.BookedBy = "Staff";
+            }
         }
     }
 }
