@@ -9,14 +9,13 @@ namespace FilmStudio
     public class Booking
     {
         public User CurrentUser;
-        public int ID;
         public DateTime IssuedOn, DueOn, ReturnedOn, BookedOn;
-        public string Notes, BookedBy;
+        public string ID, Notes, BookedBy;
 
         public Booking()
         {
             CurrentUser = new User();
-            ID = 0;
+            ID = "0";
             IssuedOn = new DateTime(2018,11,8,9,0,0,0);
             DueOn = new DateTime(2018, 11, 11, 9, 0, 0, 0);
             ReturnedOn = new DateTime(2018, 11, 10, 10, 0, 0, 0);
@@ -25,10 +24,10 @@ namespace FilmStudio
             BookedBy = "";
         }
 
-        public Booking(User currentUser, int iD, DateTime issuedOn, DateTime dueOn, DateTime returnedOn, DateTime bookedOn, string notes, string BookedBy)
+        public Booking(User currentUser, string iD, DateTime issuedOn, DateTime dueOn, DateTime returnedOn, DateTime bookedOn, string notes, string BookedBy)
         {
             CurrentUser = currentUser ?? throw new ArgumentNullException(nameof(currentUser));
-            ID = iD;
+            ID = iD ?? throw new ArgumentNullException(nameof(iD));
             IssuedOn = issuedOn;
             DueOn = dueOn;
             ReturnedOn = returnedOn;
