@@ -24,13 +24,13 @@ namespace FilmStudio
             myEquipment = new Equipment();
             myBooking = new Booking(
                 currentUser: new User(),
-                iD: 1,
-                issuedOn: DateTime.Now,
-                dueOn: DateTime.Now.AddDays(1),
-                returnedOn: DateTime.Now,
+                iD: "1",
+                issuedOn: DateTime.Now.AddDays(1),
+                dueOn: DateTime.Now.AddDays(3),
+                returnedOn: DateTime.Now.AddDays(2),
                 bookedOn: DateTime.Now,
                 notes: "No Notes",
-                BookedBy: "Student"
+                BookedBy: "Instructor"
                 );
         }
 
@@ -67,10 +67,10 @@ namespace FilmStudio
             // check for duplication
             if (listViewBooking.FindItemWithText(txtEquipment.Text) == null)
             {
-            // Adding values from text boxes to list view
-            ListViewItem listViewItem = new ListViewItem(txtEquipment.Text);
-            listViewItem.SubItems.Add(txtQuantity.Text);
-            listViewBooking.Items.Add(listViewItem);
+                // Adding values from text boxes to list view
+                ListViewItem listViewItem = new ListViewItem(txtEquipment.Text);
+                listViewItem.SubItems.Add(txtQuantity.Text);
+                listViewBooking.Items.Add(listViewItem);
             }
             else
             {
@@ -125,14 +125,26 @@ namespace FilmStudio
             SqlCommand cmd = con.CreateCommand();
             cmd.CommandType = CommandType.Text;
             cmd.CommandText = "insert into Bookings " +
-                "(UserID,Notes,BookedBy,BookingDate,BookingTime,IssueDate,IssueTime,DueDate,DueTime,ReturnDate,ReturnTime) " + 
-                "values(" + myBooking.CurrentUser.UserID + ",'" + myBooking.Notes + "','" + myBooking.BookedBy + "','" + 
-                DateOf(myBooking.BookedOn) + "','" + TimeOf(myBooking.BookedOn) + "','" + 
-                DateOf(myBooking.IssuedOn) + "','" + TimeOf(myBooking.IssuedOn) + "','" + 
-                DateOf(myBooking.DueOn) + "','" + TimeOf(myBooking.DueOn) + "','" + 
+                "(UserID,Notes,BookedBy,BookingDate,BookingTime,IssueDate,IssueTime,DueDate,DueTime,ReturnDate,ReturnTime) " +
+                "values(" + myBooking.CurrentUser.UserID + ",'" + myBooking.Notes + "','" + myBooking.BookedBy + "','" +
+                DateOf(myBooking.BookedOn) + "','" + TimeOf(myBooking.BookedOn) + "','" +
+                DateOf(myBooking.IssuedOn) + "','" + TimeOf(myBooking.IssuedOn) + "','" +
+                DateOf(myBooking.DueOn) + "','" + TimeOf(myBooking.DueOn) + "','" +
                 DateOf(myBooking.ReturnedOn) + "','" + TimeOf(myBooking.ReturnedOn) + "')";
             cmd.ExecuteNonQuery();
-            MessageBox.Show("The record has been added successfully. Press OK to continue","Booking Created");
+
+            cmd = con.CreateCommand();
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = "select top 1 BookingID from Bookings order by BookingID desc";
+            SqlDataReader rd = cmd.ExecuteReader();
+            if (rd.Read() == true)
+            {
+                myBooking.ID = rd[0].ToString();
+            }
+            rd.Close();
+
+            MessageBox.Show("The record has been added successfully. Press OK to continue", "Booking Created");
+            //MessageBox.Show(myBooking.ID, "Booking Details");
             btnAdd.Enabled = false;
         }
 
@@ -170,6 +182,29 @@ namespace FilmStudio
             {
                 myBooking.BookedBy = "Staff";
             }
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            /*SqlCommand cmd = con.CreateCommand();
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = "select * from " + "BookingsByInstructors" +
+                " where BookingID = " + myBooking.ID;
+            cmd.ExecuteNonQuery();
+            DataTable dt = new DataTable();
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            da.Fill(dt);
+            int i = Convert.ToInt32(dt.Rows.Count.ToString());
+
+            if (0 == i)
+            {
+                MessageBox.Show("Incorrect Username or Passkey!");
+            }
+            else
+            {
+                string s = "Welcome, " + txtUsername.Text + "!";
+                MessageBox.Show(s);
+            }*/
         }
     }
 }
