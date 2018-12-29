@@ -8,20 +8,19 @@ namespace FilmStudio
 {
     public class Instructor
     {
-        public int InstructorID;
-        public string Name, Email, Contact;
+        public string InstructorID, Name, Email, Contact;
 
         public Instructor()
         {
-            InstructorID = 0;
+            InstructorID = "1";
             Name = "NewInstructor";
             Email = "unknown";
             Contact = "NIL";
         }
 
-        public Instructor(int instructorID, string name, string email, string contact)
+        public Instructor(string instructorID, string name, string email, string contact)
         {
-            InstructorID = instructorID;
+            InstructorID = instructorID ?? throw new ArgumentNullException(nameof(instructorID));
             Name = name ?? throw new ArgumentNullException(nameof(name));
             Email = email ?? throw new ArgumentNullException(nameof(email));
             Contact = contact ?? throw new ArgumentNullException(nameof(contact));
