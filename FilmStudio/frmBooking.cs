@@ -24,28 +24,34 @@ namespace FilmStudio
             myEquipment = new Equipment();
             myBooking = new Booking(
                 currentUser: new User(),
-                iD: "1",
+                currentInstructor: new Instructor(),
+                currentStaff: new Staff(),
+                currentStudent: new Student(),
+                iD: "0",
                 issuedOn: DateTime.Now.AddDays(1),
                 dueOn: DateTime.Now.AddDays(3),
                 returnedOn: DateTime.Now.AddDays(2),
                 bookedOn: DateTime.Now,
                 notes: "No Notes",
-                BookedBy: "Instructor"
+                bookedBy: "Instructor"
                 );
         }
-
+        
         public frmBooking(Booking bk)
         {
             myEquipment = new Equipment();
             myBooking = new Booking(
                 currentUser: new User(),
+                currentInstructor: new Instructor(),
+                currentStaff: new Staff(),
+                currentStudent: new Student(),
                 iD: bk.ID,
                 issuedOn: bk.IssuedOn,
                 dueOn: bk.DueOn,
                 returnedOn: bk.ReturnedOn,
                 bookedOn: bk.BookedOn,
                 notes: bk.Notes,
-                BookedBy: bk.BookedBy
+                bookedBy: bk.BookedBy
                 );
         }
 
@@ -59,7 +65,7 @@ namespace FilmStudio
             txtAssignment.Text = "FYP";
             txtEquipment.Text = myEquipment.Description;
             txtQuantity.Text = 12.ToString();
-            rbtnStudent.Select();
+            rbtnInstructor.Select();
         }
 
         private void btnAddEquipment_Click(object sender, EventArgs e)
@@ -143,8 +149,7 @@ namespace FilmStudio
             }
             rd.Close();
 
-            MessageBox.Show("The record has been added successfully. Press OK to continue", "Booking Created");
-            //MessageBox.Show(myBooking.ID, "Booking Details");
+            MessageBox.Show("Booking ID is: " + myBooking.ID, "Booking Created");
             btnAdd.Enabled = false;
         }
 
@@ -186,25 +191,41 @@ namespace FilmStudio
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            /*SqlCommand cmd = con.CreateCommand();
-            cmd.CommandType = CommandType.Text;
-            cmd.CommandText = "select * from " + "BookingsByInstructors" +
-                " where BookingID = " + myBooking.ID;
-            cmd.ExecuteNonQuery();
-            DataTable dt = new DataTable();
-            SqlDataAdapter da = new SqlDataAdapter(cmd);
-            da.Fill(dt);
-            int i = Convert.ToInt32(dt.Rows.Count.ToString());
+            bool isChanged = UpdateBookedBy();
+        }
 
-            if (0 == i)
+        private bool UpdateBookedBy()
+        {
+            bool flag = false;
+            if (myBooking.BookedBy == "Instructor")
             {
-                MessageBox.Show("Incorrect Username or Passkey!");
+                SqlCommand cmd = con.CreateCommand();
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = "select * from " + "BookingsByInstructors" +
+                    " where BookingID = " + myBooking.ID;
+                cmd.ExecuteNonQuery();
+                DataTable dt = new DataTable();
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                da.Fill(dt);
+                int i = Convert.ToInt32(dt.Rows.Count.ToString());
+
+                if (0 == i)
+                {
+                    cmd = con.CreateCommand();
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = "insert into " + "BookingsByInstructors (" +
+                        "InstructorID" + "," + "BookingID" + ") values(" + 
+                        myBooking.CurrentInstructor.InstructorID + "," + myBooking.ID + ")";
+                    cmd.ExecuteNonQuery();
+                    MessageBox.Show("Record added succesfully", "Added to database");
+                    flag = true;
+                }
+                else
+                {
+                    MessageBox.Show("Record already exists!", "No need to add");
+                }
             }
-            else
-            {
-                string s = "Welcome, " + txtUsername.Text + "!";
-                MessageBox.Show(s);
-            }*/
+            return flag;
         }
     }
 }

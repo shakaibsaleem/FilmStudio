@@ -9,12 +9,20 @@ namespace FilmStudio
     public class Booking
     {
         public User CurrentUser;
+        public Instructor CurrentInstructor;
+        public Staff CurrentStaff;
+        public Student CurrentStudent;
+
         public DateTime IssuedOn, DueOn, ReturnedOn, BookedOn;
         public string ID, Notes, BookedBy;
 
         public Booking()
         {
             CurrentUser = new User();
+            CurrentInstructor = new Instructor();
+            CurrentStaff = new Staff();
+            CurrentStudent = new Student();
+
             ID = "0";
             IssuedOn = new DateTime(2018,11,8,9,0,0,0);
             DueOn = new DateTime(2018, 11, 11, 9, 0, 0, 0);
@@ -24,16 +32,19 @@ namespace FilmStudio
             BookedBy = "";
         }
 
-        public Booking(User currentUser, string iD, DateTime issuedOn, DateTime dueOn, DateTime returnedOn, DateTime bookedOn, string notes, string BookedBy)
+        public Booking(User currentUser, Instructor currentInstructor, Staff currentStaff, Student currentStudent, DateTime issuedOn, DateTime dueOn, DateTime returnedOn, DateTime bookedOn, string iD, string notes, string bookedBy)
         {
             CurrentUser = currentUser ?? throw new ArgumentNullException(nameof(currentUser));
-            ID = iD ?? throw new ArgumentNullException(nameof(iD));
+            CurrentInstructor = currentInstructor ?? throw new ArgumentNullException(nameof(currentInstructor));
+            CurrentStaff = currentStaff ?? throw new ArgumentNullException(nameof(currentStaff));
+            CurrentStudent = currentStudent ?? throw new ArgumentNullException(nameof(currentStudent));
             IssuedOn = issuedOn;
             DueOn = dueOn;
             ReturnedOn = returnedOn;
             BookedOn = bookedOn;
+            ID = iD ?? throw new ArgumentNullException(nameof(iD));
             Notes = notes ?? throw new ArgumentNullException(nameof(notes));
-            BookedBy = BookedBy ?? throw new ArgumentNullException(nameof(BookedBy));
+            BookedBy = bookedBy ?? throw new ArgumentNullException(nameof(bookedBy));
         }
     }
 }
