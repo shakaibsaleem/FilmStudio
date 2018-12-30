@@ -16,7 +16,7 @@ namespace FilmStudio
             Id = 0;
             QtyAvailable = 0;
             QtyBooked = 0;
-            Description = "New Equipment";
+            Description = "description";
             Make = "Make";
             Model = "Model";
             Remarks = "No remarks";
