@@ -26,6 +26,7 @@ namespace FilmStudio
                 currentUser: new User(),
                 currentInstructor: new Instructor(),
                 currentStaff: new Staff(),
+                currentEnrolment: new Enrolment(),
                 currentStudent: new Student(),
                 iD: "0",
                 issuedOn: DateTime.Now.AddDays(1),
@@ -44,6 +45,7 @@ namespace FilmStudio
                 currentUser: new User(),
                 currentInstructor: new Instructor(),
                 currentStaff: new Staff(),
+                currentEnrolment: new Enrolment(),
                 currentStudent: new Student(),
                 iD: bk.ID,
                 issuedOn: bk.IssuedOn,
@@ -128,40 +130,53 @@ namespace FilmStudio
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            SqlCommand cmd = con.CreateCommand();
-            cmd.CommandType = CommandType.Text;
-            cmd.CommandText = "insert into Bookings " +
-                "(UserID,Notes,BookedBy,BookingDate,BookingTime,IssueDate,IssueTime,DueDate,DueTime,ReturnDate,ReturnTime) " +
-                "values(" + myBooking.CurrentUser.UserID + ",'" + myBooking.Notes + "','" + myBooking.BookedBy + "','" +
-                DateOf(myBooking.BookedOn) + "','" + TimeOf(myBooking.BookedOn) + "','" +
-                DateOf(myBooking.IssuedOn) + "','" + TimeOf(myBooking.IssuedOn) + "','" +
-                DateOf(myBooking.DueOn) + "','" + TimeOf(myBooking.DueOn) + "','" +
-                DateOf(myBooking.ReturnedOn) + "','" + TimeOf(myBooking.ReturnedOn) + "')";
-            cmd.ExecuteNonQuery();
-
-            cmd = con.CreateCommand();
-            cmd.CommandType = CommandType.Text;
-            cmd.CommandText = "select top 1 BookingID from Bookings order by BookingID desc";
-            SqlDataReader rd = cmd.ExecuteReader();
-            if (rd.Read() == true)
+            SqlTransaction tran = con.BeginTransaction();
+            try
             {
-                myBooking.ID = rd[0].ToString();
-            }
-            rd.Close();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Transaction = tran;
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = "insert into Bookings " +
+                    "(UserID,Notes,BookedBy,BookingDate,BookingTime,IssueDate,IssueTime,DueDate,DueTime,ReturnDate,ReturnTime) " +
+                    "values(" + myBooking.CurrentUser.UserID + ",'" + myBooking.Notes + "','" + myBooking.BookedBy + "','" +
+                    DateOf(myBooking.BookedOn) + "','" + TimeOf(myBooking.BookedOn) + "','" +
+                    DateOf(myBooking.IssuedOn) + "','" + TimeOf(myBooking.IssuedOn) + "','" +
+                    DateOf(myBooking.DueOn) + "','" + TimeOf(myBooking.DueOn) + "','" +
+                    DateOf(myBooking.ReturnedOn) + "','" + TimeOf(myBooking.ReturnedOn) + "')";
+                cmd.ExecuteNonQuery();
 
-            MessageBox.Show("Booking ID is: " + myBooking.ID, "Booking Created");
-            btnAdd.Enabled = false;
+                cmd.CommandText = "select top 1 BookingID from Bookings order by BookingID desc";
+                SqlDataReader rd = cmd.ExecuteReader();
+                if (rd.Read() == true)
+                {
+                    myBooking.ID = rd[0].ToString();
+                }
+                rd.Close();
+
+                tran.Commit();
+
+                MessageBox.Show("Booking ID is: " + myBooking.ID, "Booking Created");
+                btnAdd.Enabled = false;
+            }
+            catch (Exception ex)
+            {
+                tran.Rollback();
+                MessageBox.Show(ex.Message, "Error in btnAdd");
+            }
         }
 
         public string DateOf(DateTime dateTime)
         {
-            string str = dateTime.Year + "-" + dateTime.Month + "-" + dateTime.Day;
+            //string str = dateTime.Year + "-" + dateTime.Month + "-" + dateTime.Day;
+            string str = dateTime.ToString("yyyy-MM-dd");
             return str;
         }
 
         public string TimeOf(DateTime dateTime)
         {
-            string str = dateTime.Hour + ":" + dateTime.Minute + ":" + dateTime.Second;
+            //string str = dateTime.Hour + ":" + dateTime.Minute + ":" + dateTime.Second;
+            string str = dateTime.ToString("HH:mm:ss");
             return str;
         }
 
@@ -191,41 +206,110 @@ namespace FilmStudio
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            bool isChanged = UpdateBookedBy();
+            UpdateBookedBy();
         }
 
-        private bool UpdateBookedBy()
+        private void UpdateBookedBy()
         {
-            bool flag = false;
-            if (myBooking.BookedBy == "Instructor")
+            SqlTransaction tran = con.BeginTransaction();
+            try
             {
-                SqlCommand cmd = con.CreateCommand();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Transaction = tran;
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.Text;
-                cmd.CommandText = "select * from " + "BookingsByInstructors" +
-                    " where BookingID = " + myBooking.ID;
-                cmd.ExecuteNonQuery();
-                DataTable dt = new DataTable();
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                da.Fill(dt);
-                int i = Convert.ToInt32(dt.Rows.Count.ToString());
-
-                if (0 == i)
+                if (myBooking.BookedBy == "Instructor")
                 {
-                    cmd = con.CreateCommand();
-                    cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = "insert into " + "BookingsByInstructors (" +
-                        "InstructorID" + "," + "BookingID" + ") values(" + 
-                        myBooking.CurrentInstructor.InstructorID + "," + myBooking.ID + ")";
+                    cmd.CommandText = "select * from BookingsByInstructors where BookingID = " + myBooking.ID;
                     cmd.ExecuteNonQuery();
-                    MessageBox.Show("Record added succesfully", "Added to database");
-                    flag = true;
+                    DataTable dt = new DataTable();
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
+                    da.Fill(dt);
+                    int i = Convert.ToInt32(dt.Rows.Count.ToString());
+
+                    if (0 == i)
+                    {
+                        cmd.CommandText = "insert into BookingsByInstructors (InstructorID,BookingID) values (" + 
+                            myBooking.CurrentInstructor.InstructorID + "," + myBooking.ID + ")";
+                        cmd.ExecuteNonQuery();
+
+                        MessageBox.Show("Record added succesfully", "Added to database");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Record already exists!", "No need to add");
+                    }
+                    cmd.CommandText = "delete from BookingsByStudents where BookingID = " + myBooking.ID;
+                    cmd.ExecuteNonQuery();
+
+                    cmd.CommandText = "delete from BookingsByStaff where BookingID = " + myBooking.ID;
+                    cmd.ExecuteNonQuery();
+                }
+                else if (myBooking.BookedBy == "Student")
+                {
+                    cmd.CommandText = "select * from BookingsByStudents where BookingID = " + myBooking.ID;
+                    cmd.ExecuteNonQuery();
+                    DataTable dt = new DataTable();
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
+                    da.Fill(dt);
+                    int i = Convert.ToInt32(dt.Rows.Count.ToString());
+
+                    if (0 == i)
+                    {
+                        cmd.CommandText = "insert into BookingsByStudents (EnrolmentID,BookingID,Project) values (" + 
+                            myBooking.CurrentEnrolment.EnrolmentID + "," + myBooking.ID + ",'" + txtAssignment.Text + "')";
+                        cmd.ExecuteNonQuery();
+
+                        MessageBox.Show("Record added succesfully", "Added to database");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Record already exists!", "No need to add");
+                    }
+                    cmd.CommandText = "delete from BookingsByInstructors where BookingID = " + myBooking.ID;
+                    cmd.ExecuteNonQuery();
+
+                    cmd.CommandText = "delete from BookingsByStaff where BookingID = " + myBooking.ID;
+                    cmd.ExecuteNonQuery();
+                }
+                else if (myBooking.BookedBy == "Staff")
+                {
+                    cmd.CommandText = "select * from BookingsByStaff where BookingID = " + myBooking.ID;
+                    cmd.ExecuteNonQuery();
+                    DataTable dt = new DataTable();
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
+                    da.Fill(dt);
+                    int i = Convert.ToInt32(dt.Rows.Count.ToString());
+
+                    if (0 == i)
+                    {
+                        cmd.CommandText = "insert into BookingsByStaff (StaffID,BookingID) values (" +
+                            myBooking.CurrentStaff.StaffID + "," + myBooking.ID + ")";
+                        cmd.ExecuteNonQuery();
+
+                        MessageBox.Show("Record added succesfully", "Added to database");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Record already exists!", "No need to add");
+                    }
+                    cmd.CommandText = "delete from BookingsByStudents where BookingID = " + myBooking.ID;
+                    cmd.ExecuteNonQuery();
+
+                    cmd.CommandText = "delete from BookingsByInstructors where BookingID = " + myBooking.ID;
+                    cmd.ExecuteNonQuery();
                 }
                 else
                 {
-                    MessageBox.Show("Record already exists!", "No need to add");
+                    MessageBox.Show("Unexpected value for BookedBy: " + myBooking.BookedBy, "Error in UpdateBookedBy()");
                 }
+                tran.Commit();
             }
-            return flag;
+            catch (Exception ex)
+            {
+                tran.Rollback();
+                MessageBox.Show(ex.Message, "Error in UpdateBookedBy()");
+            }
         }
     }
 }

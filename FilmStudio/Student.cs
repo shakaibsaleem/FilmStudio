@@ -8,12 +8,11 @@ namespace FilmStudio
 {
     public class Student
     {
-        public int StudentID;
-        public string HUID, FirstName, MiddleName, LastName, Contact, Email;
+        public string StudentID,HUID, FirstName, MiddleName, LastName, Contact, Email;
 
         public Student()
         {
-            StudentID = 420;
+            StudentID = "3";
             HUID = "ab01234";
             FirstName = "Shah";
             MiddleName = "Rukh";
@@ -22,9 +21,9 @@ namespace FilmStudio
             Email = "ab01234@st.habib.edu.pk";
         }
 
-        public Student(int studentID, string hUID, string firstName, string middleName, string lastName, string contact, string email)
+        public Student(string studentID, string hUID, string firstName, string middleName, string lastName, string contact, string email)
         {
-            StudentID = studentID;
+            StudentID = studentID ?? throw new ArgumentNullException(nameof(studentID));
             HUID = hUID ?? throw new ArgumentNullException(nameof(hUID));
             FirstName = firstName ?? throw new ArgumentNullException(nameof(firstName));
             MiddleName = middleName ?? throw new ArgumentNullException(nameof(middleName));

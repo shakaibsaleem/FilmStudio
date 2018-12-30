@@ -16,7 +16,7 @@ namespace FilmStudio
 
         public Enrolment()
         {
-            EnrolmentID = 9;
+            EnrolmentID = 2;
             MyStudent = new Student();
             MyCourse = new Course();
             MyInstructor = new Instructor();

@@ -8,18 +8,17 @@ namespace FilmStudio
 {
     public class Staff
     {
-        public int StaffID;
-        public string StaffName;
+        public string StaffID,StaffName;
 
         public Staff()
         {
-            StaffID = 0;
+            StaffID = "1";
             StaffName = "New Staff";
         }
 
-        public Staff(int staffID, string staffName)
+        public Staff(string staffID, string staffName)
         {
-            StaffID = staffID;
+            StaffID = staffID ?? throw new ArgumentNullException(nameof(staffID));
             StaffName = staffName ?? throw new ArgumentNullException(nameof(staffName));
         }
     }
