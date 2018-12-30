@@ -1,0 +1,2 @@
+adding an item to the list of booked items:
+if new item's name is a substring of an existing item in the list, then the old entry gets replaced by the new one and quantity of old is added to new one
