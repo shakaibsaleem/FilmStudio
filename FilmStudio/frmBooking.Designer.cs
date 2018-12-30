@@ -46,8 +46,7 @@
             this.lblEquipment = new System.Windows.Forms.Label();
             this.txtEquipment = new System.Windows.Forms.TextBox();
             this.lblQuantity = new System.Windows.Forms.Label();
-            this.txtQuantity = new System.Windows.Forms.TextBox();
-            this.groupBoxDetails = new System.Windows.Forms.GroupBox();
+            this.groupBoxBooking = new System.Windows.Forms.GroupBox();
             this.listViewBooking = new System.Windows.Forms.ListView();
             this.colHeadEquipment = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colHeadQuantity = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -64,8 +63,13 @@
             this.btnSave = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnAdd = new System.Windows.Forms.Button();
-            this.groupBoxDetails.SuspendLayout();
+            this.groupBoxEquipment = new System.Windows.Forms.GroupBox();
+            this.numQuantity = new System.Windows.Forms.NumericUpDown();
+            this.button1 = new System.Windows.Forms.Button();
+            this.groupBoxBooking.SuspendLayout();
             this.groupBoxBookedFor.SuspendLayout();
+            this.groupBoxEquipment.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numQuantity)).BeginInit();
             this.SuspendLayout();
             // 
             // txtHabibID
@@ -196,7 +200,7 @@
             // lblEquipment
             // 
             this.lblEquipment.AutoSize = true;
-            this.lblEquipment.Location = new System.Drawing.Point(18, 163);
+            this.lblEquipment.Location = new System.Drawing.Point(6, 22);
             this.lblEquipment.Name = "lblEquipment";
             this.lblEquipment.Size = new System.Drawing.Size(60, 13);
             this.lblEquipment.TabIndex = 109;
@@ -204,7 +208,7 @@
             // 
             // txtEquipment
             // 
-            this.txtEquipment.Location = new System.Drawing.Point(88, 160);
+            this.txtEquipment.Location = new System.Drawing.Point(76, 19);
             this.txtEquipment.Name = "txtEquipment";
             this.txtEquipment.Size = new System.Drawing.Size(313, 20);
             this.txtEquipment.TabIndex = 6;
@@ -213,41 +217,32 @@
             // lblQuantity
             // 
             this.lblQuantity.AutoSize = true;
-            this.lblQuantity.Location = new System.Drawing.Point(407, 163);
+            this.lblQuantity.Location = new System.Drawing.Point(395, 22);
             this.lblQuantity.Name = "lblQuantity";
             this.lblQuantity.Size = new System.Drawing.Size(49, 13);
             this.lblQuantity.TabIndex = 110;
             this.lblQuantity.Text = "Quantity:";
             // 
-            // txtQuantity
+            // groupBoxBooking
             // 
-            this.txtQuantity.Location = new System.Drawing.Point(467, 160);
-            this.txtQuantity.Name = "txtQuantity";
-            this.txtQuantity.Size = new System.Drawing.Size(100, 20);
-            this.txtQuantity.TabIndex = 7;
-            this.txtQuantity.TextChanged += new System.EventHandler(this.txtQuantity_TextChanged);
-            this.txtQuantity.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtQuantity_KeyPress);
-            // 
-            // groupBoxDetails
-            // 
-            this.groupBoxDetails.Controls.Add(this.lblHabibID);
-            this.groupBoxDetails.Controls.Add(this.txtHabibID);
-            this.groupBoxDetails.Controls.Add(this.txtName);
-            this.groupBoxDetails.Controls.Add(this.txtContact);
-            this.groupBoxDetails.Controls.Add(this.lblName);
-            this.groupBoxDetails.Controls.Add(this.txtInstructor);
-            this.groupBoxDetails.Controls.Add(this.lblContact);
-            this.groupBoxDetails.Controls.Add(this.txtCourse);
-            this.groupBoxDetails.Controls.Add(this.txtAssignment);
-            this.groupBoxDetails.Controls.Add(this.lblInstructor);
-            this.groupBoxDetails.Controls.Add(this.lblCourse);
-            this.groupBoxDetails.Controls.Add(this.lblAssignment);
-            this.groupBoxDetails.Location = new System.Drawing.Point(12, 86);
-            this.groupBoxDetails.Name = "groupBoxDetails";
-            this.groupBoxDetails.Size = new System.Drawing.Size(561, 68);
-            this.groupBoxDetails.TabIndex = 102;
-            this.groupBoxDetails.TabStop = false;
-            this.groupBoxDetails.Text = "Booking Details";
+            this.groupBoxBooking.Controls.Add(this.lblHabibID);
+            this.groupBoxBooking.Controls.Add(this.txtHabibID);
+            this.groupBoxBooking.Controls.Add(this.txtName);
+            this.groupBoxBooking.Controls.Add(this.txtContact);
+            this.groupBoxBooking.Controls.Add(this.lblName);
+            this.groupBoxBooking.Controls.Add(this.txtInstructor);
+            this.groupBoxBooking.Controls.Add(this.lblContact);
+            this.groupBoxBooking.Controls.Add(this.txtCourse);
+            this.groupBoxBooking.Controls.Add(this.txtAssignment);
+            this.groupBoxBooking.Controls.Add(this.lblInstructor);
+            this.groupBoxBooking.Controls.Add(this.lblCourse);
+            this.groupBoxBooking.Controls.Add(this.lblAssignment);
+            this.groupBoxBooking.Location = new System.Drawing.Point(12, 86);
+            this.groupBoxBooking.Name = "groupBoxBooking";
+            this.groupBoxBooking.Size = new System.Drawing.Size(561, 68);
+            this.groupBoxBooking.TabIndex = 102;
+            this.groupBoxBooking.TabStop = false;
+            this.groupBoxBooking.Text = "Booking Details";
             // 
             // listViewBooking
             // 
@@ -257,13 +252,14 @@
             this.listViewBooking.FullRowSelect = true;
             this.listViewBooking.GridLines = true;
             this.listViewBooking.HideSelection = false;
-            this.listViewBooking.Location = new System.Drawing.Point(21, 215);
+            this.listViewBooking.Location = new System.Drawing.Point(21, 240);
             this.listViewBooking.MultiSelect = false;
             this.listViewBooking.Name = "listViewBooking";
             this.listViewBooking.Size = new System.Drawing.Size(546, 97);
             this.listViewBooking.TabIndex = 9;
             this.listViewBooking.UseCompatibleStateImageBehavior = false;
             this.listViewBooking.View = System.Windows.Forms.View.Details;
+            this.listViewBooking.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listViewBooking_KeyDown);
             // 
             // colHeadEquipment
             // 
@@ -283,14 +279,15 @@
             this.dateTimeDue.Size = new System.Drawing.Size(210, 20);
             this.dateTimeDue.TabIndex = 51;
             this.dateTimeDue.Value = new System.DateTime(2018, 11, 8, 12, 30, 0, 0);
+            this.dateTimeDue.ValueChanged += new System.EventHandler(this.dateTimeDue_ValueChanged);
             // 
             // btnAddEquipment
             // 
-            this.btnAddEquipment.Location = new System.Drawing.Point(511, 186);
+            this.btnAddEquipment.Location = new System.Drawing.Point(480, 45);
             this.btnAddEquipment.Name = "btnAddEquipment";
-            this.btnAddEquipment.Size = new System.Drawing.Size(56, 23);
+            this.btnAddEquipment.Size = new System.Drawing.Size(75, 23);
             this.btnAddEquipment.TabIndex = 8;
-            this.btnAddEquipment.Text = "Add";
+            this.btnAddEquipment.Text = "Add to list";
             this.btnAddEquipment.UseVisualStyleBackColor = true;
             this.btnAddEquipment.Click += new System.EventHandler(this.btnAddEquipment_Click);
             // 
@@ -344,7 +341,7 @@
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(12, 318);
+            this.btnClose.Location = new System.Drawing.Point(18, 379);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
             this.btnClose.TabIndex = 112;
@@ -354,7 +351,7 @@
             // 
             // btnPrevious
             // 
-            this.btnPrevious.Location = new System.Drawing.Point(93, 318);
+            this.btnPrevious.Location = new System.Drawing.Point(99, 379);
             this.btnPrevious.Name = "btnPrevious";
             this.btnPrevious.Size = new System.Drawing.Size(75, 23);
             this.btnPrevious.TabIndex = 113;
@@ -363,7 +360,7 @@
             // 
             // btnNext
             // 
-            this.btnNext.Location = new System.Drawing.Point(174, 318);
+            this.btnNext.Location = new System.Drawing.Point(180, 379);
             this.btnNext.Name = "btnNext";
             this.btnNext.Size = new System.Drawing.Size(75, 23);
             this.btnNext.TabIndex = 114;
@@ -372,16 +369,17 @@
             // 
             // btnEdit
             // 
-            this.btnEdit.Location = new System.Drawing.Point(255, 318);
+            this.btnEdit.Location = new System.Drawing.Point(261, 379);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Size = new System.Drawing.Size(75, 23);
             this.btnEdit.TabIndex = 115;
             this.btnEdit.Text = "Edit";
             this.btnEdit.UseVisualStyleBackColor = true;
+            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(336, 318);
+            this.btnSave.Location = new System.Drawing.Point(342, 379);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 116;
@@ -391,7 +389,7 @@
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(417, 318);
+            this.btnDelete.Location = new System.Drawing.Point(423, 379);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(75, 23);
             this.btnDelete.TabIndex = 117;
@@ -400,7 +398,7 @@
             // 
             // btnAdd
             // 
-            this.btnAdd.Location = new System.Drawing.Point(498, 318);
+            this.btnAdd.Location = new System.Drawing.Point(504, 379);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(75, 23);
             this.btnAdd.TabIndex = 118;
@@ -408,11 +406,51 @@
             this.btnAdd.UseVisualStyleBackColor = true;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
+            // groupBoxEquipment
+            // 
+            this.groupBoxEquipment.Controls.Add(this.button1);
+            this.groupBoxEquipment.Controls.Add(this.numQuantity);
+            this.groupBoxEquipment.Controls.Add(this.btnAddEquipment);
+            this.groupBoxEquipment.Controls.Add(this.lblQuantity);
+            this.groupBoxEquipment.Controls.Add(this.txtEquipment);
+            this.groupBoxEquipment.Controls.Add(this.lblEquipment);
+            this.groupBoxEquipment.Location = new System.Drawing.Point(12, 160);
+            this.groupBoxEquipment.Name = "groupBoxEquipment";
+            this.groupBoxEquipment.Size = new System.Drawing.Size(561, 74);
+            this.groupBoxEquipment.TabIndex = 119;
+            this.groupBoxEquipment.TabStop = false;
+            this.groupBoxEquipment.Text = "Equipment Details";
+            // 
+            // numQuantity
+            // 
+            this.numQuantity.Location = new System.Drawing.Point(455, 19);
+            this.numQuantity.Name = "numQuantity";
+            this.numQuantity.Size = new System.Drawing.Size(100, 20);
+            this.numQuantity.TabIndex = 7;
+            this.numQuantity.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.numQuantity.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numQuantity.ValueChanged += new System.EventHandler(this.numQuantity_ValueChanged);
+            this.numQuantity.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.numQuantity_KeyPress);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(398, 45);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 111;
+            this.button1.Text = "Remove from list";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
             // frmBooking
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(585, 353);
+            this.ClientSize = new System.Drawing.Size(585, 426);
+            this.Controls.Add(this.groupBoxEquipment);
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnSave);
@@ -421,24 +459,23 @@
             this.Controls.Add(this.btnPrevious);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.groupBoxBookedFor);
-            this.Controls.Add(this.btnAddEquipment);
             this.Controls.Add(this.listViewBooking);
-            this.Controls.Add(this.groupBoxDetails);
-            this.Controls.Add(this.txtQuantity);
-            this.Controls.Add(this.lblQuantity);
-            this.Controls.Add(this.txtEquipment);
-            this.Controls.Add(this.lblEquipment);
+            this.Controls.Add(this.groupBoxBooking);
             this.Controls.Add(this.dateTimeIssued);
             this.Controls.Add(this.dateTimeDue);
             this.Controls.Add(this.lblDue);
             this.Controls.Add(this.lblIssued);
             this.Name = "frmBooking";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Booking Form";
             this.Load += new System.EventHandler(this.frmBooking_Load);
-            this.groupBoxDetails.ResumeLayout(false);
-            this.groupBoxDetails.PerformLayout();
+            this.groupBoxBooking.ResumeLayout(false);
+            this.groupBoxBooking.PerformLayout();
             this.groupBoxBookedFor.ResumeLayout(false);
             this.groupBoxBookedFor.PerformLayout();
+            this.groupBoxEquipment.ResumeLayout(false);
+            this.groupBoxEquipment.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numQuantity)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -464,8 +501,7 @@
         private System.Windows.Forms.Label lblEquipment;
         private System.Windows.Forms.TextBox txtEquipment;
         private System.Windows.Forms.Label lblQuantity;
-        private System.Windows.Forms.TextBox txtQuantity;
-        private System.Windows.Forms.GroupBox groupBoxDetails;
+        private System.Windows.Forms.GroupBox groupBoxBooking;
         private System.Windows.Forms.ListView listViewBooking;
         private System.Windows.Forms.ColumnHeader colHeadEquipment;
         private System.Windows.Forms.ColumnHeader colHeadQuantity;
@@ -482,5 +518,8 @@
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnAdd;
+        private System.Windows.Forms.GroupBox groupBoxEquipment;
+        private System.Windows.Forms.NumericUpDown numQuantity;
+        private System.Windows.Forms.Button button1;
     }
 }

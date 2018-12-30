@@ -34,7 +34,7 @@ namespace FilmStudio
                 returnedOn: DateTime.Now.AddDays(2),
                 bookedOn: DateTime.Now,
                 notes: "No Notes",
-                bookedBy: "Instructor"
+                bookedBy: ""
                 );
         }
         
@@ -66,8 +66,10 @@ namespace FilmStudio
             dateTimeDue.Value = myBooking.DueOn;
             txtAssignment.Text = "FYP";
             txtEquipment.Text = myEquipment.Description;
-            txtQuantity.Text = 12.ToString();
-            rbtnInstructor.Select();
+            numQuantity.Value = 1;
+            rbtnStudent.Select();
+            btnAdd.Select();
+            UpdateEnabled("Load");
         }
 
         private void btnAddEquipment_Click(object sender, EventArgs e)
@@ -77,7 +79,7 @@ namespace FilmStudio
             {
                 // Adding values from text boxes to list view
                 ListViewItem listViewItem = new ListViewItem(txtEquipment.Text);
-                listViewItem.SubItems.Add(txtQuantity.Text);
+                listViewItem.SubItems.Add(numQuantity.Value.ToString());
                 listViewBooking.Items.Add(listViewItem);
             }
             else
@@ -89,22 +91,22 @@ namespace FilmStudio
                 int q = Convert.ToInt32(subItem.Text);
                 listViewBooking.Items.RemoveAt(i);
                 listViewItem = new ListViewItem(txtEquipment.Text);
-                int qNew = Convert.ToInt32(txtQuantity.Text) + q;
+                int qNew = Convert.ToInt32(numQuantity.Value) + q;
                 listViewItem.SubItems.Add(qNew.ToString());
                 listViewBooking.Items.Add(listViewItem);
             }
             txtEquipment.Clear();
-            txtQuantity.Clear();
+            numQuantity.Value = 1;
             txtEquipment.Select();
         }
 
         private void txtEquipment_TextChanged(object sender, EventArgs e) => CheckEnableAdd();
 
-        private void txtQuantity_TextChanged(object sender, EventArgs e) => CheckEnableAdd();
+        private void numQuantity_ValueChanged(object sender, EventArgs e) => CheckEnableAdd();
 
         private void CheckEnableAdd()
         {
-            if (txtEquipment.TextLength == 0 || txtQuantity.TextLength == 0)
+            if (txtEquipment.TextLength == 0 || Convert.ToInt32(numQuantity.Value) == 0)
             {
                 btnAddEquipment.Enabled = false;
             }
@@ -114,7 +116,7 @@ namespace FilmStudio
             }
         }
 
-        private void txtQuantity_KeyPress(object sender, KeyPressEventArgs e)
+        private void numQuantity_KeyPress(object sender, KeyPressEventArgs e)
         {
             // pressing RETURN after entering quantity add the item to list
             if (e.KeyChar == (char)Keys.Return)
@@ -156,8 +158,8 @@ namespace FilmStudio
 
                 tran.Commit();
 
-                MessageBox.Show("Booking ID is: " + myBooking.ID, "Booking Created");
-                //btnAdd.Enabled = false;
+                //MessageBox.Show("Booking ID is: " + myBooking.ID, "Booking Created");
+                UpdateEnabled("Add");
             }
             catch (Exception ex)
             {
@@ -207,6 +209,7 @@ namespace FilmStudio
         private void btnSave_Click(object sender, EventArgs e)
         {
             UpdateBookedBy();
+            UpdateEnabled("Save");
         }
 
         private void UpdateBookedBy()
@@ -233,11 +236,11 @@ namespace FilmStudio
                             myBooking.CurrentInstructor.InstructorID + "," + myBooking.ID + ")";
                         cmd.ExecuteNonQuery();
 
-                        MessageBox.Show("Record added succesfully", "Added to database");
+                        //MessageBox.Show("Record updated succesfully", "Database Updated");
                     }
                     else
                     {
-                        MessageBox.Show("Record already exists!", "No need to add");
+                        //MessageBox.Show("Record already exists!", "No need to update");
                     }
                     cmd.CommandText = "delete from BookingsByStudents where BookingID = " + myBooking.ID;
                     cmd.ExecuteNonQuery();
@@ -260,11 +263,11 @@ namespace FilmStudio
                             myBooking.CurrentEnrolment.EnrolmentID + "," + myBooking.ID + ",'" + txtAssignment.Text + "')";
                         cmd.ExecuteNonQuery();
 
-                        MessageBox.Show("Record added succesfully", "Added to database");
+                        //MessageBox.Show("Record updated succesfully", "Database Updated");
                     }
                     else
                     {
-                        MessageBox.Show("Record already exists!", "No need to add");
+                        //MessageBox.Show("Record already exists!", "No need to update");
                     }
                     cmd.CommandText = "delete from BookingsByInstructors where BookingID = " + myBooking.ID;
                     cmd.ExecuteNonQuery();
@@ -287,11 +290,11 @@ namespace FilmStudio
                             myBooking.CurrentStaff.StaffID + "," + myBooking.ID + ")";
                         cmd.ExecuteNonQuery();
 
-                        MessageBox.Show("Record added succesfully", "Added to database");
+                        //MessageBox.Show("Record updated succesfully", "Database Updated");
                     }
                     else
                     {
-                        MessageBox.Show("Record already exists!", "No need to add");
+                        //MessageBox.Show("Record already exists!", "No need to update");
                     }
                     cmd.CommandText = "delete from BookingsByStudents where BookingID = " + myBooking.ID;
                     cmd.ExecuteNonQuery();
@@ -315,6 +318,84 @@ namespace FilmStudio
         private void dateTimeIssued_ValueChanged(object sender, EventArgs e)
         {
             myBooking.IssuedOn = dateTimeIssued.Value;
+        }
+
+        private void dateTimeDue_ValueChanged(object sender, EventArgs e)
+        {
+            myBooking.DueOn = dateTimeDue.Value;
+        }
+
+        private void UpdateEnabled(string e)
+        {
+            if (e == "Save")
+            {
+                btnPrevious.Enabled = true;
+                btnNext.Enabled = true;
+                btnEdit.Enabled = true;
+                btnSave.Enabled = false;
+                btnDelete.Enabled = true;
+
+                groupBoxBookedFor.Enabled = false;
+                groupBoxBooking.Enabled = false;
+                groupBoxEquipment.Enabled = false;
+
+                dateTimeIssued.Enabled = false;
+                dateTimeDue.Enabled = false;
+            }
+            else if (e == "Add")
+            {
+                btnAdd.Enabled = false;
+                btnSave.Enabled = true;
+
+                groupBoxBookedFor.Enabled = true;
+                groupBoxBooking.Enabled = true;
+                groupBoxEquipment.Enabled = true;
+            }
+            else if (e == "Load")
+            {
+                btnPrevious.Enabled = false;
+                btnNext.Enabled = false;
+                btnEdit.Enabled = false;
+                btnSave.Enabled = false;
+                btnDelete.Enabled = false;
+
+                groupBoxBookedFor.Enabled = false;
+                groupBoxBooking.Enabled = false;
+                groupBoxEquipment.Enabled = false;
+            }
+            else if (e == "Edit")
+            {
+                btnPrevious.Enabled = false;
+                btnNext.Enabled = false;
+                btnEdit.Enabled = false;
+                btnSave.Enabled = true;
+                btnDelete.Enabled = false;
+
+                groupBoxBookedFor.Enabled = true;
+                groupBoxBooking.Enabled = true;
+                groupBoxEquipment.Enabled = true;
+
+                dateTimeIssued.Enabled = true;
+                dateTimeDue.Enabled = true;
+            }
+            else
+            {
+                MessageBox.Show("Incorrect value of e: " + e, "Error in UpdateEnabled()");
+            }
+        }
+
+        private void btnEdit_Click(object sender, EventArgs e)
+        {
+            UpdateEnabled("Edit");
+        }
+
+        private void listViewBooking_KeyDown(object sender, KeyEventArgs e)
+        {
+            // pressing DELETE after selecting an item removes it from the list
+            if (e.KeyCode == Keys.Delete)
+            {
+                listViewBooking.SelectedItems[0].Remove();
+            }
         }
     }
 }
