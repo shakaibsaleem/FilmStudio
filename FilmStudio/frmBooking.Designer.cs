@@ -125,6 +125,7 @@
             this.dateTimeIssued.Size = new System.Drawing.Size(210, 20);
             this.dateTimeIssued.TabIndex = 50;
             this.dateTimeIssued.Value = new System.DateTime(2018, 11, 8, 12, 30, 0, 0);
+            this.dateTimeIssued.ValueChanged += new System.EventHandler(this.dateTimeIssued_ValueChanged);
             // 
             // lblIssued
             // 

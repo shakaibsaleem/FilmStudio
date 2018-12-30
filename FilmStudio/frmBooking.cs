@@ -157,7 +157,7 @@ namespace FilmStudio
                 tran.Commit();
 
                 MessageBox.Show("Booking ID is: " + myBooking.ID, "Booking Created");
-                btnAdd.Enabled = false;
+                //btnAdd.Enabled = false;
             }
             catch (Exception ex)
             {
@@ -176,7 +176,7 @@ namespace FilmStudio
         public string TimeOf(DateTime dateTime)
         {
             //string str = dateTime.Hour + ":" + dateTime.Minute + ":" + dateTime.Second;
-            string str = dateTime.ToString("HH:mm:ss");
+            string str = dateTime.ToString("HH:mm:00");
             return str;
         }
 
@@ -310,6 +310,11 @@ namespace FilmStudio
                 tran.Rollback();
                 MessageBox.Show(ex.Message, "Error in UpdateBookedBy()");
             }
+        }
+
+        private void dateTimeIssued_ValueChanged(object sender, EventArgs e)
+        {
+            myBooking.IssuedOn = dateTimeIssued.Value;
         }
     }
 }
