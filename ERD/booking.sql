@@ -12,7 +12,7 @@ values (2,2,'ProjectX')
 insert into BookingsByInstructors (InstructorID,BookingID)
 values (1,11)
 
-delete from BookingsByInstructors where BookingID = 11
+delete from Bookings where BookingID = 19
 
 select * from BookingsByInstructors
 
