@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.txtHabibID = new System.Windows.Forms.TextBox();
             this.txtName = new System.Windows.Forms.TextBox();
             this.txtContact = new System.Windows.Forms.TextBox();
             this.lblHabibID = new System.Windows.Forms.Label();
@@ -65,19 +64,13 @@
             this.btnAdd = new System.Windows.Forms.Button();
             this.groupBoxEquipment = new System.Windows.Forms.GroupBox();
             this.numQuantity = new System.Windows.Forms.NumericUpDown();
-            this.button1 = new System.Windows.Forms.Button();
+            this.txtNotes = new System.Windows.Forms.TextBox();
+            this.comboBoxID = new System.Windows.Forms.ComboBox();
             this.groupBoxBooking.SuspendLayout();
             this.groupBoxBookedFor.SuspendLayout();
             this.groupBoxEquipment.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numQuantity)).BeginInit();
             this.SuspendLayout();
-            // 
-            // txtHabibID
-            // 
-            this.txtHabibID.Location = new System.Drawing.Point(76, 16);
-            this.txtHabibID.Name = "txtHabibID";
-            this.txtHabibID.Size = new System.Drawing.Size(100, 20);
-            this.txtHabibID.TabIndex = 0;
             // 
             // txtName
             // 
@@ -225,8 +218,8 @@
             // 
             // groupBoxBooking
             // 
+            this.groupBoxBooking.Controls.Add(this.comboBoxID);
             this.groupBoxBooking.Controls.Add(this.lblHabibID);
-            this.groupBoxBooking.Controls.Add(this.txtHabibID);
             this.groupBoxBooking.Controls.Add(this.txtName);
             this.groupBoxBooking.Controls.Add(this.txtContact);
             this.groupBoxBooking.Controls.Add(this.lblName);
@@ -357,6 +350,7 @@
             this.btnPrevious.TabIndex = 113;
             this.btnPrevious.Text = "Previous";
             this.btnPrevious.UseVisualStyleBackColor = true;
+            this.btnPrevious.Click += new System.EventHandler(this.btnPrevious_Click);
             // 
             // btnNext
             // 
@@ -366,6 +360,7 @@
             this.btnNext.TabIndex = 114;
             this.btnNext.Text = "Next";
             this.btnNext.UseVisualStyleBackColor = true;
+            this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
             // 
             // btnEdit
             // 
@@ -408,7 +403,6 @@
             // 
             // groupBoxEquipment
             // 
-            this.groupBoxEquipment.Controls.Add(this.button1);
             this.groupBoxEquipment.Controls.Add(this.numQuantity);
             this.groupBoxEquipment.Controls.Add(this.btnAddEquipment);
             this.groupBoxEquipment.Controls.Add(this.lblQuantity);
@@ -436,20 +430,29 @@
             this.numQuantity.ValueChanged += new System.EventHandler(this.numQuantity_ValueChanged);
             this.numQuantity.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.numQuantity_KeyPress);
             // 
-            // button1
+            // txtNotes
             // 
-            this.button1.Location = new System.Drawing.Point(398, 45);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 111;
-            this.button1.Text = "Remove from list";
-            this.button1.UseVisualStyleBackColor = true;
+            this.txtNotes.Location = new System.Drawing.Point(21, 347);
+            this.txtNotes.Name = "txtNotes";
+            this.txtNotes.Size = new System.Drawing.Size(546, 20);
+            this.txtNotes.TabIndex = 120;
+            this.txtNotes.Text = "Notes";
+            this.txtNotes.TextChanged += new System.EventHandler(this.txtNotes_TextChanged);
+            // 
+            // comboBoxID
+            // 
+            this.comboBoxID.FormattingEnabled = true;
+            this.comboBoxID.Location = new System.Drawing.Point(76, 15);
+            this.comboBoxID.Name = "comboBoxID";
+            this.comboBoxID.Size = new System.Drawing.Size(100, 21);
+            this.comboBoxID.TabIndex = 121;
             // 
             // frmBooking
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(585, 426);
+            this.Controls.Add(this.txtNotes);
             this.Controls.Add(this.groupBoxEquipment);
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.btnDelete);
@@ -482,8 +485,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.TextBox txtHabibID;
         private System.Windows.Forms.TextBox txtName;
         private System.Windows.Forms.TextBox txtContact;
         private System.Windows.Forms.Label lblHabibID;
@@ -520,6 +521,7 @@
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.GroupBox groupBoxEquipment;
         private System.Windows.Forms.NumericUpDown numQuantity;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TextBox txtNotes;
+        private System.Windows.Forms.ComboBox comboBoxID;
     }
 }

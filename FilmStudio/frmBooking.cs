@@ -33,7 +33,7 @@ namespace FilmStudio
                 dueOn: DateTime.Now.AddDays(3),
                 returnedOn: DateTime.Now.AddDays(2),
                 bookedOn: DateTime.Now,
-                notes: "No Notes",
+                notes: "",
                 bookedBy: ""
                 );
         }
@@ -64,7 +64,7 @@ namespace FilmStudio
 
             dateTimeIssued.Value = myBooking.IssuedOn;
             dateTimeDue.Value = myBooking.DueOn;
-            txtAssignment.Text = "FYP";
+            txtAssignment.Text = "";
             txtEquipment.Text = myEquipment.Description;
             numQuantity.Value = 1;
             rbtnStudent.Select();
@@ -118,7 +118,7 @@ namespace FilmStudio
 
         private void numQuantity_KeyPress(object sender, KeyPressEventArgs e)
         {
-            // pressing RETURN after entering quantity add the item to list
+            // pressing RETURN after entering quantity to add the item to list
             if (e.KeyChar == (char)Keys.Return)
             {
                 btnAddEquipment.PerformClick();
@@ -187,6 +187,8 @@ namespace FilmStudio
             if (rbtnStudent.Checked)
             {
                 myBooking.BookedBy = "Student";
+                UpdateBookingDetails("Student");
+                UpdateEnabled("Student");
             }
         }
 
@@ -195,6 +197,7 @@ namespace FilmStudio
             if (rbtnInstructor.Checked)
             {
                 myBooking.BookedBy = "Instructor";
+                UpdateEnabled("Instructor");
             }
         }
 
@@ -203,16 +206,11 @@ namespace FilmStudio
             if (rbtnStaff.Checked)
             {
                 myBooking.BookedBy = "Staff";
+                UpdateEnabled("Staff");
             }
         }
 
         private void btnSave_Click(object sender, EventArgs e)
-        {
-            UpdateBookedBy();
-            UpdateEnabled("Save");
-        }
-
-        private void UpdateBookedBy()
         {
             SqlTransaction tran = con.BeginTransaction();
             try
@@ -233,14 +231,15 @@ namespace FilmStudio
                     if (0 == i)
                     {
                         cmd.CommandText = "insert into BookingsByInstructors (InstructorID,BookingID) values (" + 
-                            myBooking.CurrentInstructor.InstructorID + "," + myBooking.ID + ")";
+                            myBooking.CurrentInstructor.ID + "," + myBooking.ID + ")";
                         cmd.ExecuteNonQuery();
-
-                        //MessageBox.Show("Record updated succesfully", "Database Updated");
                     }
                     else
                     {
-                        //MessageBox.Show("Record already exists!", "No need to update");
+                        cmd.CommandText = "update BookingsByInstructors set InstructorID = " +
+                            myBooking.CurrentInstructor.ID + 
+                            " where BookingID = " + myBooking.ID;
+                        cmd.ExecuteNonQuery();
                     }
                     cmd.CommandText = "delete from BookingsByStudents where BookingID = " + myBooking.ID;
                     cmd.ExecuteNonQuery();
@@ -260,14 +259,15 @@ namespace FilmStudio
                     if (0 == i)
                     {
                         cmd.CommandText = "insert into BookingsByStudents (EnrolmentID,BookingID,Project) values (" + 
-                            myBooking.CurrentEnrolment.EnrolmentID + "," + myBooking.ID + ",'" + txtAssignment.Text + "')";
+                            myBooking.CurrentEnrolment.ID + "," + myBooking.ID + ",'" + txtAssignment.Text + "')";
                         cmd.ExecuteNonQuery();
-
-                        //MessageBox.Show("Record updated succesfully", "Database Updated");
                     }
                     else
                     {
-                        //MessageBox.Show("Record already exists!", "No need to update");
+                        cmd.CommandText = "update BookingsByStudents set EnrolmentID = " +
+                            myBooking.CurrentEnrolment.ID +
+                            " where BookingID = " + myBooking.ID;
+                        cmd.ExecuteNonQuery();
                     }
                     cmd.CommandText = "delete from BookingsByInstructors where BookingID = " + myBooking.ID;
                     cmd.ExecuteNonQuery();
@@ -287,14 +287,15 @@ namespace FilmStudio
                     if (0 == i)
                     {
                         cmd.CommandText = "insert into BookingsByStaff (StaffID,BookingID) values (" +
-                            myBooking.CurrentStaff.StaffID + "," + myBooking.ID + ")";
+                            myBooking.CurrentStaff.ID + "," + myBooking.ID + ")";
                         cmd.ExecuteNonQuery();
-
-                        //MessageBox.Show("Record updated succesfully", "Database Updated");
                     }
                     else
                     {
-                        //MessageBox.Show("Record already exists!", "No need to update");
+                        cmd.CommandText = "update BookingsByStaff set StaffID = " +
+                            myBooking.CurrentStaff.ID +
+                            " where BookingID = " + myBooking.ID;
+                        cmd.ExecuteNonQuery();
                     }
                     cmd.CommandText = "delete from BookingsByStudents where BookingID = " + myBooking.ID;
                     cmd.ExecuteNonQuery();
@@ -304,14 +305,22 @@ namespace FilmStudio
                 }
                 else
                 {
-                    MessageBox.Show("Unexpected value for BookedBy: " + myBooking.BookedBy, "Error in UpdateBookedBy()");
+                    MessageBox.Show("Unexpected value for BookedBy: " + myBooking.BookedBy, "Error in Save");
                 }
+                cmd.CommandText = "update Bookings set BookedBy = '" + 
+                    myBooking.BookedBy + "' where BookingID = " + myBooking.ID;
+                cmd.ExecuteNonQuery();
+
                 tran.Commit();
+
+                //MessageBox.Show("Press OK to continue", "Saved successfully");
+
+                UpdateEnabled("Save");
             }
             catch (Exception ex)
             {
                 tran.Rollback();
-                MessageBox.Show(ex.Message, "Error in UpdateBookedBy()");
+                MessageBox.Show(ex.Message, "Error in Save");
             }
         }
 
@@ -341,6 +350,8 @@ namespace FilmStudio
 
                 dateTimeIssued.Enabled = false;
                 dateTimeDue.Enabled = false;
+
+                txtNotes.Enabled = false;
             }
             else if (e == "Add")
             {
@@ -350,6 +361,8 @@ namespace FilmStudio
                 groupBoxBookedFor.Enabled = true;
                 groupBoxBooking.Enabled = true;
                 groupBoxEquipment.Enabled = true;
+
+                txtNotes.Enabled = true;
             }
             else if (e == "Load")
             {
@@ -362,6 +375,8 @@ namespace FilmStudio
                 groupBoxBookedFor.Enabled = false;
                 groupBoxBooking.Enabled = false;
                 groupBoxEquipment.Enabled = false;
+
+                txtNotes.Enabled = false;
             }
             else if (e == "Edit")
             {
@@ -377,10 +392,33 @@ namespace FilmStudio
 
                 dateTimeIssued.Enabled = true;
                 dateTimeDue.Enabled = true;
+
+                txtNotes.Enabled = true;
+            }
+            else if (e == "Student")
+            {
+                //comboBoxID.Enabled = true;
+                txtAssignment.Enabled = true;
+                txtCourse.Enabled = true;
+                txtInstructor.Enabled = true;
+            }
+            else if (e == "Instructor")
+            {
+                //comboBoxID.Enabled = false;
+                txtAssignment.Enabled = false;
+                txtCourse.Enabled = false;
+                txtInstructor.Enabled = false;
+            }
+            else if (e == "Staff")
+            {
+                //comboBoxID.Enabled = false;
+                txtAssignment.Enabled = false;
+                txtCourse.Enabled = false;
+                txtInstructor.Enabled = false;
             }
             else
             {
-                MessageBox.Show("Incorrect value of e: " + e, "Error in UpdateEnabled()");
+                MessageBox.Show("Invalid argument: " + e, "Error in UpdateEnabled()");
             }
         }
 
@@ -395,6 +433,37 @@ namespace FilmStudio
             if (e.KeyCode == Keys.Delete)
             {
                 listViewBooking.SelectedItems[0].Remove();
+            }
+        }
+
+        private void txtNotes_TextChanged(object sender, EventArgs e)
+        {
+            myBooking.Notes = txtNotes.Text;
+        }
+
+        private void btnNext_Click(object sender, EventArgs e)
+        {
+            myBooking.CurrentEnrolment.ID = "2";
+            myBooking.CurrentInstructor.ID = "2";
+            myBooking.CurrentStaff.ID = "2";
+        }
+
+        private void btnPrevious_Click(object sender, EventArgs e)
+        {
+            myBooking.CurrentEnrolment.ID = "1";
+            myBooking.CurrentInstructor.ID = "1";
+            myBooking.CurrentStaff.ID = "1";
+        }
+
+        private void UpdateBookingDetails(string type)
+        {
+            if (type == "Student")
+            {
+
+            }
+            else
+            {
+                MessageBox.Show("Invalid argument: " + type, "Error in UpdateBookingDetails");
             }
         }
     }
