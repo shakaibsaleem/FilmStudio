@@ -46,6 +46,7 @@
             this.txtEquipment = new System.Windows.Forms.TextBox();
             this.lblQuantity = new System.Windows.Forms.Label();
             this.groupBoxBooking = new System.Windows.Forms.GroupBox();
+            this.comboBoxID = new System.Windows.Forms.ComboBox();
             this.listViewBooking = new System.Windows.Forms.ListView();
             this.colHeadEquipment = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colHeadQuantity = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -65,7 +66,8 @@
             this.groupBoxEquipment = new System.Windows.Forms.GroupBox();
             this.numQuantity = new System.Windows.Forms.NumericUpDown();
             this.txtNotes = new System.Windows.Forms.TextBox();
-            this.comboBoxID = new System.Windows.Forms.ComboBox();
+            this.comboBoxCourse = new System.Windows.Forms.ComboBox();
+            this.comboBoxInstructor = new System.Windows.Forms.ComboBox();
             this.groupBoxBooking.SuspendLayout();
             this.groupBoxBookedFor.SuspendLayout();
             this.groupBoxEquipment.SuspendLayout();
@@ -237,6 +239,15 @@
             this.groupBoxBooking.TabStop = false;
             this.groupBoxBooking.Text = "Booking Details";
             // 
+            // comboBoxID
+            // 
+            this.comboBoxID.FormattingEnabled = true;
+            this.comboBoxID.Location = new System.Drawing.Point(76, 15);
+            this.comboBoxID.Name = "comboBoxID";
+            this.comboBoxID.Size = new System.Drawing.Size(100, 21);
+            this.comboBoxID.TabIndex = 121;
+            this.comboBoxID.SelectedIndexChanged += new System.EventHandler(this.comboBoxID_SelectedIndexChanged);
+            // 
             // listViewBooking
             // 
             this.listViewBooking.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
@@ -286,6 +297,8 @@
             // 
             // groupBoxBookedFor
             // 
+            this.groupBoxBookedFor.Controls.Add(this.comboBoxInstructor);
+            this.groupBoxBookedFor.Controls.Add(this.comboBoxCourse);
             this.groupBoxBookedFor.Controls.Add(this.rbtnStaff);
             this.groupBoxBookedFor.Controls.Add(this.rbtnInstructor);
             this.groupBoxBookedFor.Controls.Add(this.rbtnStudent);
@@ -439,13 +452,21 @@
             this.txtNotes.Text = "Notes";
             this.txtNotes.TextChanged += new System.EventHandler(this.txtNotes_TextChanged);
             // 
-            // comboBoxID
+            // comboBoxCourse
             // 
-            this.comboBoxID.FormattingEnabled = true;
-            this.comboBoxID.Location = new System.Drawing.Point(76, 15);
-            this.comboBoxID.Name = "comboBoxID";
-            this.comboBoxID.Size = new System.Drawing.Size(100, 21);
-            this.comboBoxID.TabIndex = 121;
+            this.comboBoxCourse.FormattingEnabled = true;
+            this.comboBoxCourse.Location = new System.Drawing.Point(268, 15);
+            this.comboBoxCourse.Name = "comboBoxCourse";
+            this.comboBoxCourse.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxCourse.TabIndex = 3;
+            // 
+            // comboBoxInstructor
+            // 
+            this.comboBoxInstructor.FormattingEnabled = true;
+            this.comboBoxInstructor.Location = new System.Drawing.Point(411, 15);
+            this.comboBoxInstructor.Name = "comboBoxInstructor";
+            this.comboBoxInstructor.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxInstructor.TabIndex = 4;
             // 
             // frmBooking
             // 
@@ -523,5 +544,7 @@
         private System.Windows.Forms.NumericUpDown numQuantity;
         private System.Windows.Forms.TextBox txtNotes;
         private System.Windows.Forms.ComboBox comboBoxID;
+        private System.Windows.Forms.ComboBox comboBoxCourse;
+        private System.Windows.Forms.ComboBox comboBoxInstructor;
     }
 }

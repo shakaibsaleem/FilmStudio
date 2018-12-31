@@ -68,8 +68,9 @@ namespace FilmStudio
             txtEquipment.Text = myEquipment.Description;
             numQuantity.Value = 1;
             rbtnStudent.Select();
-            btnAdd.Select();
+            //btnAdd.Select();
             UpdateEnabled("Load");
+UpdateEnabled("Add");
         }
 
         private void btnAddEquipment_Click(object sender, EventArgs e)
@@ -187,8 +188,8 @@ namespace FilmStudio
             if (rbtnStudent.Checked)
             {
                 myBooking.BookedBy = "Student";
-                UpdateBookingDetails("Student");
                 UpdateEnabled("Student");
+                UpdateBookingDetails("Student");
             }
         }
 
@@ -198,6 +199,7 @@ namespace FilmStudio
             {
                 myBooking.BookedBy = "Instructor";
                 UpdateEnabled("Instructor");
+                UpdateBookingDetails("Instructor");
             }
         }
 
@@ -207,6 +209,7 @@ namespace FilmStudio
             {
                 myBooking.BookedBy = "Staff";
                 UpdateEnabled("Staff");
+                UpdateBookingDetails("Staff");
             }
         }
 
@@ -457,13 +460,150 @@ namespace FilmStudio
 
         private void UpdateBookingDetails(string type)
         {
-            if (type == "Student")
+            try
             {
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.Text;
+
+                if (type == "Student")
+                {
+                    cmd.CommandText = "select HabibID from " + type + "s";
+                }
+                else if (type == "Instructor")
+                {
+                    cmd.CommandText = "select HabibID from " + type + "s";
+                }
+                else if (type == "Staff")
+                {
+                    cmd.CommandText = "select HabibID from " + type;
+                }
+                else
+                {
+                    MessageBox.Show("Invalid argument: " + type, "Error in UpdateBookingDetails");
+                }
+
+                comboBoxID.Items.Clear();
+                comboBoxID.ResetText();
+
+                txtName.Clear();
+                txtContact.Clear();
+                txtAssignment.Clear();
+
+                SqlDataReader rd = cmd.ExecuteReader();
+                while (rd.Read())
+                {
+                    comboBoxID.Items.Add(rd["HabibID"]);
+                }
+                rd.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error fetching Habib ID for " + type);
+            }
+            //MessageBox.Show("Press OK to continue","BookingDetails updated successfully");
+        }
+
+        private void comboBoxID_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int i = -1;
+            string habibID = "ab12345";
+            string iD, name, email, contact;
+            try
+            {
+                i = comboBoxID.SelectedIndex;
+//habibID = comboBoxID.SelectedItem.ToString();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error in index selection");
+                i = 0;
 
             }
-            else
+            habibID = comboBoxID.Items[i].ToString();
+//MessageBox.Show("Item = " + habibID, "Here");            
+            try
             {
-                MessageBox.Show("Invalid argument: " + type, "Error in UpdateBookingDetails");
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.Text;
+                SqlDataReader rd;
+
+                if (myBooking.BookedBy == "Student")
+                {
+                    cmd.CommandText = "select StudentID,HabibID,Name,Email,Contact from " +
+                        "Students where HabibID = '" + habibID + "'";
+                    rd = cmd.ExecuteReader();
+                    if (rd.Read() == true)
+                    {
+                        iD = rd[0].ToString();
+                        habibID = rd[1].ToString();
+                        name = rd[2].ToString();
+                        email = rd[3].ToString();
+                        contact = rd[4].ToString();
+                        myBooking.CurrentStudent = new Student(iD, habibID, name, email, contact);
+                    }
+                    else
+                    {
+                        myBooking.CurrentStudent = new Student();
+                    }
+                    txtName.Text = myBooking.CurrentStudent.Name;
+                    txtContact.Text = myBooking.CurrentStudent.Contact;
+                }
+                else if (myBooking.BookedBy == "Instructor")
+                {
+                    cmd.CommandText = "select InstructorID,HabibID,Name,Email,Contact from " +
+                        "Instructors where HabibID = '" + habibID + "'";
+                    rd = cmd.ExecuteReader();
+                    if (rd.Read() == true)
+                    {
+                        iD = rd[0].ToString();
+                        habibID = rd[1].ToString();
+                        name = rd[2].ToString();
+                        email = rd[3].ToString();
+                        contact = rd[4].ToString();
+                        myBooking.CurrentInstructor = new Instructor(iD, habibID, name, email, contact);
+                    }
+                    else
+                    {
+                        myBooking.CurrentInstructor = new Instructor();
+                    }
+                    txtName.Text = myBooking.CurrentInstructor.Name;
+                    txtContact.Text = myBooking.CurrentInstructor.Contact;
+                }
+                else if (myBooking.BookedBy == "Staff")
+                {
+                    cmd.CommandText = "select StaffID,HabibID,Name,Email,Contact from " +
+                        "Staff where HabibID = '" + habibID + "'";
+                    rd = cmd.ExecuteReader();
+                    if (rd.Read() == true)
+                    {
+                        iD = rd[0].ToString();
+                        habibID = rd[1].ToString();
+                        name = rd[2].ToString();
+                        email = rd[3].ToString();
+                        contact = rd[4].ToString();
+                        myBooking.CurrentStaff = new Staff(iD, habibID, name, email, contact);
+                    }
+                    else
+                    {
+                        myBooking.CurrentStaff = new Staff();
+                    }
+                    txtName.Text = myBooking.CurrentStaff.Name;
+                    txtContact.Text = myBooking.CurrentStaff.Contact;
+                }
+                else
+                {
+                    MessageBox.Show("myBooking.BookedBy: " + myBooking.BookedBy, "Unexpected value in fetching details");
+                    cmd.CommandText = "";
+                    rd = cmd.ExecuteReader();
+                }
+                rd.Close();
+                //MessageBox.Show(iD+name+email+contact,"Booking Details:");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error in fetching details");
             }
         }
     }
