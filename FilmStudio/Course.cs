@@ -13,8 +13,8 @@ namespace FilmStudio
         public Course()
         {
             CourseID = "1";
-            CourseName = "NewCourse";
-            CourseCode = "CODE101";
+            CourseName = "Course";
+            CourseCode = "CRS101";
         }
 
         public Course(string courseID, string courseName, string courseCode)
