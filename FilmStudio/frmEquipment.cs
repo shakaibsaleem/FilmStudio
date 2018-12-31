@@ -20,21 +20,15 @@ namespace FilmStudio
         public frmEquipment()
         {
             InitializeComponent();
-            myEquipment = new Equipment(1,2,0, "Black Magic 4K cinema", "Blackmagic Design", "CINECAMPROD4KEF","");
+            //myEquipment = new Equipment(1,2,0, "Black Magic 4K cinema", "Blackmagic Design", "CINECAMPROD4KEF","");
+            myEquipment = new Equipment();
         }
 
         public frmEquipment(Equipment eq)
         {
             InitializeComponent();
-            myEquipment = new Equipment(
-                eq.Id,
-                eq.QtyAvailable,
-                eq.QtyBooked,
-                eq.Description,
-                eq.Make,
-                eq.Model,
-                eq.Remarks
-                );
+            //myEquipment = new Equipment(eq.Id, eq.QtyAvailable, eq.QtyBooked, eq.Description, eq.Make, eq.Model, eq.Remarks);
+            myEquipment = new Equipment(eq.ID, eq.QtyAvailable, eq.QtyBooked, eq.Description, eq.Remarks);
         }
 
         private void frmEquipment_Load(object sender, EventArgs e)
@@ -42,11 +36,11 @@ namespace FilmStudio
             myCon = new mySQLcon();
             con = myCon.con;
 
-            txtItemId.Text = myEquipment.Id.ToString();
+            txtItemId.Text = myEquipment.ID.ToString();
             txtQtyAvailable.Text = myEquipment.QtyAvailable.ToString();
             txtQtyBooked.Text = myEquipment.QtyBooked.ToString();
-            txtMake.Text = myEquipment.Make.ToString();
-            txtModel.Text = myEquipment.Model.ToString();
+            //txtMake.Text = myEquipment.Make.ToString();
+            //txtModel.Text = myEquipment.Model.ToString();
             txtDescription.Text = myEquipment.Description.ToString();
             txtRemarks.Text = myEquipment.Remarks.ToString();
         }
@@ -54,12 +48,6 @@ namespace FilmStudio
         private void btnClose_Click(object sender, EventArgs e)
         {
             Close();
-        }
-
-        private void btnAdd_Click(object sender, EventArgs e)
-        {
-            SqlCommand cmd = con.CreateCommand();
-            cmd.CommandType = CommandType.Text;
         }
     }
 }
