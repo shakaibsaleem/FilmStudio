@@ -8,28 +8,24 @@ namespace FilmStudio
 {
     public class Equipment
     {
-        public int Id, QtyAvailable, QtyBooked;
-        public string Description, Make, Model, Remarks;
+        public int QtyAvailable, QtyBooked;
+        public string ID, Description, Remarks;
 
         public Equipment()
         {
-            Id = 0;
-            QtyAvailable = 0;
+            ID = "1";
+            QtyAvailable = 5;
             QtyBooked = 0;
             Description = "description";
-            Make = "Make";
-            Model = "Model";
-            Remarks = "No remarks";
+            Remarks = "remarks";
         }
 
-        public Equipment(int id, int qtyAvailable, int qtyBooked, string description, string make, string model, string remarks)
+        public Equipment(string iD, int qtyAvailable, int qtyBooked, string description, string remarks)
         {
-            Id = id;
+            ID = iD ?? throw new ArgumentNullException(nameof(iD));
             QtyAvailable = qtyAvailable;
             QtyBooked = qtyBooked;
             Description = description ?? throw new ArgumentNullException(nameof(description));
-            Make = make ?? throw new ArgumentNullException(nameof(make));
-            Model = model ?? throw new ArgumentNullException(nameof(model));
             Remarks = remarks ?? throw new ArgumentNullException(nameof(remarks));
         }
     }
