@@ -1,8 +1,9 @@
 CREATE TABLE Instructors (
   InstructorID INTEGER  NOT NULL   IDENTITY ,
+  HabibID VARCHAR(50)  NOT NULL  ,
   Name VARCHAR(50)    ,
   Email VARCHAR(100)  NOT NULL  ,
-  Contact VARCHAR(12)      ,
+  Contact VARCHAR(20)      ,
 PRIMARY KEY(InstructorID));
 GO
 
@@ -11,11 +12,9 @@ GO
 
 CREATE TABLE Equipments (
   EquipmentID INTEGER  NOT NULL   IDENTITY ,
-  Description VARCHAR(50)    ,
+  Description VARCHAR(100)  NOT NULL  ,
   QuantityAvailable INTEGER  NOT NULL  ,
   QuantityBooked INTEGER  NOT NULL  ,
-  Make VARCHAR(20)    ,
-  Model VARCHAR(20)    ,
   Remarks VARCHAR(50)      ,
 PRIMARY KEY(EquipmentID));
 GO
@@ -25,9 +24,10 @@ GO
 
 CREATE TABLE Staff (
   StaffID INTEGER  NOT NULL   IDENTITY ,
+  HabibID VARCHAR(50)  NOT NULL  ,
   Name VARCHAR(50)    ,
   Email VARCHAR(100)  NOT NULL  ,
-  Contact VARCHAR(12)      ,
+  Contact VARCHAR(20)      ,
 PRIMARY KEY(StaffID));
 GO
 
@@ -48,12 +48,10 @@ GO
 
 CREATE TABLE Students (
   StudentID INTEGER  NOT NULL   IDENTITY ,
-  HUID VARCHAR(7)  NOT NULL  ,
-  FirstName VARCHAR(15)  NOT NULL  ,
-  MiddleName VARCHAR(15)    ,
-  LastName VARCHAR(15)    ,
-  Contact VARCHAR(12)    ,
-  Email VARCHAR(23)  NOT NULL    ,
+  HabibID VARCHAR(7)  NOT NULL  ,
+  Name VARCHAR(50)    ,
+  Email VARCHAR(23)  NOT NULL  ,
+  Contact VARCHAR(20)      ,
 PRIMARY KEY(StudentID));
 GO
 
@@ -98,9 +96,9 @@ GO
 
 
 CREATE TABLE BookingsByInstructors (
-  InstructorID INTEGER  NOT NULL  ,
-  BookingID INTEGER  NOT NULL    ,
-PRIMARY KEY(InstructorID, BookingID)    ,
+  BookingID INTEGER  NOT NULL  ,
+  InstructorID INTEGER  NOT NULL    ,
+PRIMARY KEY(BookingID, InstructorID)    ,
   FOREIGN KEY(BookingID)
     REFERENCES Bookings(BookingID),
   FOREIGN KEY(InstructorID)
@@ -145,9 +143,9 @@ GO
 
 
 CREATE TABLE BookingsByStaff (
-  StaffID INTEGER  NOT NULL  ,
-  BookingID INTEGER  NOT NULL    ,
-PRIMARY KEY(StaffID, BookingID)    ,
+  BookingID INTEGER  NOT NULL  ,
+  StaffID INTEGER  NOT NULL    ,
+PRIMARY KEY(BookingID, StaffID)    ,
   FOREIGN KEY(StaffID)
     REFERENCES Staff(StaffID),
   FOREIGN KEY(BookingID)
