@@ -8,18 +8,24 @@ namespace FilmStudio
 {
     public class Staff
     {
-        public string StaffID,StaffName;
+        public string ID, HabibID, Name, Email, Contact;
 
         public Staff()
         {
-            StaffID = "1";
-            StaffName = "New Staff";
+            ID = "1";
+            HabibID = "talha.muneer";
+            Name = "Talha Muneer";
+            Email = "talha.muneer@ahss.habib.edu.pk";
+            Contact = "+923210123456";
         }
 
-        public Staff(string staffID, string staffName)
+        public Staff(string iD, string habibID, string name, string email, string contact)
         {
-            StaffID = staffID ?? throw new ArgumentNullException(nameof(staffID));
-            StaffName = staffName ?? throw new ArgumentNullException(nameof(staffName));
+            ID = iD ?? throw new ArgumentNullException(nameof(iD));
+            HabibID = habibID ?? throw new ArgumentNullException(nameof(habibID));
+            Name = name ?? throw new ArgumentNullException(nameof(name));
+            Email = email ?? throw new ArgumentNullException(nameof(email));
+            Contact = contact ?? throw new ArgumentNullException(nameof(contact));
         }
     }
 }
