@@ -8,28 +8,24 @@ namespace FilmStudio
 {
     public class Student
     {
-        public string StudentID,HUID, FirstName, MiddleName, LastName, Contact, Email;
+        public string ID, HabibID, Name, Email, Contact;
 
         public Student()
         {
-            StudentID = "3";
-            HUID = "ab01234";
-            FirstName = "Shah";
-            MiddleName = "Rukh";
-            LastName = "Khan";
-            Contact = "923001234567";
-            Email = "ab01234@st.habib.edu.pk";
+            ID = "1";
+            HabibID = "ms01036";
+            Name = "Mohammad Shakaib Saleem";
+            Email = "ms01036@st.habib.edu.pk";
+            Contact = "+923210123456";
         }
 
-        public Student(string studentID, string hUID, string firstName, string middleName, string lastName, string contact, string email)
+        public Student(string iD, string habibID, string name, string email, string contact)
         {
-            StudentID = studentID ?? throw new ArgumentNullException(nameof(studentID));
-            HUID = hUID ?? throw new ArgumentNullException(nameof(hUID));
-            FirstName = firstName ?? throw new ArgumentNullException(nameof(firstName));
-            MiddleName = middleName ?? throw new ArgumentNullException(nameof(middleName));
-            LastName = lastName ?? throw new ArgumentNullException(nameof(lastName));
-            Contact = contact ?? throw new ArgumentNullException(nameof(contact));
+            ID = iD ?? throw new ArgumentNullException(nameof(iD));
+            HabibID = habibID ?? throw new ArgumentNullException(nameof(habibID));
+            Name = name ?? throw new ArgumentNullException(nameof(name));
             Email = email ?? throw new ArgumentNullException(nameof(email));
+            Contact = contact ?? throw new ArgumentNullException(nameof(contact));
         }
     }
 }
