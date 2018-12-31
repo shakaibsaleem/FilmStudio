@@ -1,29 +1,41 @@
 insert into Users (Name, Passkey, isAdmin, Username)
-values ('Shakaib Saleem','admin',1,'shakaib')
+values ('user','password',0,'username')
 
 select * from Users
 
 insert into Instructors (HabibID,Name,Email,Contact)
-values ('aaron.mulvany','Aaron Mulvany','aaron.mulvany@ahss.habib.edu.pk','+923210123456')
+values ('fname.lname','Fname Lname','habibID@school.habib.edu.pk','+923210123456')
 
 select * from Instructors
 
 insert into Staff (HabibID,Name,Email,Contact)
-values ('talha.muneer','Talha Muneer','talha.muneer@ahss.habib.edu.pk','+923210123456')
+values ('fname.lname','Fname Lname','habibID@habib.edu.pk','+923210123456')
 
 select * from Staff
 
 insert into Students (HabibID,Name,Email,Contact)
-values ('ms01036','Mohammad Shakaib Saleem','ms01036@st.habib.edu.pk','+923210123456')
+values ('xx01234','Fname Lname','habibID@st.habib.edu.pk','+923210123456')
 
 select * from Students
 
 insert into Courses (CourseName,CourseCode)
-values ('Course','CRS101')
+values ('Course Name','CRS102')
 
 select * from Courses
 
 insert into Enrolments (CourseID,StudentID,InstructorID,Term)
-values (1,1,1,'Spring2019')
+values (2,2,2,'Fall2018')
+
+select * from Enrolments
+
+select * from Users
+
+select * from Instructors
+
+select * from Staff
+
+select * from Students
+
+select * from Courses
 
 select * from Enrolments
