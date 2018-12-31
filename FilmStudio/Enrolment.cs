@@ -8,24 +8,23 @@ namespace FilmStudio
 {
     public class Enrolment
     {
-        public int EnrolmentID;
         public Student MyStudent;
         public Course MyCourse;
         public Instructor MyInstructor;
-        public string Term;
+        public string ID, Term;
 
         public Enrolment()
         {
-            EnrolmentID = 2;
+            ID = "1";
             MyStudent = new Student();
             MyCourse = new Course();
             MyInstructor = new Instructor();
-            Term = "Fall2018";
+            Term = "Spring2019";
         }
 
-        public Enrolment(int enrolmentID, Student myStudent, Course myCourse, Instructor myInstructor, string term)
+        public Enrolment(string iD, Student myStudent, Course myCourse, Instructor myInstructor, string term)
         {
-            EnrolmentID = enrolmentID;
+            ID = iD ?? throw new ArgumentNullException(nameof(iD));
             MyStudent = myStudent ?? throw new ArgumentNullException(nameof(myStudent));
             MyCourse = myCourse ?? throw new ArgumentNullException(nameof(myCourse));
             MyInstructor = myInstructor ?? throw new ArgumentNullException(nameof(myInstructor));
