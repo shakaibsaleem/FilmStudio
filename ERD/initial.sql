@@ -24,18 +24,16 @@ values ('New Course','CRS103')
 select * from Courses
 
 insert into Enrolments (CourseID,StudentID,InstructorID,Term)
-values (3,2,2,'Fall2018')
+values (3,2,2,'Spring2018')
 
 select * from Enrolments
 
-select * from Users
+select * from Courses
+
+select * from Students
 
 select * from Instructors
 
 select * from Staff
 
-select * from Students
-
-select * from Courses
-
-select * from Enrolments
+select * from Users
