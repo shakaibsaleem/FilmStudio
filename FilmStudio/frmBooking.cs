@@ -70,9 +70,9 @@ namespace FilmStudio
             txtEquipment.Text = myEquipment.Description;
             numQuantity.Value = 1;
             rbtnStudent.Select();
-            //btnAdd.Select();
+            btnAdd.Select();
             UpdateEnabled("Load");
-UpdateEnabled("Add");
+//UpdateEnabled("Add");
         }
 
         private void btnAddEquipment_Click(object sender, EventArgs e)
@@ -173,14 +173,12 @@ UpdateEnabled("Add");
 
         public string DateOf(DateTime dateTime)
         {
-            //string str = dateTime.Year + "-" + dateTime.Month + "-" + dateTime.Day;
             string str = dateTime.ToString("yyyy-MM-dd");
             return str;
         }
 
         public string TimeOf(DateTime dateTime)
         {
-            //string str = dateTime.Hour + ":" + dateTime.Minute + ":" + dateTime.Second;
             string str = dateTime.ToString("HH:mm:00");
             return str;
         }
@@ -518,7 +516,6 @@ UpdateEnabled("Add");
             try
             {
                 i = comboBoxID.SelectedIndex;
-//habibID = comboBoxID.SelectedItem.ToString();
             }
             catch (Exception ex)
             {
@@ -526,7 +523,7 @@ UpdateEnabled("Add");
                 i = 0;
             }
             habibID = comboBoxID.Items[i].ToString();
-//MessageBox.Show("Item = " + habibID, "Here");            
+
             try
             {
                 SqlCommand cmd = new SqlCommand();
@@ -620,7 +617,6 @@ UpdateEnabled("Add");
                 {
                     MessageBox.Show("myBooking.BookedBy: " + myBooking.BookedBy, "Unexpected value in fetching details");
                 }
-                //MessageBox.Show(iD+name+email+contact,"Booking Details:");
             }
             catch (Exception ex)
             {
@@ -642,7 +638,6 @@ UpdateEnabled("Add");
                 i = 0;
             }
             name = comboBoxCourse.Items[i].ToString();
-//MessageBox.Show("Item = " + name, "Here");
             try
             {
                 SqlCommand cmd = new SqlCommand();
@@ -658,7 +653,6 @@ UpdateEnabled("Add");
                     iD = rd[0].ToString();
                     name = rd[1].ToString();
                     code = rd[2].ToString();
-//MessageBox.Show(iD + name + code, "Course Details:");
                     myBooking.CurrentCourse = new Course(iD, name, code);
                 }
                 else
@@ -671,7 +665,7 @@ UpdateEnabled("Add");
                 comboBoxInstructor.ResetText();
 
                 //fetching and displaying Instructor of student's selected course
-                cmd.CommandText = "select Instructors.Name from Courses, Enrolments, Instructors " +
+                cmd.CommandText = "select distinct Instructors.Name from Courses, Enrolments, Instructors " +
                     "where Courses.CourseID = Enrolments.CourseID and " +
                     "Instructors.InstructorID = Enrolments.InstructorID and " +
                     "StudentID = " + myBooking.CurrentStudent.ID +
@@ -704,7 +698,7 @@ UpdateEnabled("Add");
                 i = 0;
             }
             name = comboBoxInstructor.Items[i].ToString();
-            //MessageBox.Show("Item = " + instructor, "Here");
+
             try
             {
                 SqlCommand cmd = new SqlCommand();
@@ -722,7 +716,7 @@ UpdateEnabled("Add");
                     name =  rd[2].ToString();
                     email = rd[3].ToString();
                     contact = rd[4].ToString();
-                    MessageBox.Show(iD + habibID + name + email + contact, "Instructor Details:");
+                    //MessageBox.Show(iD + habibID + name + email + contact, "Instructor Details:");
                     myBooking.CurrentInstructor = new Instructor(iD, habibID, name, email,contact);
                 }
                 else
@@ -761,46 +755,24 @@ UpdateEnabled("Add");
                         ));
                 }
                 rd.Close();
-                myBooking.CurrentEnrolment = SelectEnrolment(enrolments);
+
+                if (enrolments.Count == 1)
+                {
+                    myBooking.CurrentEnrolment = enrolments[0];
+                }
+                else if (enrolments.Count == 0)
+                {
+                    MessageBox.Show("No enrolment records found", "Error in fetching enrolments");
+                }
+                else
+                {
+                    myBooking.CurrentEnrolment = enrolments.Last<Enrolment>();
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error in fetching enrolments");
-                //myBooking.CurrentEnrolment = new Enrolment();
             }
-        }
-
-        private Enrolment SelectEnrolment(List<Enrolment> enrolments)
-        {
-            if (enrolments.Count > 0)
-            {
-                if (enrolments.Count == 1)
-                {
-                    return enrolments[0];
-                }
-                else
-                {
-                    //string term = "";
-                    //enrolments.Sort();
-                    return enrolments.Last<Enrolment>();
-                }
-            }
-            else
-            {
-                return new Enrolment();
-            }
-        }
-
-        private string CurrentTerm()
-        {
-            string term = "";
-            int month = Convert.ToInt32(DateTime.Now.ToString("MM"));
-            string year = DateTime.Now.ToString("yyyy");
-            if (month == 1)
-            {
-                MessageBox.Show("Spring");
-            }
-            return term;
         }
     }
 }
