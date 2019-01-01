@@ -72,23 +72,23 @@ namespace FilmStudio
             rbtnStudent.Select();
             btnAdd.Select();
             UpdateEnabled("Load");
-//UpdateEnabled("Add");
         }
 
         private void btnAddEquipment_Click(object sender, EventArgs e)
         {
             // check for duplication
-            if (listViewBooking.FindItemWithText(txtEquipment.Text) == null)
+            ListViewItem listViewItem = listViewBooking.FindItemWithText(txtEquipment.Text);
+            if (listViewItem == null)
             {
+                // no duplicates
                 // Adding values from text boxes to list view
-                ListViewItem listViewItem = new ListViewItem(txtEquipment.Text);
+                listViewItem = new ListViewItem(txtEquipment.Text);
                 listViewItem.SubItems.Add(numQuantity.Value.ToString());
                 listViewBooking.Items.Add(listViewItem);
             }
-            else
+            else if (listViewItem.SubItems[0].Text == txtEquipment.Text)
             {
                 // if item exists, update quantity instead of adding as a duplicate entry
-                ListViewItem listViewItem = listViewBooking.FindItemWithText(txtEquipment.Text);
                 int i = listViewBooking.Items.IndexOf(listViewItem);
                 ListViewItem.ListViewSubItem subItem = listViewBooking.Items[i].SubItems[1];
                 int q = Convert.ToInt32(subItem.Text);
@@ -96,6 +96,14 @@ namespace FilmStudio
                 listViewItem = new ListViewItem(txtEquipment.Text);
                 int qNew = Convert.ToInt32(numQuantity.Value) + q;
                 listViewItem.SubItems.Add(qNew.ToString());
+                listViewBooking.Items.Add(listViewItem);
+            }
+            else
+            {
+                // only partial match, so not a duplicate
+                // Adding values from text boxes to list view
+                listViewItem = new ListViewItem(txtEquipment.Text);
+                listViewItem.SubItems.Add(numQuantity.Value.ToString());
                 listViewBooking.Items.Add(listViewItem);
             }
             txtEquipment.Clear();
@@ -326,6 +334,104 @@ namespace FilmStudio
                     "'  where BookingID = " + myBooking.ID;
                 cmd.ExecuteNonQuery();
 
+                string myDescription, myID;
+                int myQuantity, oldQuantity, qtyAvailable, qtyBooked;
+                SqlDataReader rd;
+                List<string> myList = new List<string>();
+
+                foreach (ListViewItem item in listViewBooking.Items)
+                {
+                    myDescription = item.SubItems[0].Text;
+                    myQuantity = Convert.ToInt32(item.SubItems[1].Text);
+
+                    cmd.CommandText = "select EquipmentID,QuantityAvailable,QuantityBooked " +
+                        "from Equipments where Description = '" + myDescription + "'";
+                    rd = cmd.ExecuteReader();
+                    if (rd.Read() == true)
+                    {
+                        myID = rd[0].ToString();
+                        qtyAvailable = Convert.ToInt32(rd[1].ToString());
+                        qtyBooked = Convert.ToInt32(rd[2].ToString());
+                        myList.Add(myID);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Invalid value of description: " + myDescription,"Error in fetching equipment details");
+                        myID = "1";
+                        qtyAvailable = 0;
+                        qtyBooked = 0;
+                    }
+                    rd.Close();
+
+                    cmd.CommandText = "select Quantity from BookedItems where " +
+                        "BookingID = " + myBooking.ID + " and EquipmentID = " + myID;
+                    rd = cmd.ExecuteReader();
+                    if (rd.Read() == true)
+                    {
+                        oldQuantity = Convert.ToInt32(rd[0].ToString());
+                        rd.Close();
+                        cmd.CommandText = "update BookedItems set Quantity = " + myQuantity + 
+                            " where BookingID = " + myBooking.ID + " and EquipmentID = " + myID;
+                        cmd.ExecuteNonQuery();
+                    }
+                    else
+                    {
+                        oldQuantity = 0;
+                        rd.Close();
+                        cmd.CommandText = "insert into BookedItems (BookingID,EquipmentID,Quantity) values " +
+                            "(" + myBooking.ID + ", " + myID + ", " + myQuantity + ")";
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    cmd.CommandText = "update Equipments set " +
+                        "QuantityBooked = " + (qtyBooked + (myQuantity-oldQuantity)) +
+                        ", QuantityAvailable = " + (qtyAvailable - (myQuantity - oldQuantity)) +
+                        " where EquipmentID = " + myID;
+                    cmd.ExecuteNonQuery();
+                }
+
+                List<string> toDelete = new List<string>();
+                myID = "";
+
+                cmd.CommandText = "select EquipmentID from BookedItems where BookingID = " + myBooking.ID;
+                rd = cmd.ExecuteReader();
+                while (rd.Read())
+                {
+                    myID = rd[0].ToString();
+                    if (myList.Contains(myID) == false)
+                    {
+                        toDelete.Add(myID);
+                    }
+                }
+                rd.Close();
+
+                foreach (string id in toDelete)
+                {
+                    cmd.CommandText = "select Quantity,QuantityAvailable,QuantityBooked " +
+                        "from BookedItems,Equipments where BookingID = " +
+                        myBooking.ID + " and BookedItems.EquipmentID = " + id +
+                        " and BookedItems.EquipmentID = Equipments.EquipmentID";
+                    rd = cmd.ExecuteReader();
+
+                    if (rd.Read() == true)
+                    {
+                        oldQuantity = Convert.ToInt32(rd[0].ToString());
+                        qtyAvailable = Convert.ToInt32(rd[1].ToString());
+                        qtyBooked = Convert.ToInt32(rd[2].ToString());
+                        rd.Close();
+
+                        cmd.CommandText = "update Equipments set " +
+                        "QuantityBooked = " + (qtyBooked - oldQuantity) +
+                        ", QuantityAvailable = " + (qtyAvailable + oldQuantity) +
+                        " where EquipmentID = " + id;
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    cmd.CommandText = "delete from BookedItems where EquipmentID = " 
+                        + id + " and BookingID = " + myBooking.ID;
+                    cmd.ExecuteNonQuery();
+                }
+
                 tran.Commit();
                 //MessageBox.Show("Press OK to continue", "Saved successfully");
                 UpdateEnabled("Save");
@@ -365,6 +471,8 @@ namespace FilmStudio
                 dateTimeDue.Enabled = false;
 
                 txtNotes.Enabled = false;
+
+                listViewBooking.Enabled = false;
             }
             else if (e == "Add")
             {
@@ -376,6 +484,8 @@ namespace FilmStudio
                 groupBoxEquipment.Enabled = true;
 
                 txtNotes.Enabled = true;
+
+                listViewBooking.Enabled = true;
             }
             else if (e == "Load")
             {
@@ -390,6 +500,8 @@ namespace FilmStudio
                 groupBoxEquipment.Enabled = false;
 
                 txtNotes.Enabled = false;
+
+                listViewBooking.Enabled = true;
             }
             else if (e == "Edit")
             {
@@ -407,6 +519,8 @@ namespace FilmStudio
                 dateTimeDue.Enabled = true;
 
                 txtNotes.Enabled = true;
+
+                listViewBooking.Enabled = true;
             }
             else if (e == "Student")
             {
