@@ -19,12 +19,12 @@ values ('xx01234','Fname Lname','habibID@st.habib.edu.pk','+923210123456')
 select * from Students
 
 insert into Courses (CourseName,CourseCode)
-values ('Course Name','CRS102')
+values ('New Course','CRS103')
 
 select * from Courses
 
 insert into Enrolments (CourseID,StudentID,InstructorID,Term)
-values (2,2,2,'Fall2018')
+values (3,2,2,'Fall2018')
 
 select * from Enrolments
 
