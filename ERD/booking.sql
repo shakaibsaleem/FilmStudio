@@ -3,9 +3,11 @@ insert into Instructors (Name, Email,Contact) values ('Aaron Mulvany','aaron.mul
 
 select * from Instructors
 
-insert into BookingsByStudents (BookingID,EnrolmentID,Project) values (2,2,'ProjectX')
+insert into BookingsByStudents (BookingID,EnrolmentID,Project) values (1,2,'ProjectX')
 
-delete from BookingsByStudents where BookingID = 55
+delete from BookingsByStudents where EnrolmentID = 2
+
+delete from BookingsByStudents where BookingID = 2
 
 select * from BookingsByStudents
 
@@ -41,8 +43,13 @@ select StudentID,HabibID,Name,Email,Contact from Students where HabibID = 'ms010
 select Courses.CourseID as id, Courses.CourseName as name, Courses.CourseCode as code, EnrolmentID, Enrolments.CourseID,StudentID,InstructorID,Term
 from Courses, Enrolments where Courses.CourseID=Enrolments.CourseID and StudentID = 2
 
-select CourseName from Courses, Enrolments where Courses.CourseID=Enrolments.CourseID and StudentID = 2
+select distinct CourseName from Courses, Enrolments where Courses.CourseID=Enrolments.CourseID and StudentID = 2
 
 select Instructors.Name from Courses, Enrolments, Instructors
 where Courses.CourseID=Enrolments.CourseID and Instructors.InstructorID=Enrolments.InstructorID
 and StudentID = 2 and Enrolments.CourseID=3
+
+select InstructorID,HabibID,Name,Email,Contact from Instructors where Name = 'Fname Lname'
+
+select EnrolmentID,Term from Enrolments
+where CourseID=3 and StudentID=2 and InstructorID=2
