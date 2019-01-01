@@ -24,6 +24,7 @@ namespace FilmStudio
             myEquipment = new Equipment();
             myBooking = new Booking(
                 currentUser: new User(),
+                currentCourse: new Course(),
                 currentInstructor: new Instructor(),
                 currentStaff: new Staff(),
                 currentEnrolment: new Enrolment(),
@@ -43,6 +44,7 @@ namespace FilmStudio
             myEquipment = new Equipment();
             myBooking = new Booking(
                 currentUser: new User(),
+                currentCourse: new Course(),
                 currentInstructor: new Instructor(),
                 currentStaff: new Staff(),
                 currentEnrolment: new Enrolment(),
@@ -402,22 +404,22 @@ UpdateEnabled("Add");
             {
                 //comboBoxID.Enabled = true;
                 txtAssignment.Enabled = true;
-                txtCourse.Enabled = true;
-                txtInstructor.Enabled = true;
+                comboBoxCourse.Enabled = true;
+                comboBoxInstructor.Enabled = true;
             }
             else if (e == "Instructor")
             {
                 //comboBoxID.Enabled = false;
                 txtAssignment.Enabled = false;
-                txtCourse.Enabled = false;
-                txtInstructor.Enabled = false;
+                comboBoxCourse.Enabled = false;
+                comboBoxInstructor.Enabled = false;
             }
             else if (e == "Staff")
             {
                 //comboBoxID.Enabled = false;
                 txtAssignment.Enabled = false;
-                txtCourse.Enabled = false;
-                txtInstructor.Enabled = false;
+                comboBoxCourse.Enabled = false;
+                comboBoxInstructor.Enabled = false;
             }
             else
             {
@@ -485,6 +487,10 @@ UpdateEnabled("Add");
 
                 comboBoxID.Items.Clear();
                 comboBoxID.ResetText();
+                comboBoxCourse.Items.Clear();
+                comboBoxCourse.ResetText();
+                comboBoxInstructor.Items.Clear();
+                comboBoxInstructor.ResetText();
 
                 txtName.Clear();
                 txtContact.Clear();
@@ -518,7 +524,6 @@ UpdateEnabled("Add");
             {
                 MessageBox.Show(ex.Message, "Error in index selection");
                 i = 0;
-
             }
             habibID = comboBoxID.Items[i].ToString();
 //MessageBox.Show("Item = " + habibID, "Here");            
@@ -547,8 +552,25 @@ UpdateEnabled("Add");
                     {
                         myBooking.CurrentStudent = new Student();
                     }
+                    rd.Close();
                     txtName.Text = myBooking.CurrentStudent.Name;
                     txtContact.Text = myBooking.CurrentStudent.Contact;
+
+                    comboBoxCourse.Items.Clear();
+                    comboBoxCourse.ResetText();
+                    comboBoxInstructor.Items.Clear();
+                    comboBoxInstructor.ResetText();
+
+                    //fetching and displaying courses of selected student
+                    cmd.CommandText = "select distinct CourseName from Courses, Enrolments " +
+                        "where Courses.CourseID=Enrolments.CourseID and StudentID = " +
+                        myBooking.CurrentStudent.ID;
+                    rd = cmd.ExecuteReader();
+                    while (rd.Read())
+                    {
+                        comboBoxCourse.Items.Add(rd["CourseName"]);
+                    }
+                    rd.Close();
                 }
                 else if (myBooking.BookedBy == "Instructor")
                 {
@@ -568,6 +590,7 @@ UpdateEnabled("Add");
                     {
                         myBooking.CurrentInstructor = new Instructor();
                     }
+                    rd.Close();
                     txtName.Text = myBooking.CurrentInstructor.Name;
                     txtContact.Text = myBooking.CurrentInstructor.Contact;
                 }
@@ -589,21 +612,159 @@ UpdateEnabled("Add");
                     {
                         myBooking.CurrentStaff = new Staff();
                     }
+                    rd.Close();
                     txtName.Text = myBooking.CurrentStaff.Name;
                     txtContact.Text = myBooking.CurrentStaff.Contact;
                 }
                 else
                 {
                     MessageBox.Show("myBooking.BookedBy: " + myBooking.BookedBy, "Unexpected value in fetching details");
-                    cmd.CommandText = "";
-                    rd = cmd.ExecuteReader();
                 }
-                rd.Close();
                 //MessageBox.Show(iD+name+email+contact,"Booking Details:");
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error in fetching details");
+                MessageBox.Show(ex.Message, "Error in fetching courses");
+            }
+        }
+
+        private void comboBoxCourse_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int i = -1;
+            string iD, name, code;
+            try
+            {
+                i = comboBoxCourse.SelectedIndex;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error in index selection");
+                i = 0;
+            }
+            name = comboBoxCourse.Items[i].ToString();
+//MessageBox.Show("Item = " + name, "Here");
+            try
+            {
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.Text;
+                SqlDataReader rd;
+
+                cmd.CommandText = "select CourseID,CourseName,CourseCode from " +
+                    "Courses where CourseName = '" + name + "'";
+                rd = cmd.ExecuteReader();
+                if (rd.Read() == true)
+                {
+                    iD = rd[0].ToString();
+                    name = rd[1].ToString();
+                    code = rd[2].ToString();
+//MessageBox.Show(iD + name + code, "Course Details:");
+                    myBooking.CurrentCourse = new Course(iD, name, code);
+                }
+                else
+                {
+                    myBooking.CurrentCourse = new Course();
+                }
+                rd.Close();
+
+                comboBoxInstructor.Items.Clear();
+                comboBoxInstructor.ResetText();
+
+                //fetching and displaying Instructor of student's selected course
+                cmd.CommandText = "select Instructors.Name from Courses, Enrolments, Instructors " +
+                    "where Courses.CourseID = Enrolments.CourseID and " +
+                    "Instructors.InstructorID = Enrolments.InstructorID and " +
+                    "StudentID = " + myBooking.CurrentStudent.ID +
+                    " and Enrolments.CourseID = " + myBooking.CurrentCourse.ID;
+                rd = cmd.ExecuteReader();
+                while (rd.Read())
+                {
+                    comboBoxInstructor.Items.Add(rd["Name"]);
+                }
+                rd.Close();
+                comboBoxInstructor.SelectedIndex = 0;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error in fetching Instructors");
+            }
+        }
+
+        private void comboBoxInstructor_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int i = -1;
+            string iD,habibID,name,email,contact;
+            try
+            {
+                i = comboBoxInstructor.SelectedIndex;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error in index selection");
+                i = 0;
+            }
+            name = comboBoxInstructor.Items[i].ToString();
+            //MessageBox.Show("Item = " + instructor, "Here");
+            try
+            {
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.Text;
+                SqlDataReader rd;
+
+                cmd.CommandText = "select InstructorID,HabibID,Name,Email,Contact from " +
+                    "Instructors where Name = '" + name + "'";
+                rd = cmd.ExecuteReader();
+                if (rd.Read() == true)
+                {
+                    iD = rd[0].ToString();
+                    habibID = rd[1].ToString();
+                    name =  rd[2].ToString();
+                    email = rd[3].ToString();
+                    contact = rd[4].ToString();
+                    MessageBox.Show(iD + habibID + name + email + contact, "Instructor Details:");
+                    myBooking.CurrentInstructor = new Instructor(iD, habibID, name, email,contact);
+                }
+                else
+                {
+                    myBooking.CurrentInstructor = new Instructor();
+                }
+                rd.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error in fetching details of Instructor");
+            }
+
+            // fetching details of corresponding enrolment
+            List<Enrolment> enrolments = new List<Enrolment>();
+            try
+            {
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.Text;
+                SqlDataReader rd;
+
+                cmd.CommandText = "select EnrolmentID,Term from Enrolments " +
+                    "where CourseID = " + myBooking.CurrentCourse.ID +
+                    " and StudentID = " + myBooking.CurrentStudent.ID +
+                    " and InstructorID = " + myBooking.CurrentInstructor.ID;
+                rd = cmd.ExecuteReader();
+                while (rd.Read())
+                {
+                    enrolments.Add(new Enrolment(
+                        rd["EnrolmentID"].ToString(), 
+                        myBooking.CurrentStudent, 
+                        myBooking.CurrentCourse, 
+                        myBooking.CurrentInstructor, 
+                        rd["Term"].ToString()
+                        ));
+                }
+                rd.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error in fetching enrolments");
             }
         }
     }
