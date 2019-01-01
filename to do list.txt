@@ -1,8 +1,6 @@
 remove bug of login trick. strip password string till second last " starting scanning from right to left
 
-make text fields read only when needed, instead of disabling
-
-add items of equipment list to database when saving
+instead of disabling, make text fields read-only, when needed
 
 DONE:
 
@@ -15,3 +13,6 @@ when booking form opens, enter all info and then allow add record and then allow
 
 in frmbooking: for equipments, allow delete edit too. not just add
 
+fix bug when added equipment is substring of existing item in list view
+
+add items of equipment list to database when saving
