@@ -310,14 +310,24 @@ namespace FilmStudio
                 {
                     MessageBox.Show("Unexpected value for BookedBy: " + myBooking.BookedBy, "Error in Save");
                 }
-                cmd.CommandText = "update Bookings set BookedBy = '" + 
-                    myBooking.BookedBy + "' where BookingID = " + myBooking.ID;
+
+                cmd.CommandText = "update Bookings set " +
+                    "   UserID = " + myBooking.CurrentUser.UserID +
+                    " , Notes = '" + myBooking.Notes +
+                    "', BookedBy = '" + myBooking.BookedBy +
+                    "', BookingDate = '" + DateOf(myBooking.BookedOn) +
+                    "', BookingTime = '" + TimeOf(myBooking.BookedOn) +
+                    "', IssueDate = '" + DateOf(myBooking.IssuedOn) +
+                    "', IssueTime = '" + TimeOf(myBooking.IssuedOn) +
+                    "', DueDate = '" + DateOf(myBooking.DueOn) +
+                    "', DueTime = '" + TimeOf(myBooking.DueOn) +
+                    "', ReturnDate = '" + DateOf(myBooking.ReturnedOn) +
+                    "', ReturnTime = '" + TimeOf(myBooking.ReturnedOn) +
+                    "'  where BookingID = " + myBooking.ID;
                 cmd.ExecuteNonQuery();
 
                 tran.Commit();
-
                 //MessageBox.Show("Press OK to continue", "Saved successfully");
-
                 UpdateEnabled("Save");
             }
             catch (Exception ex)
@@ -359,7 +369,7 @@ namespace FilmStudio
             else if (e == "Add")
             {
                 btnAdd.Enabled = false;
-                btnSave.Enabled = true;
+                btnSave.Enabled = false;
 
                 groupBoxBookedFor.Enabled = true;
                 groupBoxBooking.Enabled = true;
@@ -400,6 +410,7 @@ namespace FilmStudio
             }
             else if (e == "Student")
             {
+                btnSave.Enabled = false;
                 //comboBoxID.Enabled = true;
                 txtAssignment.Enabled = true;
                 comboBoxCourse.Enabled = true;
@@ -407,6 +418,7 @@ namespace FilmStudio
             }
             else if (e == "Instructor")
             {
+                btnSave.Enabled = false;
                 //comboBoxID.Enabled = false;
                 txtAssignment.Enabled = false;
                 comboBoxCourse.Enabled = false;
@@ -414,6 +426,7 @@ namespace FilmStudio
             }
             else if (e == "Staff")
             {
+                btnSave.Enabled = false;
                 //comboBoxID.Enabled = false;
                 txtAssignment.Enabled = false;
                 comboBoxCourse.Enabled = false;
@@ -553,6 +566,8 @@ namespace FilmStudio
                     txtName.Text = myBooking.CurrentStudent.Name;
                     txtContact.Text = myBooking.CurrentStudent.Contact;
 
+                    btnSave.Enabled = false;
+
                     comboBoxCourse.Items.Clear();
                     comboBoxCourse.ResetText();
                     comboBoxInstructor.Items.Clear();
@@ -590,6 +605,7 @@ namespace FilmStudio
                     rd.Close();
                     txtName.Text = myBooking.CurrentInstructor.Name;
                     txtContact.Text = myBooking.CurrentInstructor.Contact;
+                    btnSave.Enabled = true;
                 }
                 else if (myBooking.BookedBy == "Staff")
                 {
@@ -612,6 +628,7 @@ namespace FilmStudio
                     rd.Close();
                     txtName.Text = myBooking.CurrentStaff.Name;
                     txtContact.Text = myBooking.CurrentStaff.Contact;
+                    btnSave.Enabled = true;
                 }
                 else
                 {
@@ -661,6 +678,7 @@ namespace FilmStudio
                 }
                 rd.Close();
 
+                btnSave.Enabled = false;
                 comboBoxInstructor.Items.Clear();
                 comboBoxInstructor.ResetText();
 
@@ -759,6 +777,7 @@ namespace FilmStudio
                 if (enrolments.Count == 1)
                 {
                     myBooking.CurrentEnrolment = enrolments[0];
+                    btnSave.Enabled = true;
                 }
                 else if (enrolments.Count == 0)
                 {
@@ -767,6 +786,7 @@ namespace FilmStudio
                 else
                 {
                     myBooking.CurrentEnrolment = enrolments.Last<Enrolment>();
+                    btnSave.Enabled = true;
                 }
             }
             catch (Exception ex)
