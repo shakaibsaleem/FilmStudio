@@ -37,7 +37,6 @@ ReturnDate = '2019-01-01',
 ReturnTime = '22:32:00'
 where BookingID = 1
 
-
 delete from Bookings where BookingID = 19
 
 insert into Bookings (UserID,Notes,BookedBy,BookingDate,BookingTime,IssueDate,IssueTime,DueDate,DueTime,ReturnDate,ReturnTime)
@@ -50,6 +49,35 @@ select * from BookingsByStudents
 select * from BookingsByStaff
 
 select * from BookingsByInstructors
+
+delete from BookedItems where BookingID = 1
+
+insert into BookedItems (BookingID,EquipmentID,Quantity)
+values (1,1,1)
+
+select EquipmentID from BookedItems where BookingID = 6
+
+select Quantity,QuantityAvailable,QuantityBooked from BookedItems,Equipments
+where BookingID = 2 and BookedItems.EquipmentID = 3
+and BookedItems.EquipmentID = Equipments.EquipmentID
+
+update BookedItems set Quantity = 1 where BookingID = 1 and EquipmentID = 2
+
+select * from BookedItems
+
+select * from Equipments
+
+update Equipments set
+QuantityBooked = 0,
+QuantityAvailable = 3
+where EquipmentID = 1
+
+insert into Equipments (Description,QuantityAvailable,QuantityBooked)
+values ('c',3,0)
+
+select EquipmentID,QuantityAvailable,QuantityBooked from Equipments where Description = 'Camera'
+
+select * from Equipments
 
 select HabibID from Students
 
