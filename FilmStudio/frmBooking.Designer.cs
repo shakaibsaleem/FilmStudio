@@ -40,8 +40,6 @@
             this.lblCourse = new System.Windows.Forms.Label();
             this.lblInstructor = new System.Windows.Forms.Label();
             this.txtAssignment = new System.Windows.Forms.TextBox();
-            this.txtCourse = new System.Windows.Forms.TextBox();
-            this.txtInstructor = new System.Windows.Forms.TextBox();
             this.lblEquipment = new System.Windows.Forms.Label();
             this.txtEquipment = new System.Windows.Forms.TextBox();
             this.lblQuantity = new System.Windows.Forms.Label();
@@ -178,20 +176,6 @@
             this.txtAssignment.Size = new System.Drawing.Size(100, 20);
             this.txtAssignment.TabIndex = 3;
             // 
-            // txtCourse
-            // 
-            this.txtCourse.Location = new System.Drawing.Point(231, 42);
-            this.txtCourse.Name = "txtCourse";
-            this.txtCourse.Size = new System.Drawing.Size(158, 20);
-            this.txtCourse.TabIndex = 4;
-            // 
-            // txtInstructor
-            // 
-            this.txtInstructor.Location = new System.Drawing.Point(455, 42);
-            this.txtInstructor.Name = "txtInstructor";
-            this.txtInstructor.Size = new System.Drawing.Size(100, 20);
-            this.txtInstructor.TabIndex = 5;
-            // 
             // lblEquipment
             // 
             this.lblEquipment.AutoSize = true;
@@ -220,21 +204,21 @@
             // 
             // groupBoxBooking
             // 
+            this.groupBoxBooking.Controls.Add(this.comboBoxInstructor);
             this.groupBoxBooking.Controls.Add(this.comboBoxID);
+            this.groupBoxBooking.Controls.Add(this.comboBoxCourse);
             this.groupBoxBooking.Controls.Add(this.lblHabibID);
             this.groupBoxBooking.Controls.Add(this.txtName);
             this.groupBoxBooking.Controls.Add(this.txtContact);
             this.groupBoxBooking.Controls.Add(this.lblName);
-            this.groupBoxBooking.Controls.Add(this.txtInstructor);
             this.groupBoxBooking.Controls.Add(this.lblContact);
-            this.groupBoxBooking.Controls.Add(this.txtCourse);
             this.groupBoxBooking.Controls.Add(this.txtAssignment);
             this.groupBoxBooking.Controls.Add(this.lblInstructor);
             this.groupBoxBooking.Controls.Add(this.lblCourse);
             this.groupBoxBooking.Controls.Add(this.lblAssignment);
             this.groupBoxBooking.Location = new System.Drawing.Point(12, 86);
             this.groupBoxBooking.Name = "groupBoxBooking";
-            this.groupBoxBooking.Size = new System.Drawing.Size(561, 68);
+            this.groupBoxBooking.Size = new System.Drawing.Size(561, 69);
             this.groupBoxBooking.TabIndex = 102;
             this.groupBoxBooking.TabStop = false;
             this.groupBoxBooking.Text = "Booking Details";
@@ -256,10 +240,10 @@
             this.listViewBooking.FullRowSelect = true;
             this.listViewBooking.GridLines = true;
             this.listViewBooking.HideSelection = false;
-            this.listViewBooking.Location = new System.Drawing.Point(21, 240);
+            this.listViewBooking.Location = new System.Drawing.Point(12, 241);
             this.listViewBooking.MultiSelect = false;
             this.listViewBooking.Name = "listViewBooking";
-            this.listViewBooking.Size = new System.Drawing.Size(546, 97);
+            this.listViewBooking.Size = new System.Drawing.Size(561, 97);
             this.listViewBooking.TabIndex = 9;
             this.listViewBooking.UseCompatibleStateImageBehavior = false;
             this.listViewBooking.View = System.Windows.Forms.View.Details;
@@ -297,8 +281,6 @@
             // 
             // groupBoxBookedFor
             // 
-            this.groupBoxBookedFor.Controls.Add(this.comboBoxInstructor);
-            this.groupBoxBookedFor.Controls.Add(this.comboBoxCourse);
             this.groupBoxBookedFor.Controls.Add(this.rbtnStaff);
             this.groupBoxBookedFor.Controls.Add(this.rbtnInstructor);
             this.groupBoxBookedFor.Controls.Add(this.rbtnStudent);
@@ -347,7 +329,7 @@
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(18, 379);
+            this.btnClose.Location = new System.Drawing.Point(12, 370);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
             this.btnClose.TabIndex = 112;
@@ -357,7 +339,7 @@
             // 
             // btnPrevious
             // 
-            this.btnPrevious.Location = new System.Drawing.Point(99, 379);
+            this.btnPrevious.Location = new System.Drawing.Point(93, 370);
             this.btnPrevious.Name = "btnPrevious";
             this.btnPrevious.Size = new System.Drawing.Size(75, 23);
             this.btnPrevious.TabIndex = 113;
@@ -367,7 +349,7 @@
             // 
             // btnNext
             // 
-            this.btnNext.Location = new System.Drawing.Point(180, 379);
+            this.btnNext.Location = new System.Drawing.Point(174, 370);
             this.btnNext.Name = "btnNext";
             this.btnNext.Size = new System.Drawing.Size(75, 23);
             this.btnNext.TabIndex = 114;
@@ -377,7 +359,7 @@
             // 
             // btnEdit
             // 
-            this.btnEdit.Location = new System.Drawing.Point(261, 379);
+            this.btnEdit.Location = new System.Drawing.Point(255, 370);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Size = new System.Drawing.Size(75, 23);
             this.btnEdit.TabIndex = 115;
@@ -387,7 +369,7 @@
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(342, 379);
+            this.btnSave.Location = new System.Drawing.Point(336, 370);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 116;
@@ -397,7 +379,7 @@
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(423, 379);
+            this.btnDelete.Location = new System.Drawing.Point(417, 370);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(75, 23);
             this.btnDelete.TabIndex = 117;
@@ -406,7 +388,7 @@
             // 
             // btnAdd
             // 
-            this.btnAdd.Location = new System.Drawing.Point(504, 379);
+            this.btnAdd.Location = new System.Drawing.Point(498, 370);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(75, 23);
             this.btnAdd.TabIndex = 118;
@@ -421,7 +403,7 @@
             this.groupBoxEquipment.Controls.Add(this.lblQuantity);
             this.groupBoxEquipment.Controls.Add(this.txtEquipment);
             this.groupBoxEquipment.Controls.Add(this.lblEquipment);
-            this.groupBoxEquipment.Location = new System.Drawing.Point(12, 160);
+            this.groupBoxEquipment.Location = new System.Drawing.Point(12, 161);
             this.groupBoxEquipment.Name = "groupBoxEquipment";
             this.groupBoxEquipment.Size = new System.Drawing.Size(561, 74);
             this.groupBoxEquipment.TabIndex = 119;
@@ -445,9 +427,9 @@
             // 
             // txtNotes
             // 
-            this.txtNotes.Location = new System.Drawing.Point(21, 347);
+            this.txtNotes.Location = new System.Drawing.Point(12, 344);
             this.txtNotes.Name = "txtNotes";
-            this.txtNotes.Size = new System.Drawing.Size(546, 20);
+            this.txtNotes.Size = new System.Drawing.Size(561, 20);
             this.txtNotes.TabIndex = 120;
             this.txtNotes.Text = "Notes";
             this.txtNotes.TextChanged += new System.EventHandler(this.txtNotes_TextChanged);
@@ -455,24 +437,26 @@
             // comboBoxCourse
             // 
             this.comboBoxCourse.FormattingEnabled = true;
-            this.comboBoxCourse.Location = new System.Drawing.Point(268, 15);
+            this.comboBoxCourse.Location = new System.Drawing.Point(231, 42);
             this.comboBoxCourse.Name = "comboBoxCourse";
-            this.comboBoxCourse.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxCourse.Size = new System.Drawing.Size(158, 21);
             this.comboBoxCourse.TabIndex = 3;
+            this.comboBoxCourse.SelectedIndexChanged += new System.EventHandler(this.comboBoxCourse_SelectedIndexChanged);
             // 
             // comboBoxInstructor
             // 
             this.comboBoxInstructor.FormattingEnabled = true;
-            this.comboBoxInstructor.Location = new System.Drawing.Point(411, 15);
+            this.comboBoxInstructor.Location = new System.Drawing.Point(455, 42);
             this.comboBoxInstructor.Name = "comboBoxInstructor";
-            this.comboBoxInstructor.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxInstructor.Size = new System.Drawing.Size(100, 21);
             this.comboBoxInstructor.TabIndex = 4;
+            this.comboBoxInstructor.SelectedIndexChanged += new System.EventHandler(this.comboBoxInstructor_SelectedIndexChanged);
             // 
             // frmBooking
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(585, 426);
+            this.ClientSize = new System.Drawing.Size(585, 405);
             this.Controls.Add(this.txtNotes);
             this.Controls.Add(this.groupBoxEquipment);
             this.Controls.Add(this.btnAdd);
@@ -518,8 +502,6 @@
         private System.Windows.Forms.Label lblCourse;
         private System.Windows.Forms.Label lblInstructor;
         private System.Windows.Forms.TextBox txtAssignment;
-        private System.Windows.Forms.TextBox txtCourse;
-        private System.Windows.Forms.TextBox txtInstructor;
         private System.Windows.Forms.Label lblEquipment;
         private System.Windows.Forms.TextBox txtEquipment;
         private System.Windows.Forms.Label lblQuantity;
