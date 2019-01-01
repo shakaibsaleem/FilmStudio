@@ -37,3 +37,12 @@ select * from BookingsByInstructors
 select HabibID from Students
 
 select StudentID,HabibID,Name,Email,Contact from Students where HabibID = 'ms01036'
+
+select Courses.CourseID as id, Courses.CourseName as name, Courses.CourseCode as code, EnrolmentID, Enrolments.CourseID,StudentID,InstructorID,Term
+from Courses, Enrolments where Courses.CourseID=Enrolments.CourseID and StudentID = 2
+
+select CourseName from Courses, Enrolments where Courses.CourseID=Enrolments.CourseID and StudentID = 2
+
+select Instructors.Name from Courses, Enrolments, Instructors
+where Courses.CourseID=Enrolments.CourseID and Instructors.InstructorID=Enrolments.InstructorID
+and StudentID = 2 and Enrolments.CourseID=3
