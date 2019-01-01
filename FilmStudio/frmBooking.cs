@@ -761,11 +761,46 @@ UpdateEnabled("Add");
                         ));
                 }
                 rd.Close();
+                myBooking.CurrentEnrolment = SelectEnrolment(enrolments);
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error in fetching enrolments");
+                //myBooking.CurrentEnrolment = new Enrolment();
             }
+        }
+
+        private Enrolment SelectEnrolment(List<Enrolment> enrolments)
+        {
+            if (enrolments.Count > 0)
+            {
+                if (enrolments.Count == 1)
+                {
+                    return enrolments[0];
+                }
+                else
+                {
+                    //string term = "";
+                    //enrolments.Sort();
+                    return enrolments.Last<Enrolment>();
+                }
+            }
+            else
+            {
+                return new Enrolment();
+            }
+        }
+
+        private string CurrentTerm()
+        {
+            string term = "";
+            int month = Convert.ToInt32(DateTime.Now.ToString("MM"));
+            string year = DateTime.Now.ToString("yyyy");
+            if (month == 1)
+            {
+                MessageBox.Show("Spring");
+            }
+            return term;
         }
     }
 }
