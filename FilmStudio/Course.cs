@@ -8,18 +8,18 @@ namespace FilmStudio
 {
     public class Course
     {
-        public string CourseID, CourseName, CourseCode;
+        public string ID, CourseName, CourseCode;
 
         public Course()
         {
-            CourseID = "1";
+            ID = "1";
             CourseName = "Course";
             CourseCode = "CRS101";
         }
 
-        public Course(string courseID, string courseName, string courseCode)
+        public Course(string iD, string courseName, string courseCode)
         {
-            CourseID = courseID ?? throw new ArgumentNullException(nameof(courseID));
+            ID = iD ?? throw new ArgumentNullException(nameof(iD));
             CourseName = courseName ?? throw new ArgumentNullException(nameof(courseName));
             CourseCode = courseCode ?? throw new ArgumentNullException(nameof(courseCode));
         }
