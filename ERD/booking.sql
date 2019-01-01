@@ -23,6 +23,21 @@ select top 1 BookingID from Bookings order by BookingID desc
 
 update Bookings set BookedBy = 'Instructor' where BookingID = 43
 
+update Bookings set
+UserID = 2,
+Notes = 'none',
+BookedBy = 'Instructor',
+BookingDate = '2019-01-01',
+BookingTime = '22:32:00',
+IssueDate = '2019-01-01',
+IssueTime = '22:32:00',
+DueDate = '2019-01-01',
+DueTime = '22:32:00',
+ReturnDate = '2019-01-01',
+ReturnTime = '22:32:00'
+where BookingID = 1
+
+
 delete from Bookings where BookingID = 19
 
 insert into Bookings (UserID,Notes,BookedBy,BookingDate,BookingTime,IssueDate,IssueTime,DueDate,DueTime,ReturnDate,ReturnTime)
