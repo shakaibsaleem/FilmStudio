@@ -13,6 +13,7 @@ namespace FilmStudio
         public Staff CurrentStaff;
         public Enrolment CurrentEnrolment;
         public Student CurrentStudent;
+        public Course CurrentCourse;
 
         public DateTime IssuedOn, DueOn, ReturnedOn, BookedOn;
         public string ID, Notes, BookedBy;
@@ -24,6 +25,7 @@ namespace FilmStudio
             CurrentStaff = new Staff();
             CurrentStudent = new Student();
             CurrentEnrolment = new Enrolment();
+            CurrentCourse = new Course();
 
             ID = "0";
             IssuedOn = new DateTime(2018,11,8,9,0,0,0);
@@ -34,9 +36,10 @@ namespace FilmStudio
             BookedBy = "";
         }
 
-        public Booking(User currentUser, Instructor currentInstructor, Staff currentStaff, Student currentStudent, Enrolment currentEnrolment, DateTime issuedOn, DateTime dueOn, DateTime returnedOn, DateTime bookedOn, string iD, string notes, string bookedBy)
+        public Booking(User currentUser,Course currentCourse, Instructor currentInstructor, Staff currentStaff, Student currentStudent, Enrolment currentEnrolment, DateTime issuedOn, DateTime dueOn, DateTime returnedOn, DateTime bookedOn, string iD, string notes, string bookedBy)
         {
             CurrentUser = currentUser ?? throw new ArgumentNullException(nameof(currentUser));
+            CurrentCourse = currentCourse ?? throw new ArgumentNullException(nameof(currentCourse));
             CurrentInstructor = currentInstructor ?? throw new ArgumentNullException(nameof(currentInstructor));
             CurrentStaff = currentStaff ?? throw new ArgumentNullException(nameof(currentStaff));
             CurrentEnrolment = currentEnrolment ?? throw new ArgumentNullException(nameof(currentEnrolment));
