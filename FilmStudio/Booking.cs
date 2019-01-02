@@ -16,7 +16,7 @@ namespace FilmStudio
         public Course CurrentCourse;
 
         public DateTime IssuedOn, DueOn, ReturnedOn, BookedOn;
-        public string ID, Notes, BookedBy;
+        public string ID, Notes, BookedBy, Project;
 
         public Booking()
         {
@@ -28,15 +28,16 @@ namespace FilmStudio
             CurrentCourse = new Course();
 
             ID = "0";
-            IssuedOn = new DateTime(2018,11,8,9,0,0,0);
-            DueOn = new DateTime(2018, 11, 11, 9, 0, 0, 0);
-            ReturnedOn = new DateTime(2018, 11, 10, 10, 0, 0, 0);
-            BookedOn = new DateTime(2018, 11, 7, 9, 41, 15, 2);
+            IssuedOn = DateTime.Now.AddDays(1);
+            DueOn = DateTime.Now.AddDays(3);
+            ReturnedOn = DateTime.Now.AddDays(2);
+            BookedOn = DateTime.Now;
             Notes = "";
             BookedBy = "";
+            Project = "";
         }
 
-        public Booking(User currentUser,Course currentCourse, Instructor currentInstructor, Staff currentStaff, Student currentStudent, Enrolment currentEnrolment, DateTime issuedOn, DateTime dueOn, DateTime returnedOn, DateTime bookedOn, string iD, string notes, string bookedBy)
+        public Booking(User currentUser,Course currentCourse, Instructor currentInstructor, Staff currentStaff, Student currentStudent, Enrolment currentEnrolment, DateTime issuedOn, DateTime dueOn, DateTime returnedOn, DateTime bookedOn, string iD, string notes, string bookedBy, string project)
         {
             CurrentUser = currentUser ?? throw new ArgumentNullException(nameof(currentUser));
             CurrentCourse = currentCourse ?? throw new ArgumentNullException(nameof(currentCourse));
@@ -51,6 +52,7 @@ namespace FilmStudio
             ID = iD ?? throw new ArgumentNullException(nameof(iD));
             Notes = notes ?? throw new ArgumentNullException(nameof(notes));
             BookedBy = bookedBy ?? throw new ArgumentNullException(nameof(bookedBy));
+            Project = project ?? throw new ArgumentNullException(nameof(project));
         }
     }
 }
