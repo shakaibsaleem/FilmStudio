@@ -68,6 +68,7 @@ namespace FilmStudio
             dateTimeDue.Value = myBooking.DueOn;
             txtAssignment.Text = "";
             txtEquipment.Text = myEquipment.Description;
+            txtEquipment.Visible = false;
             numQuantity.Value = 1;
             rbtnStudent.Select();
             btnAdd.Select();
@@ -108,7 +109,8 @@ namespace FilmStudio
             }
             txtEquipment.Clear();
             numQuantity.Value = 1;
-            txtEquipment.Select();
+            comboBoxEquipment.ResetText();
+            comboBoxEquipment.Select();
         }
 
         private void txtEquipment_TextChanged(object sender, EventArgs e) => CheckEnableAdd();
@@ -171,12 +173,53 @@ namespace FilmStudio
 
                 //MessageBox.Show("Booking ID is: " + myBooking.ID, "Booking Created");
                 UpdateEnabled("Add");
+
+                Equipment eq;
+                string d = "";
+                int qtyA, qtyB;
+
+                cmd.CommandText = "select Description,QuantityBooked,QuantityAvailable from Equipments order by Description";
+                rd = cmd.ExecuteReader();
+                while (rd.Read())
+                {
+                    qtyA = Convert.ToInt32(rd[1].ToString());
+                    qtyB = Convert.ToInt32(rd[2].ToString());
+                    d = rd[0].ToString();
+                    eq = new Equipment(qtyA,qtyB,d);
+                    comboBoxEquipment.Items.Add(eq);
+                    //comboBoxEquipment.Items.Add(rd[0].ToString());
+                    //comboBoxEquipment.Items.Add(rd[0].ToString()+" - "+ rd[1].ToString() + " booked, " + rd[2].ToString() + " available");
+                }
+                rd.Close();
+
+                int width = comboBoxEquipment.DropDownWidth;
+                int maxWidth = DropDownWidth(comboBoxEquipment);
+                if (maxWidth > width)
+                {
+                    comboBoxEquipment.DropDownWidth = maxWidth;
+                }
+
             }
             catch (Exception ex)
             {
                 tran.Rollback();
                 MessageBox.Show(ex.Message, "Error in btnAdd");
             }
+        }
+
+        private int DropDownWidth(ComboBox myCombo)
+        {
+            //Credits: stackoverflow.com/a/16435431
+            int maxWidth = 0, temp = 0;
+            foreach (var obj in myCombo.Items)
+            {
+                temp = TextRenderer.MeasureText(myCombo.GetItemText(obj), myCombo.Font).Width;
+                if (temp > maxWidth)
+                {
+                    maxWidth = temp;
+                }
+            }
+            return maxWidth + SystemInformation.VerticalScrollBarWidth;
         }
 
         public string DateOf(DateTime dateTime)
@@ -595,15 +638,15 @@ namespace FilmStudio
 
                 if (type == "Student")
                 {
-                    cmd.CommandText = "select HabibID from " + type + "s";
+                    cmd.CommandText = "select HabibID from " + type + "s order by HabibID";
                 }
                 else if (type == "Instructor")
                 {
-                    cmd.CommandText = "select HabibID from " + type + "s";
+                    cmd.CommandText = "select HabibID from " + type + "s order by HabibID";
                 }
                 else if (type == "Staff")
                 {
-                    cmd.CommandText = "select HabibID from " + type;
+                    cmd.CommandText = "select HabibID from " + type + " order by HabibID";
                 }
                 else
                 {
@@ -627,6 +670,13 @@ namespace FilmStudio
                     comboBoxID.Items.Add(rd["HabibID"]);
                 }
                 rd.Close();
+
+                int width = comboBoxID.DropDownWidth;
+                int maxWidth = DropDownWidth(comboBoxID);
+                if (maxWidth > width)
+                {
+                    comboBoxID.DropDownWidth = maxWidth;
+                }
             }
             catch (Exception ex)
             {
@@ -697,6 +747,12 @@ namespace FilmStudio
                         comboBoxCourse.Items.Add(rd["CourseName"]);
                     }
                     rd.Close();
+                    int width = comboBoxCourse.DropDownWidth;
+                    int maxWidth = DropDownWidth(comboBoxCourse);
+                    if (maxWidth > width)
+                    {
+                        comboBoxCourse.DropDownWidth = maxWidth;
+                    }
                 }
                 else if (myBooking.BookedBy == "Instructor")
                 {
@@ -808,6 +864,12 @@ namespace FilmStudio
                     comboBoxInstructor.Items.Add(rd["Name"]);
                 }
                 rd.Close();
+                int width = comboBoxInstructor.DropDownWidth;
+                int maxWidth = DropDownWidth(comboBoxInstructor);
+                if (maxWidth > width)
+                {
+                    comboBoxInstructor.DropDownWidth = maxWidth;
+                }
                 comboBoxInstructor.SelectedIndex = 0;
             }
             catch (Exception ex)
@@ -907,6 +969,12 @@ namespace FilmStudio
             {
                 MessageBox.Show(ex.Message, "Error in fetching enrolments");
             }
+        }
+
+        private void comboBoxEquipment_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Equipment eq = (Equipment)comboBoxEquipment.SelectedItem;
+            txtEquipment.Text = eq.Description;
         }
     }
 }
