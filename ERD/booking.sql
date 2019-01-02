@@ -1,4 +1,10 @@
 
+DBCC CHECKIDENT (Equipments, RESEED, 0);
+
+delete from Students where StudentID >2
+
+delete from Equipments where EquipmentID > 0
+
 insert into Instructors (Name, Email,Contact) values ('Aaron Mulvany','aaron.mulvany@ahss.habib.edu.pk','03210321321')
 
 select * from Instructors
@@ -42,6 +48,10 @@ delete from Bookings where BookingID = 19
 insert into Bookings (UserID,Notes,BookedBy,BookingDate,BookingTime,IssueDate,IssueTime,DueDate,DueTime,ReturnDate,ReturnTime)
 values (1, 'Note','Instructor','2018-12-30','11:1:2','2018-12-29','12:00:00','2018-12-30','09:00:00','2018-12-30','18:00:00')
 
+select * from Equipments
+
+select * from BookedItems
+
 select * from Bookings
 
 select * from BookingsByStudents
@@ -73,7 +83,7 @@ QuantityAvailable = 3
 where EquipmentID = 1
 
 insert into Equipments (Description,QuantityAvailable,QuantityBooked)
-values ('c',3,0)
+values ('ab',10,0)
 
 select EquipmentID,QuantityAvailable,QuantityBooked from Equipments where Description = 'Camera'
 
