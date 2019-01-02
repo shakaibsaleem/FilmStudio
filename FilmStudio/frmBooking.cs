@@ -18,29 +18,27 @@ namespace FilmStudio
         mySQLcon myCon;
         SqlConnection con;
 
+        string mode;
+
         public frmBooking()
         {
             InitializeComponent();
             myEquipment = new Equipment();
-            myBooking = new Booking(
-                currentUser: new User(),
-                currentCourse: new Course(),
-                currentInstructor: new Instructor(),
-                currentStaff: new Staff(),
-                currentEnrolment: new Enrolment(),
-                currentStudent: new Student(),
-                iD: "0",
-                issuedOn: DateTime.Now.AddDays(1),
-                dueOn: DateTime.Now.AddDays(3),
-                returnedOn: DateTime.Now.AddDays(2),
-                bookedOn: DateTime.Now,
-                notes: "",
-                bookedBy: ""
-                );
+            myBooking = new Booking();
+            mode = "";
         }
-        
-        public frmBooking(Booking bk)
+
+        public frmBooking(string m)
         {
+            InitializeComponent();
+            myEquipment = new Equipment();
+            myBooking = new Booking();
+            mode = m;
+        }
+
+        public frmBooking(Booking bk, string m)
+        {
+            InitializeComponent();
             myEquipment = new Equipment();
             myBooking = new Booking(
                 currentUser: new User(),
@@ -55,8 +53,10 @@ namespace FilmStudio
                 returnedOn: bk.ReturnedOn,
                 bookedOn: bk.BookedOn,
                 notes: bk.Notes,
-                bookedBy: bk.BookedBy
+                bookedBy: bk.BookedBy,
+                project: bk.Project
                 );
+            mode = m;
         }
 
         private void frmBooking_Load(object sender, EventArgs e)
@@ -66,35 +66,37 @@ namespace FilmStudio
 
             dateTimeIssued.Value = myBooking.IssuedOn;
             dateTimeDue.Value = myBooking.DueOn;
-            txtAssignment.Text = "";
-            txtEquipment.Text = myEquipment.Description;
+            txtAssignment.Text = myBooking.Project;
+            //txtEquipment.Text = myEquipment.Description;
+            //comboBoxEquipment.SelectedIndex = comboBoxEquipment.Items.IndexOf(myEquipment.Description);
             txtEquipment.Visible = false;
             numQuantity.Value = 1;
             rbtnStudent.Select();
             btnAdd.Select();
             UpdateEnabled("Load");
+            mode = "Load";
         }
 
         private void btnAddEquipment_Click(object sender, EventArgs e)
         {
             // check for duplication
-            ListViewItem listViewItem = listViewBooking.FindItemWithText(txtEquipment.Text);
+            ListViewItem listViewItem = listViewBooking.FindItemWithText(myEquipment.Description);
             if (listViewItem == null)
             {
                 // no duplicates
                 // Adding values from text boxes to list view
-                listViewItem = new ListViewItem(txtEquipment.Text);
+                listViewItem = new ListViewItem(myEquipment.Description);
                 listViewItem.SubItems.Add(numQuantity.Value.ToString());
                 listViewBooking.Items.Add(listViewItem);
             }
-            else if (listViewItem.SubItems[0].Text == txtEquipment.Text)
+            else if (listViewItem.SubItems[0].Text == myEquipment.Description)
             {
                 // if item exists, update quantity instead of adding as a duplicate entry
                 int i = listViewBooking.Items.IndexOf(listViewItem);
                 ListViewItem.ListViewSubItem subItem = listViewBooking.Items[i].SubItems[1];
                 int q = Convert.ToInt32(subItem.Text);
                 listViewBooking.Items.RemoveAt(i);
-                listViewItem = new ListViewItem(txtEquipment.Text);
+                listViewItem = new ListViewItem(myEquipment.Description);
                 int qNew = Convert.ToInt32(numQuantity.Value) + q;
                 listViewItem.SubItems.Add(qNew.ToString());
                 listViewBooking.Items.Add(listViewItem);
@@ -103,30 +105,23 @@ namespace FilmStudio
             {
                 // only partial match, so not a duplicate
                 // Adding values from text boxes to list view
-                listViewItem = new ListViewItem(txtEquipment.Text);
+                listViewItem = new ListViewItem(myEquipment.Description);
                 listViewItem.SubItems.Add(numQuantity.Value.ToString());
                 listViewBooking.Items.Add(listViewItem);
             }
-            txtEquipment.Clear();
+            //txtEquipment.Clear();
+            myEquipment.Description = "";
+            txtAvailable.Clear();
+            txtBooked.Clear();
             numQuantity.Value = 1;
             comboBoxEquipment.ResetText();
             comboBoxEquipment.Select();
+            btnAddEquipment.Enabled = false;
         }
 
-        private void txtEquipment_TextChanged(object sender, EventArgs e) => CheckEnableAdd();
-
-        private void numQuantity_ValueChanged(object sender, EventArgs e) => CheckEnableAdd();
-
-        private void CheckEnableAdd()
+        private void numQuantity_ValueChanged(object sender, EventArgs e)
         {
-            if (txtEquipment.TextLength == 0 || Convert.ToInt32(numQuantity.Value) == 0)
-            {
-                btnAddEquipment.Enabled = false;
-            }
-            else
-            {
-                btnAddEquipment.Enabled = true;
-            }
+            btnAddEquipment.Enabled = Convert.ToInt32(numQuantity.Value) > 0;
         }
 
         private void numQuantity_KeyPress(object sender, KeyPressEventArgs e)
@@ -140,7 +135,23 @@ namespace FilmStudio
 
         private void btnClose_Click(object sender, EventArgs e)
         {
-            Close();
+            if (mode == "Edit")
+            {
+                DialogResult dialogResult = MessageBox.Show("Any unsaved changes will be lost.", 
+                    "Are you sure you want to close?", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    Close();
+                }
+                else if (dialogResult == DialogResult.No)
+                {
+                    btnSave.Select();
+                }
+            }
+            else if (mode == "Save")
+            {
+                Close();
+            }
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -173,22 +184,38 @@ namespace FilmStudio
 
                 //MessageBox.Show("Booking ID is: " + myBooking.ID, "Booking Created");
                 UpdateEnabled("Add");
+                UpdateComboBoxEquipment();
+                mode = "Edit";
+            }
+            catch (Exception ex)
+            {
+                tran.Rollback();
+                MessageBox.Show(ex.Message, "Error in btnAdd");
+            }
+        }
 
-                Equipment eq;
-                string d = "";
-                int qtyA, qtyB;
+        public void UpdateComboBoxEquipment()
+        {
+            Equipment eq;
+            string d = "";
+            int qtyA, qtyB;
+
+            try
+            {
+                comboBoxEquipment.Items.Clear();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.Text;
 
                 cmd.CommandText = "select Description,QuantityBooked,QuantityAvailable from Equipments order by Description";
-                rd = cmd.ExecuteReader();
+                SqlDataReader rd = cmd.ExecuteReader();
                 while (rd.Read())
                 {
-                    qtyA = Convert.ToInt32(rd[1].ToString());
-                    qtyB = Convert.ToInt32(rd[2].ToString());
+                    qtyA = Convert.ToInt32(rd[2].ToString());
+                    qtyB = Convert.ToInt32(rd[1].ToString());
                     d = rd[0].ToString();
-                    eq = new Equipment(qtyA,qtyB,d);
+                    eq = new Equipment(qtyA, qtyB, d);
                     comboBoxEquipment.Items.Add(eq);
-                    //comboBoxEquipment.Items.Add(rd[0].ToString());
-                    //comboBoxEquipment.Items.Add(rd[0].ToString()+" - "+ rd[1].ToString() + " booked, " + rd[2].ToString() + " available");
                 }
                 rd.Close();
 
@@ -198,12 +225,10 @@ namespace FilmStudio
                 {
                     comboBoxEquipment.DropDownWidth = maxWidth;
                 }
-
             }
             catch (Exception ex)
             {
-                tran.Rollback();
-                MessageBox.Show(ex.Message, "Error in btnAdd");
+                MessageBox.Show(ex.Message, "Error in UpdateComboBoxEquipment()");
             }
         }
 
@@ -226,6 +251,16 @@ namespace FilmStudio
         {
             string str = dateTime.ToString("yyyy-MM-dd");
             return str;
+        }
+
+        public DateTime DateTimeOf(string date, string time)
+        {
+            DateTime dateTime;
+            dateTime = Convert.ToDateTime(date);
+            date = dateTime.ToString("dd-MM-yyyy");
+            dateTime = Convert.ToDateTime(date + " " + time);
+            //MessageBox.Show(dateTime.ToString());
+            return dateTime;
         }
 
         public string TimeOf(DateTime dateTime)
@@ -469,7 +504,7 @@ namespace FilmStudio
                         " where EquipmentID = " + id;
                         cmd.ExecuteNonQuery();
                     }
-
+                    rd.Close();
                     cmd.CommandText = "delete from BookedItems where EquipmentID = " 
                         + id + " and BookingID = " + myBooking.ID;
                     cmd.ExecuteNonQuery();
@@ -478,6 +513,7 @@ namespace FilmStudio
                 tran.Commit();
                 //MessageBox.Show("Press OK to continue", "Saved successfully");
                 UpdateEnabled("Save");
+                mode = "Save";
             }
             catch (Exception ex)
             {
@@ -500,6 +536,7 @@ namespace FilmStudio
         {
             if (e == "Save")
             {
+                btnAddEquipment.Enabled = false;
                 btnPrevious.Enabled = true;
                 btnNext.Enabled = true;
                 btnEdit.Enabled = true;
@@ -519,6 +556,7 @@ namespace FilmStudio
             }
             else if (e == "Add")
             {
+                btnAddEquipment.Enabled = false;
                 btnAdd.Enabled = false;
                 btnSave.Enabled = false;
 
@@ -532,6 +570,7 @@ namespace FilmStudio
             }
             else if (e == "Load")
             {
+                btnAddEquipment.Enabled = false;
                 btnPrevious.Enabled = false;
                 btnNext.Enabled = false;
                 btnEdit.Enabled = false;
@@ -548,6 +587,7 @@ namespace FilmStudio
             }
             else if (e == "Edit")
             {
+                btnAddEquipment.Enabled = false;
                 btnPrevious.Enabled = false;
                 btnNext.Enabled = false;
                 btnEdit.Enabled = false;
@@ -598,6 +638,8 @@ namespace FilmStudio
         private void btnEdit_Click(object sender, EventArgs e)
         {
             UpdateEnabled("Edit");
+            UpdateComboBoxEquipment();
+            mode = "Edit";
         }
 
         private void listViewBooking_KeyDown(object sender, KeyEventArgs e)
@@ -616,16 +658,167 @@ namespace FilmStudio
 
         private void btnNext_Click(object sender, EventArgs e)
         {
-            myBooking.CurrentEnrolment.ID = "2";
-            myBooking.CurrentInstructor.ID = "2";
-            myBooking.CurrentStaff.ID = "2";
+            if (mode == "Edit")
+            {
+                DialogResult dialogResult = MessageBox.Show("Any unsaved changes will be lost.",
+                    "Are you sure you want to close?", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    AdvanceTo("NextRecord", myBooking.ID);
+                }
+                else if (dialogResult == DialogResult.No)
+                {
+                    btnSave.Select();
+                }
+            }
+            else if (mode == "Save")
+            {
+                AdvanceTo("NextRecord", myBooking.ID);
+            }
+        }
+
+        public void AdvanceTo(string record, string id)
+        {
+            SqlDataReader rd;
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = con;
+            cmd.CommandType = CommandType.Text;
+
+            try
+            {
+                if (record == "NextRecord")
+                {
+                    cmd.CommandText = "select * from (select lead(BookingID) over " +
+                        "(order by BookingID) NextValue, BookingID from Bookings) as " +
+                        "NewTable where NewTable.BookingID = " + id;
+                    rd = cmd.ExecuteReader();
+                    if (rd.Read())
+                    {
+                        id = rd[0].ToString();
+                        if (id == "")
+                        {
+                            MessageBox.Show("The last available record is currently loaded", "No next record");
+                            rd.Close();
+                            return;
+                        }
+                        else
+                        {
+                            MessageBox.Show(id, "Next record found");
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show(id, "Next record not found");
+                    }
+                    rd.Close();
+                    //MessageBox.Show("ID = " + id, "Loading next record");
+                    //LoadRecord(id: id);
+                }
+                else if (record == "PrevRecord")
+                {
+                    cmd.CommandText = "select * from (select lag(BookingID) over " +
+                        "(order by BookingID) PrevValue, BookingID from Bookings) as " +
+                        "NewTable where NewTable.BookingID = " + id;
+                    rd = cmd.ExecuteReader();
+                    if (rd.Read())
+                    {
+                        id = rd[0].ToString();
+                        if (id == "")
+                        {
+                            MessageBox.Show("The first available record is currently loaded", "No previous record");
+                            rd.Close();
+                            return;
+                        }
+                        else
+                        {
+                            MessageBox.Show(id, "Previous record found");
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show(id, "Previous record not found");
+                    }
+                    rd.Close();
+                    //MessageBox.Show("ID = " + id, "Loading previous record");
+                }
+                else
+                {
+                    MessageBox.Show("Incorrect value for record: " + record, "Error in AdvanceTo()");
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message,"Error in AdvanceTo()");
+            }
+            LoadRecord(id: id);
+        }
+
+        public void LoadRecord(string id)
+        {
+            //SqlTransaction tran = con.BeginTransaction();
+            string date, time;
+            try
+            {
+                SqlDataReader rd;
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = con;
+                //cmd.Transaction = tran;
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = "select UserID,Notes,BookedBy,BookingDate,BookingTime,IssueDate," +
+                    "IssueTime,DueDate,DueTime,ReturnDate,ReturnTime from Bookings where BookingID = " + id;
+                rd = cmd.ExecuteReader();
+                if (rd.Read())
+                {
+                    myBooking.ID = id;
+                    myBooking.CurrentUser.UserID = rd[0].ToString();
+                    myBooking.Notes = rd[1].ToString();
+                    myBooking.BookedBy = rd[2].ToString();
+                    date = rd[3].ToString();
+                    time = rd[4].ToString();
+                    myBooking.BookedOn = DateTimeOf(date: date,time: time);
+                    date = rd[5].ToString();
+                    time = rd[6].ToString();
+                    myBooking.IssuedOn = DateTimeOf(date: date, time: time);
+                    date = rd[7].ToString();
+                    time = rd[8].ToString();
+                    myBooking.DueOn = DateTimeOf(date: date, time: time);
+                    date = rd[9].ToString();
+                    time = rd[10].ToString();
+                    myBooking.ReturnedOn = DateTimeOf(date: date, time: time);
+                }
+                rd.Close();
+                //tran.Commit();
+            }
+            catch (Exception ex)
+            {
+                //tran.Rollback();
+                MessageBox.Show(ex.Message, "Error in LoadRecord()");
+            }
+            dateTimeIssued.Value = myBooking.IssuedOn;
+            dateTimeDue.Value = myBooking.DueOn;
+            //set remaining fields
         }
 
         private void btnPrevious_Click(object sender, EventArgs e)
         {
-            myBooking.CurrentEnrolment.ID = "1";
-            myBooking.CurrentInstructor.ID = "1";
-            myBooking.CurrentStaff.ID = "1";
+            if (mode == "Edit")
+            {
+                DialogResult dialogResult = MessageBox.Show("Any unsaved changes will be lost.",
+                    "Are you sure you want to close?", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    AdvanceTo("PrevRecord", myBooking.ID);
+                }
+                else if (dialogResult == DialogResult.No)
+                {
+                    btnSave.Select();
+                }
+            }
+            else if (mode == "Save")
+            {
+                AdvanceTo("PrevRecord", myBooking.ID);
+            }
         }
 
         private void UpdateBookingDetails(string type)
@@ -974,7 +1167,12 @@ namespace FilmStudio
         private void comboBoxEquipment_SelectedIndexChanged(object sender, EventArgs e)
         {
             Equipment eq = (Equipment)comboBoxEquipment.SelectedItem;
-            txtEquipment.Text = eq.Description;
+            //txtEquipment.Text = eq.Description;
+            myEquipment.Description = eq.Description;
+            txtAvailable.Text = eq.QtyAvailable.ToString();
+            txtBooked.Text = eq.QtyBooked.ToString();
+
+            btnAddEquipment.Enabled = comboBoxEquipment.SelectedIndex >= 0;
         }
     }
 }
