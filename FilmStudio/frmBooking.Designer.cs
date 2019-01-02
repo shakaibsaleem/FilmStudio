@@ -64,13 +64,13 @@
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnAdd = new System.Windows.Forms.Button();
             this.groupBoxEquipment = new System.Windows.Forms.GroupBox();
+            this.lblBooked = new System.Windows.Forms.Label();
+            this.txtBooked = new System.Windows.Forms.TextBox();
+            this.txtAvailable = new System.Windows.Forms.TextBox();
+            this.lblAvailable = new System.Windows.Forms.Label();
+            this.comboBoxEquipment = new System.Windows.Forms.ComboBox();
             this.numQuantity = new System.Windows.Forms.NumericUpDown();
             this.txtNotes = new System.Windows.Forms.TextBox();
-            this.comboBoxEquipment = new System.Windows.Forms.ComboBox();
-            this.lblAvailable = new System.Windows.Forms.Label();
-            this.txtAvailable = new System.Windows.Forms.TextBox();
-            this.txtBooked = new System.Windows.Forms.TextBox();
-            this.lblBooked = new System.Windows.Forms.Label();
             this.groupBoxBooking.SuspendLayout();
             this.groupBoxBookedFor.SuspendLayout();
             this.groupBoxEquipment.SuspendLayout();
@@ -198,7 +198,6 @@
             this.txtEquipment.Name = "txtEquipment";
             this.txtEquipment.Size = new System.Drawing.Size(100, 20);
             this.txtEquipment.TabIndex = 6;
-            this.txtEquipment.TextChanged += new System.EventHandler(this.txtEquipment_TextChanged);
             // 
             // lblQuantity
             // 
@@ -446,6 +445,51 @@
             this.groupBoxEquipment.TabStop = false;
             this.groupBoxEquipment.Text = "Equipment Details";
             // 
+            // lblBooked
+            // 
+            this.lblBooked.AutoSize = true;
+            this.lblBooked.Location = new System.Drawing.Point(182, 50);
+            this.lblBooked.Name = "lblBooked";
+            this.lblBooked.Size = new System.Drawing.Size(47, 13);
+            this.lblBooked.TabIndex = 115;
+            this.lblBooked.Text = "Booked:";
+            // 
+            // txtBooked
+            // 
+            this.txtBooked.Location = new System.Drawing.Point(231, 47);
+            this.txtBooked.Name = "txtBooked";
+            this.txtBooked.ReadOnly = true;
+            this.txtBooked.Size = new System.Drawing.Size(100, 20);
+            this.txtBooked.TabIndex = 114;
+            // 
+            // txtAvailable
+            // 
+            this.txtAvailable.Location = new System.Drawing.Point(76, 47);
+            this.txtAvailable.Name = "txtAvailable";
+            this.txtAvailable.ReadOnly = true;
+            this.txtAvailable.Size = new System.Drawing.Size(100, 20);
+            this.txtAvailable.TabIndex = 113;
+            // 
+            // lblAvailable
+            // 
+            this.lblAvailable.AutoSize = true;
+            this.lblAvailable.Location = new System.Drawing.Point(6, 50);
+            this.lblAvailable.Name = "lblAvailable";
+            this.lblAvailable.Size = new System.Drawing.Size(53, 13);
+            this.lblAvailable.TabIndex = 112;
+            this.lblAvailable.Text = "Available:";
+            // 
+            // comboBoxEquipment
+            // 
+            this.comboBoxEquipment.DropDownHeight = 80;
+            this.comboBoxEquipment.FormattingEnabled = true;
+            this.comboBoxEquipment.IntegralHeight = false;
+            this.comboBoxEquipment.Location = new System.Drawing.Point(76, 18);
+            this.comboBoxEquipment.Name = "comboBoxEquipment";
+            this.comboBoxEquipment.Size = new System.Drawing.Size(313, 21);
+            this.comboBoxEquipment.TabIndex = 111;
+            this.comboBoxEquipment.SelectedIndexChanged += new System.EventHandler(this.comboBoxEquipment_SelectedIndexChanged);
+            // 
             // numQuantity
             // 
             this.numQuantity.Location = new System.Drawing.Point(455, 19);
@@ -469,51 +513,6 @@
             this.txtNotes.TabIndex = 120;
             this.txtNotes.Text = "Notes";
             this.txtNotes.TextChanged += new System.EventHandler(this.txtNotes_TextChanged);
-            // 
-            // comboBoxEquipment
-            // 
-            this.comboBoxEquipment.DropDownHeight = 80;
-            this.comboBoxEquipment.FormattingEnabled = true;
-            this.comboBoxEquipment.IntegralHeight = false;
-            this.comboBoxEquipment.Location = new System.Drawing.Point(76, 18);
-            this.comboBoxEquipment.Name = "comboBoxEquipment";
-            this.comboBoxEquipment.Size = new System.Drawing.Size(313, 21);
-            this.comboBoxEquipment.TabIndex = 111;
-            this.comboBoxEquipment.SelectedIndexChanged += new System.EventHandler(this.comboBoxEquipment_SelectedIndexChanged);
-            // 
-            // lblAvailable
-            // 
-            this.lblAvailable.AutoSize = true;
-            this.lblAvailable.Location = new System.Drawing.Point(6, 50);
-            this.lblAvailable.Name = "lblAvailable";
-            this.lblAvailable.Size = new System.Drawing.Size(53, 13);
-            this.lblAvailable.TabIndex = 112;
-            this.lblAvailable.Text = "Available:";
-            // 
-            // txtAvailable
-            // 
-            this.txtAvailable.Location = new System.Drawing.Point(76, 47);
-            this.txtAvailable.Name = "txtAvailable";
-            this.txtAvailable.ReadOnly = true;
-            this.txtAvailable.Size = new System.Drawing.Size(100, 20);
-            this.txtAvailable.TabIndex = 113;
-            // 
-            // txtBooked
-            // 
-            this.txtBooked.Location = new System.Drawing.Point(231, 47);
-            this.txtBooked.Name = "txtBooked";
-            this.txtBooked.ReadOnly = true;
-            this.txtBooked.Size = new System.Drawing.Size(100, 20);
-            this.txtBooked.TabIndex = 114;
-            // 
-            // lblBooked
-            // 
-            this.lblBooked.AutoSize = true;
-            this.lblBooked.Location = new System.Drawing.Point(182, 50);
-            this.lblBooked.Name = "lblBooked";
-            this.lblBooked.Size = new System.Drawing.Size(47, 13);
-            this.lblBooked.TabIndex = 115;
-            this.lblBooked.Text = "Booked:";
             // 
             // frmBooking
             // 
