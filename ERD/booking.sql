@@ -43,10 +43,21 @@ ReturnDate = '2019-01-01',
 ReturnTime = '22:32:00'
 where BookingID = 1
 
-delete from Bookings where BookingID = 19
+delete from Bookings where BookingID = 21
 
 insert into Bookings (UserID,Notes,BookedBy,BookingDate,BookingTime,IssueDate,IssueTime,DueDate,DueTime,ReturnDate,ReturnTime)
 values (1, 'Note','Instructor','2018-12-30','11:1:2','2018-12-29','12:00:00','2018-12-30','09:00:00','2018-12-30','18:00:00')
+
+select UserID,Notes,BookedBy,BookingDate,BookingTime,IssueDate,IssueTime,DueDate,DueTime,ReturnDate,ReturnTime
+from Bookings
+where BookingID = 1
+
+select * from (SELECT LAG(BookingID) OVER (ORDER BY BookingID) PreviousValue, BookingID FROM Bookings) as newtable
+where newtable.BookingID = 1
+
+select * from (SELECT LEAD(BookingID) OVER (ORDER BY BookingID) NextValue, BookingID FROM Bookings) as newtable
+WHERE newtable.BookingID = 25
+
 
 select * from Equipments
 
