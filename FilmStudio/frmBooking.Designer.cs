@@ -66,6 +66,11 @@
             this.groupBoxEquipment = new System.Windows.Forms.GroupBox();
             this.numQuantity = new System.Windows.Forms.NumericUpDown();
             this.txtNotes = new System.Windows.Forms.TextBox();
+            this.comboBoxEquipment = new System.Windows.Forms.ComboBox();
+            this.lblAvailable = new System.Windows.Forms.Label();
+            this.txtAvailable = new System.Windows.Forms.TextBox();
+            this.txtBooked = new System.Windows.Forms.TextBox();
+            this.lblBooked = new System.Windows.Forms.Label();
             this.groupBoxBooking.SuspendLayout();
             this.groupBoxBookedFor.SuspendLayout();
             this.groupBoxEquipment.SuspendLayout();
@@ -189,9 +194,9 @@
             // 
             // txtEquipment
             // 
-            this.txtEquipment.Location = new System.Drawing.Point(76, 19);
+            this.txtEquipment.Location = new System.Drawing.Point(243, 16);
             this.txtEquipment.Name = "txtEquipment";
-            this.txtEquipment.Size = new System.Drawing.Size(313, 20);
+            this.txtEquipment.Size = new System.Drawing.Size(100, 20);
             this.txtEquipment.TabIndex = 6;
             this.txtEquipment.TextChanged += new System.EventHandler(this.txtEquipment_TextChanged);
             // 
@@ -227,7 +232,9 @@
             // 
             // comboBoxInstructor
             // 
+            this.comboBoxInstructor.DropDownHeight = 80;
             this.comboBoxInstructor.FormattingEnabled = true;
+            this.comboBoxInstructor.IntegralHeight = false;
             this.comboBoxInstructor.Location = new System.Drawing.Point(455, 42);
             this.comboBoxInstructor.Name = "comboBoxInstructor";
             this.comboBoxInstructor.Size = new System.Drawing.Size(100, 21);
@@ -236,7 +243,9 @@
             // 
             // comboBoxID
             // 
+            this.comboBoxID.DropDownHeight = 80;
             this.comboBoxID.FormattingEnabled = true;
+            this.comboBoxID.IntegralHeight = false;
             this.comboBoxID.Location = new System.Drawing.Point(76, 15);
             this.comboBoxID.Name = "comboBoxID";
             this.comboBoxID.Size = new System.Drawing.Size(100, 21);
@@ -245,7 +254,9 @@
             // 
             // comboBoxCourse
             // 
+            this.comboBoxCourse.DropDownHeight = 80;
             this.comboBoxCourse.FormattingEnabled = true;
+            this.comboBoxCourse.IntegralHeight = false;
             this.comboBoxCourse.Location = new System.Drawing.Point(231, 42);
             this.comboBoxCourse.Name = "comboBoxCourse";
             this.comboBoxCourse.Size = new System.Drawing.Size(158, 21);
@@ -304,6 +315,7 @@
             this.groupBoxBookedFor.Controls.Add(this.rbtnStaff);
             this.groupBoxBookedFor.Controls.Add(this.rbtnInstructor);
             this.groupBoxBookedFor.Controls.Add(this.rbtnStudent);
+            this.groupBoxBookedFor.Controls.Add(this.txtEquipment);
             this.groupBoxBookedFor.Location = new System.Drawing.Point(12, 38);
             this.groupBoxBookedFor.Name = "groupBoxBookedFor";
             this.groupBoxBookedFor.Size = new System.Drawing.Size(561, 42);
@@ -418,10 +430,14 @@
             // 
             // groupBoxEquipment
             // 
+            this.groupBoxEquipment.Controls.Add(this.lblBooked);
+            this.groupBoxEquipment.Controls.Add(this.txtBooked);
+            this.groupBoxEquipment.Controls.Add(this.txtAvailable);
+            this.groupBoxEquipment.Controls.Add(this.lblAvailable);
+            this.groupBoxEquipment.Controls.Add(this.comboBoxEquipment);
             this.groupBoxEquipment.Controls.Add(this.numQuantity);
             this.groupBoxEquipment.Controls.Add(this.btnAddEquipment);
             this.groupBoxEquipment.Controls.Add(this.lblQuantity);
-            this.groupBoxEquipment.Controls.Add(this.txtEquipment);
             this.groupBoxEquipment.Controls.Add(this.lblEquipment);
             this.groupBoxEquipment.Location = new System.Drawing.Point(12, 161);
             this.groupBoxEquipment.Name = "groupBoxEquipment";
@@ -453,6 +469,51 @@
             this.txtNotes.TabIndex = 120;
             this.txtNotes.Text = "Notes";
             this.txtNotes.TextChanged += new System.EventHandler(this.txtNotes_TextChanged);
+            // 
+            // comboBoxEquipment
+            // 
+            this.comboBoxEquipment.DropDownHeight = 80;
+            this.comboBoxEquipment.FormattingEnabled = true;
+            this.comboBoxEquipment.IntegralHeight = false;
+            this.comboBoxEquipment.Location = new System.Drawing.Point(76, 18);
+            this.comboBoxEquipment.Name = "comboBoxEquipment";
+            this.comboBoxEquipment.Size = new System.Drawing.Size(313, 21);
+            this.comboBoxEquipment.TabIndex = 111;
+            this.comboBoxEquipment.SelectedIndexChanged += new System.EventHandler(this.comboBoxEquipment_SelectedIndexChanged);
+            // 
+            // lblAvailable
+            // 
+            this.lblAvailable.AutoSize = true;
+            this.lblAvailable.Location = new System.Drawing.Point(6, 50);
+            this.lblAvailable.Name = "lblAvailable";
+            this.lblAvailable.Size = new System.Drawing.Size(53, 13);
+            this.lblAvailable.TabIndex = 112;
+            this.lblAvailable.Text = "Available:";
+            // 
+            // txtAvailable
+            // 
+            this.txtAvailable.Location = new System.Drawing.Point(76, 47);
+            this.txtAvailable.Name = "txtAvailable";
+            this.txtAvailable.ReadOnly = true;
+            this.txtAvailable.Size = new System.Drawing.Size(100, 20);
+            this.txtAvailable.TabIndex = 113;
+            // 
+            // txtBooked
+            // 
+            this.txtBooked.Location = new System.Drawing.Point(231, 47);
+            this.txtBooked.Name = "txtBooked";
+            this.txtBooked.ReadOnly = true;
+            this.txtBooked.Size = new System.Drawing.Size(100, 20);
+            this.txtBooked.TabIndex = 114;
+            // 
+            // lblBooked
+            // 
+            this.lblBooked.AutoSize = true;
+            this.lblBooked.Location = new System.Drawing.Point(182, 50);
+            this.lblBooked.Name = "lblBooked";
+            this.lblBooked.Size = new System.Drawing.Size(47, 13);
+            this.lblBooked.TabIndex = 115;
+            this.lblBooked.Text = "Booked:";
             // 
             // frmBooking
             // 
@@ -530,5 +591,10 @@
         private System.Windows.Forms.ComboBox comboBoxID;
         private System.Windows.Forms.ComboBox comboBoxCourse;
         private System.Windows.Forms.ComboBox comboBoxInstructor;
+        private System.Windows.Forms.ComboBox comboBoxEquipment;
+        private System.Windows.Forms.Label lblBooked;
+        private System.Windows.Forms.TextBox txtBooked;
+        private System.Windows.Forms.TextBox txtAvailable;
+        private System.Windows.Forms.Label lblAvailable;
     }
 }
