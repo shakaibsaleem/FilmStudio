@@ -18,6 +18,9 @@ values ('xx01234','Fname Lname','habibID@st.habib.edu.pk','+923210123456')
 
 select * from Students
 
+select HabibID from Students
+order by HabibID
+
 insert into Courses (CourseName,CourseCode)
 values ('New Course','CRS103')
 
