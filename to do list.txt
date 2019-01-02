@@ -2,6 +2,14 @@ remove bug of login trick. strip password string till second last " starting sca
 
 instead of disabling, make text fields read-only, when needed
 
+issue updated when issued
+
+return updated when returned
+
+select equipment from dropdown
+
+show quantity of available equipment
+
 DONE:
 
 change bookings to allow booking to be made for faculty or staff too
