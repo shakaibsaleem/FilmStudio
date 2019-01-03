@@ -559,6 +559,9 @@
             this.Controls.Add(this.dateTimeDue);
             this.Controls.Add(this.lblDue);
             this.Controls.Add(this.lblIssued);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "frmBooking";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Booking Form";
