@@ -72,7 +72,8 @@ namespace FilmStudio
                 }
                 else if (task == "Search")
                 {
-                    MessageBox.Show("Search");
+                    frmSearch frm = new frmSearch();
+                    frm.Show();
                 }
                 else
                 {
