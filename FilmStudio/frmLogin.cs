@@ -15,10 +15,12 @@ namespace FilmStudio
     {
         mySQLcon myCon;
         SqlConnection con;
+        public bool success { get; private set; }
 
         public frmLogin()
         {
             InitializeComponent();
+            success = false;
         }
 
         private void Login_Load(object sender, EventArgs e)
@@ -41,21 +43,28 @@ namespace FilmStudio
             if (0==i)
             {
                 MessageBox.Show("Incorrect Username or Passkey!");
+                txtUsername.Select();
             }
             else
             {
-                string s = "Welcome, "+txtUsername.Text+"!";
-                MessageBox.Show(s);
-                frmBooking f = new frmBooking();
-                f.Show();
-                //frmEquipment f = new frmEquipment();
-                //f.Show();
+                MessageBox.Show("Welcome, " + txtUsername.Text + "!", "Login Successful");
+                success = true;
+                Close();
             }
         }
 
         private void btnClose_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void frmLogin_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // pressing RETURN will perform Login
+            if (e.KeyChar == (char)Keys.Return)
+            {
+                btnLogin.PerformClick();
+            }
         }
     }
 }
