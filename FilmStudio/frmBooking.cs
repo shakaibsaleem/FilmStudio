@@ -25,7 +25,7 @@ namespace FilmStudio
             InitializeComponent();
             myEquipment = new Equipment();
             myBooking = new Booking();
-            mode = "";
+            mode = "Add";
         }
 
         public frmBooking(string m)
@@ -67,14 +67,11 @@ namespace FilmStudio
             dateTimeIssued.Value = myBooking.IssuedOn;
             dateTimeDue.Value = myBooking.DueOn;
             txtAssignment.Text = myBooking.Project;
-            //txtEquipment.Text = myEquipment.Description;
-            //comboBoxEquipment.SelectedIndex = comboBoxEquipment.Items.IndexOf(myEquipment.Description);
-            txtEquipment.Visible = false;
             numQuantity.Value = 1;
             rbtnStudent.Select();
             btnAdd.Select();
             UpdateEnabled("Load");
-            mode = "Load";
+            //mode = "Load";
         }
 
         private void btnAddEquipment_Click(object sender, EventArgs e)
@@ -109,7 +106,6 @@ namespace FilmStudio
                 listViewItem.SubItems.Add(numQuantity.Value.ToString());
                 listViewBooking.Items.Add(listViewItem);
             }
-            //txtEquipment.Clear();
             myEquipment.Description = "";
             txtAvailable.Clear();
             txtBooked.Clear();
@@ -135,7 +131,7 @@ namespace FilmStudio
 
         private void btnClose_Click(object sender, EventArgs e)
         {
-            if (mode == "Edit")
+            if (mode == "Edit" || mode == "Add" || mode == "Load")
             {
                 DialogResult dialogResult = MessageBox.Show("Any unsaved changes will be lost.", 
                     "Are you sure you want to close?", MessageBoxButtons.YesNo);
@@ -185,7 +181,8 @@ namespace FilmStudio
                 //MessageBox.Show("Booking ID is: " + myBooking.ID, "Booking Created");
                 UpdateEnabled("Add");
                 UpdateComboBoxEquipment();
-                mode = "Edit";
+                mode = "Add";
+                groupBoxBookedFor.Focus();
             }
             catch (Exception ex)
             {
@@ -577,7 +574,11 @@ namespace FilmStudio
                 btnSave.Enabled = false;
                 btnDelete.Enabled = false;
 
-                groupBoxBookedFor.Enabled = false;
+                txtHabibID.Visible = false;
+                txtCourse.Visible = false;
+                txtInstructor.Visible = false;
+
+                groupBoxBookedFor.Enabled = true;
                 groupBoxBooking.Enabled = false;
                 groupBoxEquipment.Enabled = false;
 
@@ -658,7 +659,7 @@ namespace FilmStudio
 
         private void btnNext_Click(object sender, EventArgs e)
         {
-            if (mode == "Edit")
+            if (mode == "Edit" || mode == "Load" || mode == "Add")
             {
                 DialogResult dialogResult = MessageBox.Show("Any unsaved changes will be lost.",
                     "Are you sure you want to close?", MessageBoxButtons.YesNo);
@@ -756,15 +757,14 @@ namespace FilmStudio
 
         public void LoadRecord(string id)
         {
-            //SqlTransaction tran = con.BeginTransaction();
+            SqlDataReader rd;
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = con;
+            cmd.CommandType = CommandType.Text;
             string date, time;
             try
             {
-                SqlDataReader rd;
-                SqlCommand cmd = new SqlCommand();
-                cmd.Connection = con;
-                //cmd.Transaction = tran;
-                cmd.CommandType = CommandType.Text;
+                
                 cmd.CommandText = "select UserID,Notes,BookedBy,BookingDate,BookingTime,IssueDate," +
                     "IssueTime,DueDate,DueTime,ReturnDate,ReturnTime from Bookings where BookingID = " + id;
                 rd = cmd.ExecuteReader();
@@ -788,21 +788,42 @@ namespace FilmStudio
                     myBooking.ReturnedOn = DateTimeOf(date: date, time: time);
                 }
                 rd.Close();
-                //tran.Commit();
             }
             catch (Exception ex)
             {
-                //tran.Rollback();
                 MessageBox.Show(ex.Message, "Error in LoadRecord()");
             }
+            UpdateEnabled(myBooking.BookedBy);
+            UpdateBookingDetails(myBooking.BookedBy);
             dateTimeIssued.Value = myBooking.IssuedOn;
             dateTimeDue.Value = myBooking.DueOn;
+            //if (rbtnInstructor.Checked)
+            //{
+            //    myBooking.BookedBy = "Instructor";
+            //    txtHabibID.Text = myBooking.CurrentInstructor.HabibID;
+            //    txtName.Text = myBooking.CurrentInstructor.Name;
+            //    txtContact.Text = myBooking.CurrentInstructor.Contact;
+            //    txtHabibID.Visible = true;
+            //    txtCourse.Visible = true;
+            //    txtInstructor.Visible = true;
+            //}
+            //else if (rbtnStudent.Checked)
+            //{
+            //    myBooking.BookedBy = "Student";
+            //}
+            //else if (rbtnStaff.Checked)
+            //{
+            //    myBooking.BookedBy = "Staff";
+            //    txtHabibID.Text = myBooking.CurrentStaff.HabibID;
+            //    txtName.Text = myBooking.CurrentStaff.Name;
+            //    txtContact.Text = myBooking.CurrentStaff.Contact;
+            //}
             //set remaining fields
         }
 
         private void btnPrevious_Click(object sender, EventArgs e)
         {
-            if (mode == "Edit")
+            if (mode == "Edit" || mode == "Load" || mode == "Add")
             {
                 DialogResult dialogResult = MessageBox.Show("Any unsaved changes will be lost.",
                     "Are you sure you want to close?", MessageBoxButtons.YesNo);
@@ -1167,7 +1188,6 @@ namespace FilmStudio
         private void comboBoxEquipment_SelectedIndexChanged(object sender, EventArgs e)
         {
             Equipment eq = (Equipment)comboBoxEquipment.SelectedItem;
-            //txtEquipment.Text = eq.Description;
             myEquipment.Description = eq.Description;
             txtAvailable.Text = eq.QtyAvailable.ToString();
             txtBooked.Text = eq.QtyBooked.ToString();
