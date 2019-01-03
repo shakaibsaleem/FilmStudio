@@ -229,7 +229,7 @@ namespace FilmStudio
             }
         }
 
-        private int DropDownWidth(ComboBox myCombo)
+        public static int DropDownWidth(ComboBox myCombo)
         {
             //Credits: stackoverflow.com/a/16435431
             int maxWidth = 0, temp = 0;
@@ -244,13 +244,13 @@ namespace FilmStudio
             return maxWidth + SystemInformation.VerticalScrollBarWidth;
         }
 
-        public string DateOf(DateTime dateTime)
+        public static string DateOf(DateTime dateTime)
         {
             string str = dateTime.ToString("yyyy-MM-dd");
             return str;
         }
 
-        public DateTime DateTimeOf(string date, string time)
+        public static DateTime DateTimeOf(string date, string time)
         {
             DateTime dateTime;
             dateTime = Convert.ToDateTime(date);
@@ -260,7 +260,7 @@ namespace FilmStudio
             return dateTime;
         }
 
-        public string TimeOf(DateTime dateTime)
+        public static string TimeOf(DateTime dateTime)
         {
             string str = dateTime.ToString("HH:mm:00");
             return str;
