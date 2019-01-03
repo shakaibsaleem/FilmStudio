@@ -18,7 +18,16 @@ namespace FilmStudio
             Application.SetCompatibleTextRenderingDefault(false);
             //Application.Run(new frmLogin());
             //Application.Run(new frmEquipment());
-            Application.Run(new frmBooking());
+            //Application.Run(new frmBooking());
+            //Application.Run(new frmMenu());
+
+            frmLogin login = new frmLogin();
+            //Application.Run(login);
+            
+            if (!login.success)
+            {
+                Application.Run(new frmMenu());
+            }
         }
     }
 }
