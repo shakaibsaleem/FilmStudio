@@ -8,9 +8,13 @@ return updated when returned
 
 next previous
 
-serach
+search booking using id, item, date, course
 
-menu
+menu fix
+
+fix bug: when add, then previous next etc, error comes
+
+implement: show all details when next, prev and showing search result
 
 DONE:
 
