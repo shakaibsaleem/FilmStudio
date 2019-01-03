@@ -6,9 +6,11 @@ issue updated when issued
 
 return updated when returned
 
-select equipment from dropdown
+next previous
 
-show quantity of available equipment
+serach
+
+menu
 
 DONE:
 
