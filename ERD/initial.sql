@@ -16,7 +16,7 @@ select * from Staff
 insert into Students (HabibID,Name,Email,Contact)
 values ('xx01234','Fname Lname','habibID@st.habib.edu.pk','+923210123456')
 
-select * from Students
+select * from Students where HabibID = 'ms01036'
 
 select HabibID from Students
 order by HabibID
@@ -26,14 +26,18 @@ values ('New Course','CRS103')
 
 select * from Courses
 
+select CourseName from Courses order by CourseName
+
+select Name from Instructors order by Name
+
 insert into Enrolments (CourseID,StudentID,InstructorID,Term)
 values (3,2,2,'Spring2018')
 
 select * from Enrolments
 
-select * from Courses
-
 select * from Students
+
+select * from Courses
 
 select * from Instructors
 
