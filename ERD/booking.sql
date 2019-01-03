@@ -58,6 +58,28 @@ where newtable.BookingID = 1
 select * from (SELECT LEAD(BookingID) OVER (ORDER BY BookingID) NextValue, BookingID FROM Bookings) as newtable
 WHERE newtable.BookingID = 25
 
+insert into Bookings (UserID,Notes,BookedBy,BookingDate,BookingTime,IssueDate,IssueTime,DueDate,DueTime)
+values (1, 'Note','Instructor','2018-12-30','11:1:2','2018-12-29','12:00:00','2018-12-30','09:00:00')
+
+select Bookings.BookingID,Description,Quantity as QuantityIssued,IssueDate,ReturnDate,DueDate,QuantityAvailable,BookedBy,Notes
+from Equipments, BookedItems, Bookings
+where Equipments.EquipmentID=BookedItems.EquipmentID
+and BookedItems.BookingID = Bookings.BookingID
+and Equipments.EquipmentID = 17
+
+select Bookings.BookingID,CourseName,IssueDate,ReturnDate,DueDate,Project
+from Courses,Enrolments,BookingsByStudents,Bookings
+where Courses.CourseID=Enrolments.CourseID
+and Enrolments.EnrolmentID=BookingsByStudents.EnrolmentID
+and BookingsByStudents.BookingID=Bookings.BookingID
+and CourseName = 'Course'
+
+select BookingID,IssueDate,ReturnDate,DueDate,BookedBy,Notes  from Bookings 
+where IssueDate >= '2019-01-03' and IssueDate <= '2019-01-03'
+or ReturnDate = '2019-01-04'
+or DueDate = '2019-01-05'
+
+select Description from Equipments order by Description
 
 select * from Equipments
 
@@ -70,6 +92,14 @@ select * from BookingsByStudents
 select * from BookingsByStaff
 
 select * from BookingsByInstructors
+
+select * from Bookings,BookedItems
+
+select HabibID,IssueDate,ReturnDate,DueDate
+from Bookings, BookingsByStudents, Enrolments, Students
+where Bookings.BookingID=BookingsByStudents.BookingID
+and BookingsByStudents.EnrolmentID=Enrolments.EnrolmentID
+and Enrolments.StudentID=Students.StudentID
 
 delete from BookedItems where BookingID = 1
 
