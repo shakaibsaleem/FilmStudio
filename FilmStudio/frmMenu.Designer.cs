@@ -110,7 +110,10 @@
             this.Controls.Add(this.btnGo);
             this.Controls.Add(this.comboBoxType);
             this.Controls.Add(this.groupBoxTask);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.KeyPreview = true;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "frmMenu";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Menu";
