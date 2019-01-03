@@ -41,7 +41,6 @@
             this.lblInstructor = new System.Windows.Forms.Label();
             this.txtAssignment = new System.Windows.Forms.TextBox();
             this.lblEquipment = new System.Windows.Forms.Label();
-            this.txtEquipment = new System.Windows.Forms.TextBox();
             this.lblQuantity = new System.Windows.Forms.Label();
             this.groupBoxBooking = new System.Windows.Forms.GroupBox();
             this.comboBoxInstructor = new System.Windows.Forms.ComboBox();
@@ -71,6 +70,9 @@
             this.comboBoxEquipment = new System.Windows.Forms.ComboBox();
             this.numQuantity = new System.Windows.Forms.NumericUpDown();
             this.txtNotes = new System.Windows.Forms.TextBox();
+            this.txtHabibID = new System.Windows.Forms.TextBox();
+            this.txtInstructor = new System.Windows.Forms.TextBox();
+            this.txtCourse = new System.Windows.Forms.TextBox();
             this.groupBoxBooking.SuspendLayout();
             this.groupBoxBookedFor.SuspendLayout();
             this.groupBoxEquipment.SuspendLayout();
@@ -192,13 +194,6 @@
             this.lblEquipment.TabIndex = 109;
             this.lblEquipment.Text = "Equipment:";
             // 
-            // txtEquipment
-            // 
-            this.txtEquipment.Location = new System.Drawing.Point(243, 16);
-            this.txtEquipment.Name = "txtEquipment";
-            this.txtEquipment.Size = new System.Drawing.Size(100, 20);
-            this.txtEquipment.TabIndex = 6;
-            // 
             // lblQuantity
             // 
             this.lblQuantity.AutoSize = true;
@@ -210,6 +205,9 @@
             // 
             // groupBoxBooking
             // 
+            this.groupBoxBooking.Controls.Add(this.txtCourse);
+            this.groupBoxBooking.Controls.Add(this.txtInstructor);
+            this.groupBoxBooking.Controls.Add(this.txtHabibID);
             this.groupBoxBooking.Controls.Add(this.comboBoxInstructor);
             this.groupBoxBooking.Controls.Add(this.comboBoxID);
             this.groupBoxBooking.Controls.Add(this.comboBoxCourse);
@@ -314,7 +312,6 @@
             this.groupBoxBookedFor.Controls.Add(this.rbtnStaff);
             this.groupBoxBookedFor.Controls.Add(this.rbtnInstructor);
             this.groupBoxBookedFor.Controls.Add(this.rbtnStudent);
-            this.groupBoxBookedFor.Controls.Add(this.txtEquipment);
             this.groupBoxBookedFor.Location = new System.Drawing.Point(12, 38);
             this.groupBoxBookedFor.Name = "groupBoxBookedFor";
             this.groupBoxBookedFor.Size = new System.Drawing.Size(561, 42);
@@ -514,6 +511,33 @@
             this.txtNotes.Text = "Notes";
             this.txtNotes.TextChanged += new System.EventHandler(this.txtNotes_TextChanged);
             // 
+            // txtHabibID
+            // 
+            this.txtHabibID.Location = new System.Drawing.Point(77, 16);
+            this.txtHabibID.Name = "txtHabibID";
+            this.txtHabibID.ReadOnly = true;
+            this.txtHabibID.Size = new System.Drawing.Size(100, 20);
+            this.txtHabibID.TabIndex = 122;
+            this.txtHabibID.Text = "Habib ID";
+            // 
+            // txtInstructor
+            // 
+            this.txtInstructor.Location = new System.Drawing.Point(456, 43);
+            this.txtInstructor.Name = "txtInstructor";
+            this.txtInstructor.ReadOnly = true;
+            this.txtInstructor.Size = new System.Drawing.Size(100, 20);
+            this.txtInstructor.TabIndex = 123;
+            this.txtInstructor.Text = "Instructor";
+            // 
+            // txtCourse
+            // 
+            this.txtCourse.Location = new System.Drawing.Point(232, 43);
+            this.txtCourse.Name = "txtCourse";
+            this.txtCourse.ReadOnly = true;
+            this.txtCourse.Size = new System.Drawing.Size(158, 20);
+            this.txtCourse.TabIndex = 124;
+            this.txtCourse.Text = "Course";
+            // 
             // frmBooking
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -565,7 +589,6 @@
         private System.Windows.Forms.Label lblInstructor;
         private System.Windows.Forms.TextBox txtAssignment;
         private System.Windows.Forms.Label lblEquipment;
-        private System.Windows.Forms.TextBox txtEquipment;
         private System.Windows.Forms.Label lblQuantity;
         private System.Windows.Forms.GroupBox groupBoxBooking;
         private System.Windows.Forms.ListView listViewBooking;
@@ -595,5 +618,8 @@
         private System.Windows.Forms.TextBox txtBooked;
         private System.Windows.Forms.TextBox txtAvailable;
         private System.Windows.Forms.Label lblAvailable;
+        private System.Windows.Forms.TextBox txtCourse;
+        private System.Windows.Forms.TextBox txtInstructor;
+        private System.Windows.Forms.TextBox txtHabibID;
     }
 }
