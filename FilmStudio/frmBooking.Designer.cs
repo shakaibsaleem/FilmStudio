@@ -43,6 +43,9 @@
             this.lblEquipment = new System.Windows.Forms.Label();
             this.lblQuantity = new System.Windows.Forms.Label();
             this.groupBoxBooking = new System.Windows.Forms.GroupBox();
+            this.txtCourse = new System.Windows.Forms.TextBox();
+            this.txtInstructor = new System.Windows.Forms.TextBox();
+            this.txtHabibID = new System.Windows.Forms.TextBox();
             this.comboBoxInstructor = new System.Windows.Forms.ComboBox();
             this.comboBoxID = new System.Windows.Forms.ComboBox();
             this.comboBoxCourse = new System.Windows.Forms.ComboBox();
@@ -51,7 +54,7 @@
             this.colHeadQuantity = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.dateTimeDue = new System.Windows.Forms.DateTimePicker();
             this.btnAddEquipment = new System.Windows.Forms.Button();
-            this.groupBoxBookedFor = new System.Windows.Forms.GroupBox();
+            this.groupBoxBookedBy = new System.Windows.Forms.GroupBox();
             this.rbtnStaff = new System.Windows.Forms.RadioButton();
             this.rbtnInstructor = new System.Windows.Forms.RadioButton();
             this.rbtnStudent = new System.Windows.Forms.RadioButton();
@@ -70,11 +73,8 @@
             this.comboBoxEquipment = new System.Windows.Forms.ComboBox();
             this.numQuantity = new System.Windows.Forms.NumericUpDown();
             this.txtNotes = new System.Windows.Forms.TextBox();
-            this.txtHabibID = new System.Windows.Forms.TextBox();
-            this.txtInstructor = new System.Windows.Forms.TextBox();
-            this.txtCourse = new System.Windows.Forms.TextBox();
             this.groupBoxBooking.SuspendLayout();
-            this.groupBoxBookedFor.SuspendLayout();
+            this.groupBoxBookedBy.SuspendLayout();
             this.groupBoxEquipment.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numQuantity)).BeginInit();
             this.SuspendLayout();
@@ -227,6 +227,33 @@
             this.groupBoxBooking.TabStop = false;
             this.groupBoxBooking.Text = "Booking Details";
             // 
+            // txtCourse
+            // 
+            this.txtCourse.Location = new System.Drawing.Point(232, 43);
+            this.txtCourse.Name = "txtCourse";
+            this.txtCourse.ReadOnly = true;
+            this.txtCourse.Size = new System.Drawing.Size(158, 20);
+            this.txtCourse.TabIndex = 124;
+            this.txtCourse.Text = "Course";
+            // 
+            // txtInstructor
+            // 
+            this.txtInstructor.Location = new System.Drawing.Point(456, 43);
+            this.txtInstructor.Name = "txtInstructor";
+            this.txtInstructor.ReadOnly = true;
+            this.txtInstructor.Size = new System.Drawing.Size(100, 20);
+            this.txtInstructor.TabIndex = 123;
+            this.txtInstructor.Text = "Instructor";
+            // 
+            // txtHabibID
+            // 
+            this.txtHabibID.Location = new System.Drawing.Point(77, 16);
+            this.txtHabibID.Name = "txtHabibID";
+            this.txtHabibID.ReadOnly = true;
+            this.txtHabibID.Size = new System.Drawing.Size(100, 20);
+            this.txtHabibID.TabIndex = 122;
+            this.txtHabibID.Text = "Habib ID";
+            // 
             // comboBoxInstructor
             // 
             this.comboBoxInstructor.DropDownHeight = 80;
@@ -307,17 +334,17 @@
             this.btnAddEquipment.UseVisualStyleBackColor = true;
             this.btnAddEquipment.Click += new System.EventHandler(this.btnAddEquipment_Click);
             // 
-            // groupBoxBookedFor
+            // groupBoxBookedBy
             // 
-            this.groupBoxBookedFor.Controls.Add(this.rbtnStaff);
-            this.groupBoxBookedFor.Controls.Add(this.rbtnInstructor);
-            this.groupBoxBookedFor.Controls.Add(this.rbtnStudent);
-            this.groupBoxBookedFor.Location = new System.Drawing.Point(12, 38);
-            this.groupBoxBookedFor.Name = "groupBoxBookedFor";
-            this.groupBoxBookedFor.Size = new System.Drawing.Size(561, 42);
-            this.groupBoxBookedFor.TabIndex = 111;
-            this.groupBoxBookedFor.TabStop = false;
-            this.groupBoxBookedFor.Text = "Booked For";
+            this.groupBoxBookedBy.Controls.Add(this.rbtnStaff);
+            this.groupBoxBookedBy.Controls.Add(this.rbtnInstructor);
+            this.groupBoxBookedBy.Controls.Add(this.rbtnStudent);
+            this.groupBoxBookedBy.Location = new System.Drawing.Point(12, 38);
+            this.groupBoxBookedBy.Name = "groupBoxBookedBy";
+            this.groupBoxBookedBy.Size = new System.Drawing.Size(561, 42);
+            this.groupBoxBookedBy.TabIndex = 111;
+            this.groupBoxBookedBy.TabStop = false;
+            this.groupBoxBookedBy.Text = "BookedBy";
             // 
             // rbtnStaff
             // 
@@ -511,33 +538,6 @@
             this.txtNotes.Text = "Notes";
             this.txtNotes.TextChanged += new System.EventHandler(this.txtNotes_TextChanged);
             // 
-            // txtHabibID
-            // 
-            this.txtHabibID.Location = new System.Drawing.Point(77, 16);
-            this.txtHabibID.Name = "txtHabibID";
-            this.txtHabibID.ReadOnly = true;
-            this.txtHabibID.Size = new System.Drawing.Size(100, 20);
-            this.txtHabibID.TabIndex = 122;
-            this.txtHabibID.Text = "Habib ID";
-            // 
-            // txtInstructor
-            // 
-            this.txtInstructor.Location = new System.Drawing.Point(456, 43);
-            this.txtInstructor.Name = "txtInstructor";
-            this.txtInstructor.ReadOnly = true;
-            this.txtInstructor.Size = new System.Drawing.Size(100, 20);
-            this.txtInstructor.TabIndex = 123;
-            this.txtInstructor.Text = "Instructor";
-            // 
-            // txtCourse
-            // 
-            this.txtCourse.Location = new System.Drawing.Point(232, 43);
-            this.txtCourse.Name = "txtCourse";
-            this.txtCourse.ReadOnly = true;
-            this.txtCourse.Size = new System.Drawing.Size(158, 20);
-            this.txtCourse.TabIndex = 124;
-            this.txtCourse.Text = "Course";
-            // 
             // frmBooking
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -552,7 +552,7 @@
             this.Controls.Add(this.btnNext);
             this.Controls.Add(this.btnPrevious);
             this.Controls.Add(this.btnClose);
-            this.Controls.Add(this.groupBoxBookedFor);
+            this.Controls.Add(this.groupBoxBookedBy);
             this.Controls.Add(this.listViewBooking);
             this.Controls.Add(this.groupBoxBooking);
             this.Controls.Add(this.dateTimeIssued);
@@ -568,8 +568,8 @@
             this.Load += new System.EventHandler(this.frmBooking_Load);
             this.groupBoxBooking.ResumeLayout(false);
             this.groupBoxBooking.PerformLayout();
-            this.groupBoxBookedFor.ResumeLayout(false);
-            this.groupBoxBookedFor.PerformLayout();
+            this.groupBoxBookedBy.ResumeLayout(false);
+            this.groupBoxBookedBy.PerformLayout();
             this.groupBoxEquipment.ResumeLayout(false);
             this.groupBoxEquipment.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numQuantity)).EndInit();
@@ -599,7 +599,7 @@
         private System.Windows.Forms.ColumnHeader colHeadQuantity;
         private System.Windows.Forms.DateTimePicker dateTimeDue;
         private System.Windows.Forms.Button btnAddEquipment;
-        private System.Windows.Forms.GroupBox groupBoxBookedFor;
+        private System.Windows.Forms.GroupBox groupBoxBookedBy;
         private System.Windows.Forms.RadioButton rbtnStaff;
         private System.Windows.Forms.RadioButton rbtnInstructor;
         private System.Windows.Forms.RadioButton rbtnStudent;

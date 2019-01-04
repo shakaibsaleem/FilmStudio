@@ -182,7 +182,7 @@ namespace FilmStudio
                 UpdateEnabled("Add");
                 UpdateComboBoxEquipment();
                 mode = "Add";
-                groupBoxBookedFor.Focus();
+                groupBoxBookedBy.Focus();
             }
             catch (Exception ex)
             {
@@ -540,7 +540,7 @@ namespace FilmStudio
                 btnSave.Enabled = false;
                 btnDelete.Enabled = true;
 
-                groupBoxBookedFor.Enabled = false;
+                groupBoxBookedBy.Enabled = false;
                 groupBoxBooking.Enabled = false;
                 groupBoxEquipment.Enabled = false;
 
@@ -557,7 +557,7 @@ namespace FilmStudio
                 btnAdd.Enabled = false;
                 btnSave.Enabled = false;
 
-                groupBoxBookedFor.Enabled = true;
+                groupBoxBookedBy.Enabled = true;
                 groupBoxBooking.Enabled = true;
                 groupBoxEquipment.Enabled = true;
 
@@ -578,7 +578,7 @@ namespace FilmStudio
                 txtCourse.Visible = false;
                 txtInstructor.Visible = false;
 
-                groupBoxBookedFor.Enabled = true;
+                groupBoxBookedBy.Enabled = true;
                 groupBoxBooking.Enabled = false;
                 groupBoxEquipment.Enabled = false;
 
@@ -595,7 +595,7 @@ namespace FilmStudio
                 btnSave.Enabled = true;
                 btnDelete.Enabled = false;
 
-                groupBoxBookedFor.Enabled = true;
+                groupBoxBookedBy.Enabled = true;
                 groupBoxBooking.Enabled = true;
                 groupBoxEquipment.Enabled = true;
 
