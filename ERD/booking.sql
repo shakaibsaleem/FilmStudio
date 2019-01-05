@@ -25,6 +25,8 @@ update BookingsByInstructors set InstructorID = 2 where BookingID = 53
 
 select * from BookingsByInstructors
 
+select InstructorID from BookingsByInstructors where BookingID = 9
+
 select top 1 BookingID from Bookings order by BookingID desc
 
 update Bookings set BookedBy = 'Instructor' where BookingID = 43
@@ -89,19 +91,25 @@ select * from Bookings
 
 select * from BookingsByStudents
 
-select * from BookingsByStaff
-
 select * from BookingsByInstructors
+
+select * from BookingsByStaff
 
 select * from Bookings,BookedItems
 
-select HabibID,IssueDate,ReturnDate,DueDate
+select Bookings.BookingID,HabibID,IssueDate,ReturnDate,DueDate
 from Bookings, BookingsByStudents, Enrolments, Students
 where Bookings.BookingID=BookingsByStudents.BookingID
 and BookingsByStudents.EnrolmentID=Enrolments.EnrolmentID
 and Enrolments.StudentID=Students.StudentID
+and HabibID = 'ms01036'
 
-delete from BookedItems where BookingID = 1
+select Bookings.BookingID,Name,IssueDate,ReturnDate,DueDate,HabibID  from Bookings, BookingsByStudents, Enrolments, Students where Bookings.BookingID = BookingsByStudents.BookingID and BookingsByStudents.EnrolmentID = Enrolments.EnrolmentID and Enrolments.StudentID = Students.StudentID and Students.StudentID = 1
+order by Bookings.BookingID desc
+
+delete from Bookings where BookingID = 84
+
+delete from BookedItems where BookingID = 84
 
 insert into BookedItems (BookingID,EquipmentID,Quantity)
 values (1,1,1)
@@ -147,3 +155,19 @@ select InstructorID,HabibID,Name,Email,Contact from Instructors where Name = 'Fn
 
 select EnrolmentID,Term from Enrolments
 where CourseID=3 and StudentID=2 and InstructorID=2
+
+select * from Bookings
+
+select * from BookingsByStudents
+
+select * from Enrolments
+
+select * from Students
+
+select * from Courses
+
+select * from Instructors
+
+select Enrolments.EnrolmentID,Project,Term,Students.StudentID,Students.HabibID,Students.Name,Students.Email,Students.Contact,Courses.CourseID,Courses.CourseName,Courses.CourseCode,Instructors.InstructorID,Instructors.HabibID,Instructors.Name,Instructors.Email,Instructors.Contact from BookingsByStudents, Enrolments, Students, Courses, Instructors where BookingsByStudents.BookingID = 74 and BookingsByStudents.EnrolmentID = Enrolments.EnrolmentID and Enrolments.StudentID = Students.StudentID and Enrolments.CourseID = Courses.CourseID and Enrolments.InstructorID = Instructors.InstructorID
+
+select Description,Quantity from BookedItems,Equipments where BookedItems.EquipmentID = Equipments.EquipmentID and BookingID = 14
