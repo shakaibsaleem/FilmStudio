@@ -8,12 +8,12 @@ namespace FilmStudio
 {
     public class User
     {
-        public string UserID, Name, Username, Passkey;
+        public string ID, Name, Username, Passkey;
         public bool IsAdmin;
 
         public User()
         {
-            UserID = "1";
+            ID = "1";
             Name = "Shakaib Saleem";
             Username = "shakaib";
             Passkey = "admin";
@@ -22,7 +22,7 @@ namespace FilmStudio
 
         public User(string userID, string name, string username, string passkey, bool isAdmin)
         {
-            UserID = userID ?? throw new ArgumentNullException(nameof(userID));
+            ID = userID ?? throw new ArgumentNullException(nameof(userID));
             Name = name ?? throw new ArgumentNullException(nameof(name));
             Username = username ?? throw new ArgumentNullException(nameof(username));
             Passkey = passkey ?? throw new ArgumentNullException(nameof(passkey));
