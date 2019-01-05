@@ -6,7 +6,7 @@ select * from Users
 insert into Instructors (HabibID,Name,Email,Contact)
 values ('fname.lname','Fname Lname','habibID@school.habib.edu.pk','+923210123456')
 
-select * from Instructors
+select HabibID,Name,Email,Contact from Instructors where InstructorID = 1
 
 insert into Staff (HabibID,Name,Email,Contact)
 values ('fname.lname','Fname Lname','habibID@habib.edu.pk','+923210123456')
