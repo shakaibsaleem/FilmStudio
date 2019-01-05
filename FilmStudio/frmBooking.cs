@@ -516,7 +516,7 @@ namespace FilmStudio
             }
             else if (state == "View")
             {
-                AdvanceTo("PrevRecord", myBooking.ID);
+                AdvanceTo("NextRecord", myBooking.ID);
             }
             else
             {
@@ -1147,7 +1147,6 @@ namespace FilmStudio
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = con;
             cmd.CommandType = CommandType.Text;
-
             try
             {
                 if (record == "NextRecord")
