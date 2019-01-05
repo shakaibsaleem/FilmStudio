@@ -17,61 +17,31 @@ namespace FilmStudio
         public Equipment myEquipment;
         mySQLcon myCon;
         SqlConnection con;
-
-        string mode;
+        string state;
 
         public frmBooking()
         {
             InitializeComponent();
-            myEquipment = new Equipment();
+            myCon = new mySQLcon();
+            con = myCon.con;
             myBooking = new Booking();
-            mode = "Add";
+            state = "Empty";
         }
 
-        public frmBooking(string m)
+        public frmBooking(string id)
         {
             InitializeComponent();
-            myEquipment = new Equipment();
+            myCon = new mySQLcon();
+            con = myCon.con;
             myBooking = new Booking();
-            mode = m;
-        }
-
-        public frmBooking(Booking bk, string m)
-        {
-            InitializeComponent();
-            myEquipment = new Equipment();
-            myBooking = new Booking(
-                currentUser: new User(),
-                currentCourse: new Course(),
-                currentInstructor: new Instructor(),
-                currentStaff: new Staff(),
-                currentEnrolment: new Enrolment(),
-                currentStudent: new Student(),
-                iD: bk.ID,
-                issuedOn: bk.IssuedOn,
-                dueOn: bk.DueOn,
-                returnedOn: bk.ReturnedOn,
-                bookedOn: bk.BookedOn,
-                notes: bk.Notes,
-                bookedBy: bk.BookedBy,
-                project: bk.Project
-                );
-            mode = m;
+            LoadRecord(id);
+            state = "View";
         }
 
         private void frmBooking_Load(object sender, EventArgs e)
         {
-            myCon = new mySQLcon();
-            con = myCon.con;
-
-            dateTimeIssued.Value = myBooking.IssuedOn;
-            dateTimeDue.Value = myBooking.DueOn;
-            txtAssignment.Text = myBooking.Project;
-            numQuantity.Value = 1;
-            rbtnStudent.Select();
-            btnAdd.Select();
-            UpdateEnabled("Load");
-            //mode = "Load";
+            myEquipment = new Equipment();
+            UpdateFields(state);
         }
 
         private void btnAddEquipment_Click(object sender, EventArgs e)
@@ -131,22 +101,43 @@ namespace FilmStudio
 
         private void btnClose_Click(object sender, EventArgs e)
         {
-            if (mode == "Edit" || mode == "Add" || mode == "Load")
+            if (state == "Empty")
             {
-                DialogResult dialogResult = MessageBox.Show("Any unsaved changes will be lost.", 
-                    "Are you sure you want to close?", MessageBoxButtons.YesNo);
+                DialogResult dialogResult = MessageBox.Show("You have not added the record." +
+                    " Press Yes to add the record and then close. Press No to close without" +
+                    " adding.","Add record before closing?", MessageBoxButtons.YesNoCancel);
                 if (dialogResult == DialogResult.Yes)
                 {
+                    btnAdd.PerformClick();
                     Close();
                 }
                 else if (dialogResult == DialogResult.No)
                 {
-                    btnSave.Select();
+                    Close();
                 }
             }
-            else if (mode == "Save")
+            else if (state == "Add" || state == "Edit")
+            {
+                DialogResult dialogResult = MessageBox.Show("There may be unsaved changes to the record." +
+                    " Press Yes to save the record and then close. Press No to close without" +
+                    " saving.", "Save record before closing?", MessageBoxButtons.YesNoCancel);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    btnSave.PerformClick();
+                    Close();
+                }
+                else if (dialogResult == DialogResult.No)
+                {
+                    Close();
+                }
+            }
+            else if (state == "View")
             {
                 Close();
+            }
+            else
+            {
+                MessageBox.Show("State = ", "Unexpected value in btnClose");
             }
         }
 
@@ -160,12 +151,12 @@ namespace FilmStudio
                 cmd.Connection = con;
                 cmd.CommandType = CommandType.Text;
                 cmd.CommandText = "insert into Bookings " +
-                    "(UserID,Notes,BookedBy,BookingDate,BookingTime,IssueDate,IssueTime,DueDate,DueTime,ReturnDate,ReturnTime) " +
-                    "values(" + myBooking.CurrentUser.UserID + ",'" + myBooking.Notes + "','" + myBooking.BookedBy + "','" +
+                    "(UserID,BookedBy,Notes,BookingDate,BookingTime,IssueDate," +
+                    "IssueTime,DueDate,DueTime)values(" + myBooking.User.ID + ",'" + 
+                    myBooking.BookedBy + "','" + myBooking.Notes +"','" +
                     DateOf(myBooking.BookedOn) + "','" + TimeOf(myBooking.BookedOn) + "','" +
                     DateOf(myBooking.IssuedOn) + "','" + TimeOf(myBooking.IssuedOn) + "','" +
-                    DateOf(myBooking.DueOn) + "','" + TimeOf(myBooking.DueOn) + "','" +
-                    DateOf(myBooking.ReturnedOn) + "','" + TimeOf(myBooking.ReturnedOn) + "')";
+                    DateOf(myBooking.DueOn) + "','" + TimeOf(myBooking.DueOn) + "')";
                 cmd.ExecuteNonQuery();
 
                 cmd.CommandText = "select top 1 BookingID from Bookings order by BookingID desc";
@@ -175,14 +166,9 @@ namespace FilmStudio
                     myBooking.ID = rd[0].ToString();
                 }
                 rd.Close();
-
                 tran.Commit();
-
-                //MessageBox.Show("Booking ID is: " + myBooking.ID, "Booking Created");
-                UpdateEnabled("Add");
-                UpdateComboBoxEquipment();
-                mode = "Add";
-                groupBoxBookedBy.Focus();
+                state = "Add";
+                UpdateFields(state);
             }
             catch (Exception ex)
             {
@@ -191,88 +177,12 @@ namespace FilmStudio
             }
         }
 
-        public void UpdateComboBoxEquipment()
-        {
-            Equipment eq;
-            string d = "";
-            int qtyA, qtyB;
-
-            try
-            {
-                comboBoxEquipment.Items.Clear();
-                SqlCommand cmd = new SqlCommand();
-                cmd.Connection = con;
-                cmd.CommandType = CommandType.Text;
-
-                cmd.CommandText = "select Description,QuantityBooked,QuantityAvailable from Equipments order by Description";
-                SqlDataReader rd = cmd.ExecuteReader();
-                while (rd.Read())
-                {
-                    qtyA = Convert.ToInt32(rd[2].ToString());
-                    qtyB = Convert.ToInt32(rd[1].ToString());
-                    d = rd[0].ToString();
-                    eq = new Equipment(qtyA, qtyB, d);
-                    comboBoxEquipment.Items.Add(eq);
-                }
-                rd.Close();
-
-                int width = comboBoxEquipment.DropDownWidth;
-                int maxWidth = DropDownWidth(comboBoxEquipment);
-                if (maxWidth > width)
-                {
-                    comboBoxEquipment.DropDownWidth = maxWidth;
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error in UpdateComboBoxEquipment()");
-            }
-        }
-
-        public static int DropDownWidth(ComboBox myCombo)
-        {
-            //Credits: stackoverflow.com/a/16435431
-            int maxWidth = 0, temp = 0;
-            foreach (var obj in myCombo.Items)
-            {
-                temp = TextRenderer.MeasureText(myCombo.GetItemText(obj), myCombo.Font).Width;
-                if (temp > maxWidth)
-                {
-                    maxWidth = temp;
-                }
-            }
-            return maxWidth + SystemInformation.VerticalScrollBarWidth;
-        }
-
-        public static string DateOf(DateTime dateTime)
-        {
-            string str = dateTime.ToString("yyyy-MM-dd");
-            return str;
-        }
-
-        public static DateTime DateTimeOf(string date, string time)
-        {
-            DateTime dateTime;
-            dateTime = Convert.ToDateTime(date);
-            date = dateTime.ToString("dd-MM-yyyy");
-            dateTime = Convert.ToDateTime(date + " " + time);
-            //MessageBox.Show(dateTime.ToString());
-            return dateTime;
-        }
-
-        public static string TimeOf(DateTime dateTime)
-        {
-            string str = dateTime.ToString("HH:mm:00");
-            return str;
-        }
-
         private void rbtnStudent_CheckedChanged(object sender, EventArgs e)
         {
             if (rbtnStudent.Checked)
             {
                 myBooking.BookedBy = "Student";
-                UpdateEnabled("Student");
-                UpdateBookingDetails("Student");
+                UpdateFields("Student");
             }
         }
 
@@ -281,8 +191,7 @@ namespace FilmStudio
             if (rbtnInstructor.Checked)
             {
                 myBooking.BookedBy = "Instructor";
-                UpdateEnabled("Instructor");
-                UpdateBookingDetails("Instructor");
+                UpdateFields("Instructor");
             }
         }
 
@@ -291,8 +200,7 @@ namespace FilmStudio
             if (rbtnStaff.Checked)
             {
                 myBooking.BookedBy = "Staff";
-                UpdateEnabled("Staff");
-                UpdateBookingDetails("Staff");
+                UpdateFields("Staff");
             }
         }
 
@@ -317,14 +225,23 @@ namespace FilmStudio
                     if (0 == i)
                     {
                         cmd.CommandText = "insert into BookingsByInstructors (InstructorID,BookingID) values (" + 
-                            myBooking.CurrentInstructor.ID + "," + myBooking.ID + ")";
+                            myBooking.Instructor.ID + "," + myBooking.ID + ")";
+                        cmd.ExecuteNonQuery();
+                    }
+                    else if (1==i)
+                    {
+                        cmd.CommandText = "update BookingsByInstructors set InstructorID = " +
+                            myBooking.Instructor.ID + 
+                            " where BookingID = " + myBooking.ID;
                         cmd.ExecuteNonQuery();
                     }
                     else
                     {
-                        cmd.CommandText = "update BookingsByInstructors set InstructorID = " +
-                            myBooking.CurrentInstructor.ID + 
-                            " where BookingID = " + myBooking.ID;
+                        cmd.CommandText = "delete from BookingsByInstructors where BookingID = " + myBooking.ID;
+                        cmd.ExecuteNonQuery();
+
+                        cmd.CommandText = "insert into BookingsByInstructors (InstructorID,BookingID) values (" +
+                            myBooking.Instructor.ID + "," + myBooking.ID + ")";
                         cmd.ExecuteNonQuery();
                     }
                     cmd.CommandText = "delete from BookingsByStudents where BookingID = " + myBooking.ID;
@@ -345,14 +262,23 @@ namespace FilmStudio
                     if (0 == i)
                     {
                         cmd.CommandText = "insert into BookingsByStudents (EnrolmentID,BookingID,Project) values (" + 
-                            myBooking.CurrentEnrolment.ID + "," + myBooking.ID + ",'" + txtAssignment.Text + "')";
+                            myBooking.Enrolment.ID + "," + myBooking.ID + ",'" + txtAssignment.Text + "')";
+                        cmd.ExecuteNonQuery();
+                    }
+                    else if (1==i)
+                    {
+                        cmd.CommandText = "update BookingsByStudents set EnrolmentID = " +
+                            myBooking.Enrolment.ID + ",Project = '" + txtAssignment.Text +
+                            "' where BookingID = " + myBooking.ID;
                         cmd.ExecuteNonQuery();
                     }
                     else
                     {
-                        cmd.CommandText = "update BookingsByStudents set EnrolmentID = " +
-                            myBooking.CurrentEnrolment.ID +
-                            " where BookingID = " + myBooking.ID;
+                        cmd.CommandText = "delete from BookingsByStudents where BookingID = " + myBooking.ID;
+                        cmd.ExecuteNonQuery();
+
+                        cmd.CommandText = "insert into BookingsByStudents (EnrolmentID,BookingID,Project) values (" +
+                            myBooking.Enrolment.ID + "," + myBooking.ID + ",'" + txtAssignment.Text + "')";
                         cmd.ExecuteNonQuery();
                     }
                     cmd.CommandText = "delete from BookingsByInstructors where BookingID = " + myBooking.ID;
@@ -373,14 +299,23 @@ namespace FilmStudio
                     if (0 == i)
                     {
                         cmd.CommandText = "insert into BookingsByStaff (StaffID,BookingID) values (" +
-                            myBooking.CurrentStaff.ID + "," + myBooking.ID + ")";
+                            myBooking.Staff.ID + "," + myBooking.ID + ")";
+                        cmd.ExecuteNonQuery();
+                    }
+                    else if (1 == i)
+                    {
+                        cmd.CommandText = "update BookingsByStaff set StaffID = " +
+                            myBooking.Staff.ID +
+                            " where BookingID = " + myBooking.ID;
                         cmd.ExecuteNonQuery();
                     }
                     else
                     {
-                        cmd.CommandText = "update BookingsByStaff set StaffID = " +
-                            myBooking.CurrentStaff.ID +
-                            " where BookingID = " + myBooking.ID;
+                        cmd.CommandText = "delete from BookingsByStaff where BookingID = " + myBooking.ID;
+                        cmd.ExecuteNonQuery();
+
+                        cmd.CommandText = "insert into BookingsByStaff (StaffID,BookingID) values (" +
+                            myBooking.Staff.ID + "," + myBooking.ID + ")";
                         cmd.ExecuteNonQuery();
                     }
                     cmd.CommandText = "delete from BookingsByStudents where BookingID = " + myBooking.ID;
@@ -395,7 +330,7 @@ namespace FilmStudio
                 }
 
                 cmd.CommandText = "update Bookings set " +
-                    "   UserID = " + myBooking.CurrentUser.UserID +
+                    "   UserID = " + myBooking.User.ID +
                     " , Notes = '" + myBooking.Notes +
                     "', BookedBy = '" + myBooking.BookedBy +
                     "', BookingDate = '" + DateOf(myBooking.BookedOn) +
@@ -404,8 +339,6 @@ namespace FilmStudio
                     "', IssueTime = '" + TimeOf(myBooking.IssuedOn) +
                     "', DueDate = '" + DateOf(myBooking.DueOn) +
                     "', DueTime = '" + TimeOf(myBooking.DueOn) +
-                    "', ReturnDate = '" + DateOf(myBooking.ReturnedOn) +
-                    "', ReturnTime = '" + TimeOf(myBooking.ReturnedOn) +
                     "'  where BookingID = " + myBooking.ID;
                 cmd.ExecuteNonQuery();
 
@@ -508,9 +441,8 @@ namespace FilmStudio
                 }
 
                 tran.Commit();
-                //MessageBox.Show("Press OK to continue", "Saved successfully");
-                UpdateEnabled("Save");
-                mode = "Save";
+                state = "View";
+                UpdateFields(state);
             }
             catch (Exception ex)
             {
@@ -529,118 +461,11 @@ namespace FilmStudio
             myBooking.DueOn = dateTimeDue.Value;
         }
 
-        private void UpdateEnabled(string e)
-        {
-            if (e == "Save")
-            {
-                btnAddEquipment.Enabled = false;
-                btnPrevious.Enabled = true;
-                btnNext.Enabled = true;
-                btnEdit.Enabled = true;
-                btnSave.Enabled = false;
-                btnDelete.Enabled = true;
-
-                groupBoxBookedBy.Enabled = false;
-                groupBoxBooking.Enabled = false;
-                groupBoxEquipment.Enabled = false;
-
-                dateTimeIssued.Enabled = false;
-                dateTimeDue.Enabled = false;
-
-                txtNotes.Enabled = false;
-
-                listViewBooking.Enabled = false;
-            }
-            else if (e == "Add")
-            {
-                btnAddEquipment.Enabled = false;
-                btnAdd.Enabled = false;
-                btnSave.Enabled = false;
-
-                groupBoxBookedBy.Enabled = true;
-                groupBoxBooking.Enabled = true;
-                groupBoxEquipment.Enabled = true;
-
-                txtNotes.Enabled = true;
-
-                listViewBooking.Enabled = true;
-            }
-            else if (e == "Load")
-            {
-                btnAddEquipment.Enabled = false;
-                btnPrevious.Enabled = false;
-                btnNext.Enabled = false;
-                btnEdit.Enabled = false;
-                btnSave.Enabled = false;
-                btnDelete.Enabled = false;
-
-                txtHabibID.Visible = false;
-                txtCourse.Visible = false;
-                txtInstructor.Visible = false;
-
-                groupBoxBookedBy.Enabled = true;
-                groupBoxBooking.Enabled = false;
-                groupBoxEquipment.Enabled = false;
-
-                txtNotes.Enabled = false;
-
-                listViewBooking.Enabled = true;
-            }
-            else if (e == "Edit")
-            {
-                btnAddEquipment.Enabled = false;
-                btnPrevious.Enabled = false;
-                btnNext.Enabled = false;
-                btnEdit.Enabled = false;
-                btnSave.Enabled = true;
-                btnDelete.Enabled = false;
-
-                groupBoxBookedBy.Enabled = true;
-                groupBoxBooking.Enabled = true;
-                groupBoxEquipment.Enabled = true;
-
-                dateTimeIssued.Enabled = true;
-                dateTimeDue.Enabled = true;
-
-                txtNotes.Enabled = true;
-
-                listViewBooking.Enabled = true;
-            }
-            else if (e == "Student")
-            {
-                btnSave.Enabled = false;
-                //comboBoxID.Enabled = true;
-                txtAssignment.Enabled = true;
-                comboBoxCourse.Enabled = true;
-                comboBoxInstructor.Enabled = true;
-            }
-            else if (e == "Instructor")
-            {
-                btnSave.Enabled = false;
-                //comboBoxID.Enabled = false;
-                txtAssignment.Enabled = false;
-                comboBoxCourse.Enabled = false;
-                comboBoxInstructor.Enabled = false;
-            }
-            else if (e == "Staff")
-            {
-                btnSave.Enabled = false;
-                //comboBoxID.Enabled = false;
-                txtAssignment.Enabled = false;
-                comboBoxCourse.Enabled = false;
-                comboBoxInstructor.Enabled = false;
-            }
-            else
-            {
-                MessageBox.Show("Invalid argument: " + e, "Error in UpdateEnabled()");
-            }
-        }
-
         private void btnEdit_Click(object sender, EventArgs e)
         {
-            UpdateEnabled("Edit");
+            UpdateFields("Edit");
             UpdateComboBoxEquipment();
-            mode = "Edit";
+            state = "Edit";
         }
 
         private void listViewBooking_KeyDown(object sender, KeyEventArgs e)
@@ -659,244 +484,150 @@ namespace FilmStudio
 
         private void btnNext_Click(object sender, EventArgs e)
         {
-            if (mode == "Edit" || mode == "Load" || mode == "Add")
+            if (state == "Empty")
             {
-                DialogResult dialogResult = MessageBox.Show("Any unsaved changes will be lost.",
-                    "Are you sure you want to close?", MessageBoxButtons.YesNo);
+                DialogResult dialogResult = MessageBox.Show("You have not added the record." +
+                    " Press Yes to add the record and then go to next record. Press No to go to next record without" +
+                    " adding.", "Add record before advancing?", MessageBoxButtons.YesNoCancel);
                 if (dialogResult == DialogResult.Yes)
                 {
+                    btnAdd.PerformClick();
                     AdvanceTo("NextRecord", myBooking.ID);
                 }
                 else if (dialogResult == DialogResult.No)
                 {
-                    btnSave.Select();
+                    AdvanceTo("NextRecord", myBooking.ID);
                 }
             }
-            else if (mode == "Save")
+            else if (state == "Add" || state == "Edit")
             {
-                AdvanceTo("NextRecord", myBooking.ID);
-            }
-        }
-
-        public void AdvanceTo(string record, string id)
-        {
-            SqlDataReader rd;
-            SqlCommand cmd = new SqlCommand();
-            cmd.Connection = con;
-            cmd.CommandType = CommandType.Text;
-
-            try
-            {
-                if (record == "NextRecord")
+                DialogResult dialogResult = MessageBox.Show("There may be unsaved changes to the record." +
+                    " Press Yes to save the record and then go to next record. Press No to go to next record without" +
+                    " saving.", "Save record before advancing?", MessageBoxButtons.YesNoCancel);
+                if (dialogResult == DialogResult.Yes)
                 {
-                    cmd.CommandText = "select * from (select lead(BookingID) over " +
-                        "(order by BookingID) NextValue, BookingID from Bookings) as " +
-                        "NewTable where NewTable.BookingID = " + id;
-                    rd = cmd.ExecuteReader();
-                    if (rd.Read())
-                    {
-                        id = rd[0].ToString();
-                        if (id == "")
-                        {
-                            MessageBox.Show("The last available record is currently loaded", "No next record");
-                            rd.Close();
-                            return;
-                        }
-                        else
-                        {
-                            MessageBox.Show(id, "Next record found");
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show(id, "Next record not found");
-                    }
-                    rd.Close();
-                    //MessageBox.Show("ID = " + id, "Loading next record");
-                    //LoadRecord(id: id);
+                    btnSave.PerformClick();
+                    AdvanceTo("NextRecord", myBooking.ID);
                 }
-                else if (record == "PrevRecord")
+                else if (dialogResult == DialogResult.No)
                 {
-                    cmd.CommandText = "select * from (select lag(BookingID) over " +
-                        "(order by BookingID) PrevValue, BookingID from Bookings) as " +
-                        "NewTable where NewTable.BookingID = " + id;
-                    rd = cmd.ExecuteReader();
-                    if (rd.Read())
-                    {
-                        id = rd[0].ToString();
-                        if (id == "")
-                        {
-                            MessageBox.Show("The first available record is currently loaded", "No previous record");
-                            rd.Close();
-                            return;
-                        }
-                        else
-                        {
-                            MessageBox.Show(id, "Previous record found");
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show(id, "Previous record not found");
-                    }
-                    rd.Close();
-                    //MessageBox.Show("ID = " + id, "Loading previous record");
-                }
-                else
-                {
-                    MessageBox.Show("Incorrect value for record: " + record, "Error in AdvanceTo()");
-                    return;
+                    AdvanceTo("NextRecord", myBooking.ID);
                 }
             }
-            catch (Exception ex)
+            else if (state == "View")
             {
-                MessageBox.Show(ex.Message,"Error in AdvanceTo()");
+                AdvanceTo("PrevRecord", myBooking.ID);
             }
-            LoadRecord(id: id);
-        }
-
-        public void LoadRecord(string id)
-        {
-            SqlDataReader rd;
-            SqlCommand cmd = new SqlCommand();
-            cmd.Connection = con;
-            cmd.CommandType = CommandType.Text;
-            string date, time;
-            try
+            else
             {
-                
-                cmd.CommandText = "select UserID,Notes,BookedBy,BookingDate,BookingTime,IssueDate," +
-                    "IssueTime,DueDate,DueTime,ReturnDate,ReturnTime from Bookings where BookingID = " + id;
-                rd = cmd.ExecuteReader();
-                if (rd.Read())
-                {
-                    myBooking.ID = id;
-                    myBooking.CurrentUser.UserID = rd[0].ToString();
-                    myBooking.Notes = rd[1].ToString();
-                    myBooking.BookedBy = rd[2].ToString();
-                    date = rd[3].ToString();
-                    time = rd[4].ToString();
-                    myBooking.BookedOn = DateTimeOf(date: date,time: time);
-                    date = rd[5].ToString();
-                    time = rd[6].ToString();
-                    myBooking.IssuedOn = DateTimeOf(date: date, time: time);
-                    date = rd[7].ToString();
-                    time = rd[8].ToString();
-                    myBooking.DueOn = DateTimeOf(date: date, time: time);
-                    date = rd[9].ToString();
-                    time = rd[10].ToString();
-                    myBooking.ReturnedOn = DateTimeOf(date: date, time: time);
-                }
-                rd.Close();
+                MessageBox.Show("State = ", "Unexpected value in btnNext");
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error in LoadRecord()");
-            }
-            UpdateEnabled(myBooking.BookedBy);
-            UpdateBookingDetails(myBooking.BookedBy);
-            dateTimeIssued.Value = myBooking.IssuedOn;
-            dateTimeDue.Value = myBooking.DueOn;
-            //if (rbtnInstructor.Checked)
-            //{
-            //    myBooking.BookedBy = "Instructor";
-            //    txtHabibID.Text = myBooking.CurrentInstructor.HabibID;
-            //    txtName.Text = myBooking.CurrentInstructor.Name;
-            //    txtContact.Text = myBooking.CurrentInstructor.Contact;
-            //    txtHabibID.Visible = true;
-            //    txtCourse.Visible = true;
-            //    txtInstructor.Visible = true;
-            //}
-            //else if (rbtnStudent.Checked)
-            //{
-            //    myBooking.BookedBy = "Student";
-            //}
-            //else if (rbtnStaff.Checked)
-            //{
-            //    myBooking.BookedBy = "Staff";
-            //    txtHabibID.Text = myBooking.CurrentStaff.HabibID;
-            //    txtName.Text = myBooking.CurrentStaff.Name;
-            //    txtContact.Text = myBooking.CurrentStaff.Contact;
-            //}
-            //set remaining fields
         }
 
         private void btnPrevious_Click(object sender, EventArgs e)
         {
-            if (mode == "Edit" || mode == "Load" || mode == "Add")
+            if (state == "Empty")
             {
-                DialogResult dialogResult = MessageBox.Show("Any unsaved changes will be lost.",
-                    "Are you sure you want to close?", MessageBoxButtons.YesNo);
+                DialogResult dialogResult = MessageBox.Show("You have not added the record." +
+                    " Press Yes to add the record and then go to previous record. Press No to go to previous record without" +
+                    " adding.", "Add record before advancing?", MessageBoxButtons.YesNoCancel);
                 if (dialogResult == DialogResult.Yes)
                 {
+                    btnAdd.PerformClick();
                     AdvanceTo("PrevRecord", myBooking.ID);
                 }
                 else if (dialogResult == DialogResult.No)
                 {
-                    btnSave.Select();
+                    AdvanceTo("PrevRecord", myBooking.ID);
                 }
             }
-            else if (mode == "Save")
+            else if (state == "Add" || state == "Edit")
+            {
+                DialogResult dialogResult = MessageBox.Show("There may be unsaved changes to the record." +
+                    " Press Yes to save the record and then go to previous record. Press No to go to previous record without" +
+                    " saving.", "Save record before advancing?", MessageBoxButtons.YesNoCancel);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    btnSave.PerformClick();
+                    AdvanceTo("PrevRecord", myBooking.ID);
+                }
+                else if (dialogResult == DialogResult.No)
+                {
+                    AdvanceTo("PrevRecord", myBooking.ID);
+                }
+            }
+            else if (state == "View")
             {
                 AdvanceTo("PrevRecord", myBooking.ID);
             }
+            else
+            {
+                MessageBox.Show("State = ", "Unexpected value in btnPrevious");
+            }
         }
 
-        private void UpdateBookingDetails(string type)
+        private void btnDelete_Click(object sender, EventArgs e)
         {
+            SqlTransaction tran = con.BeginTransaction();
             try
             {
                 SqlCommand cmd = new SqlCommand();
+                cmd.Transaction = tran;
                 cmd.Connection = con;
                 cmd.CommandType = CommandType.Text;
 
-                if (type == "Student")
+                //delete from booked items
+                cmd.CommandText = "delete from BookedItems where BookingID = " + myBooking.ID;
+                cmd.ExecuteNonQuery();
+
+                //delete from booked by
+                cmd.CommandText = "";
+                if (myBooking.BookedBy == "Student")
                 {
-                    cmd.CommandText = "select HabibID from " + type + "s order by HabibID";
+                    cmd.CommandText = "delete from BookingsByStudents where BookingID = " + myBooking.ID;
                 }
-                else if (type == "Instructor")
+                else if (myBooking.BookedBy == "Instructor")
                 {
-                    cmd.CommandText = "select HabibID from " + type + "s order by HabibID";
+                    cmd.CommandText = "delete from BookingsByInstructors where BookingID = " + myBooking.ID;
                 }
-                else if (type == "Staff")
+                else if (myBooking.BookedBy == "Staff")
                 {
-                    cmd.CommandText = "select HabibID from " + type + " order by HabibID";
+                    cmd.CommandText = "delete from BookingsByStaff where BookingID = " + myBooking.ID;
                 }
                 else
                 {
-                    MessageBox.Show("Invalid argument: " + type, "Error in UpdateBookingDetails");
+                    MessageBox.Show("Invalid value: " + myBooking.BookedBy, "Error in UpdateBookingDetails");
                 }
+                cmd.ExecuteNonQuery();
 
-                comboBoxID.Items.Clear();
-                comboBoxID.ResetText();
-                comboBoxCourse.Items.Clear();
-                comboBoxCourse.ResetText();
-                comboBoxInstructor.Items.Clear();
-                comboBoxInstructor.ResetText();
+                //delete from bookings
+                cmd.CommandText = "delete from Bookings where BookingID = " + myBooking.ID;
+                cmd.ExecuteNonQuery();
 
-                txtName.Clear();
-                txtContact.Clear();
-                txtAssignment.Clear();
+                tran.Commit();
+                Close();
 
-                SqlDataReader rd = cmd.ExecuteReader();
-                while (rd.Read())
-                {
-                    comboBoxID.Items.Add(rd["HabibID"]);
-                }
-                rd.Close();
-
-                int width = comboBoxID.DropDownWidth;
-                int maxWidth = DropDownWidth(comboBoxID);
-                if (maxWidth > width)
-                {
-                    comboBoxID.DropDownWidth = maxWidth;
-                }
+                //try
+                //{
+                //    btnNext.PerformClick();
+                //}
+                //catch (Exception)
+                //{
+                //    try
+                //    {
+                //        btnPrevious.PerformClick();
+                //    }
+                //    catch (Exception)
+                //    {
+                //        Close();
+                //    }
+                //}
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error fetching Habib ID for " + type);
+                tran.Rollback();
+                MessageBox.Show(ex.Message);
             }
-            //MessageBox.Show("Press OK to continue","BookingDetails updated successfully");
         }
 
         private void comboBoxID_SelectedIndexChanged(object sender, EventArgs e)
@@ -934,15 +665,16 @@ namespace FilmStudio
                         name = rd[2].ToString();
                         email = rd[3].ToString();
                         contact = rd[4].ToString();
-                        myBooking.CurrentStudent = new Student(iD, habibID, name, email, contact);
+                        myBooking.Student = new Student(iD, habibID, name, email, contact);
                     }
                     else
                     {
-                        myBooking.CurrentStudent = new Student();
+                        myBooking.Student = new Student();
                     }
                     rd.Close();
-                    txtName.Text = myBooking.CurrentStudent.Name;
-                    txtContact.Text = myBooking.CurrentStudent.Contact;
+                    txtHabibID.Text = myBooking.Student.HabibID;
+                    txtName.Text = myBooking.Student.Name;
+                    txtContact.Text = myBooking.Student.Contact;
 
                     btnSave.Enabled = false;
 
@@ -954,7 +686,7 @@ namespace FilmStudio
                     //fetching and displaying courses of selected student
                     cmd.CommandText = "select distinct CourseName from Courses, Enrolments " +
                         "where Courses.CourseID=Enrolments.CourseID and StudentID = " +
-                        myBooking.CurrentStudent.ID;
+                        myBooking.Student.ID;
                     rd = cmd.ExecuteReader();
                     while (rd.Read())
                     {
@@ -980,16 +712,18 @@ namespace FilmStudio
                         name = rd[2].ToString();
                         email = rd[3].ToString();
                         contact = rd[4].ToString();
-                        myBooking.CurrentInstructor = new Instructor(iD, habibID, name, email, contact);
+                        myBooking.Instructor = new Instructor(iD, habibID, name, email, contact);
                     }
                     else
                     {
-                        myBooking.CurrentInstructor = new Instructor();
+                        myBooking.Instructor = new Instructor();
                     }
                     rd.Close();
-                    txtName.Text = myBooking.CurrentInstructor.Name;
-                    txtContact.Text = myBooking.CurrentInstructor.Contact;
+                    txtHabibID.Text = myBooking.Instructor.HabibID;
+                    txtName.Text = myBooking.Instructor.Name;
+                    txtContact.Text = myBooking.Instructor.Contact;
                     btnSave.Enabled = true;
+                    //btnSave.Select();
                 }
                 else if (myBooking.BookedBy == "Staff")
                 {
@@ -1003,16 +737,18 @@ namespace FilmStudio
                         name = rd[2].ToString();
                         email = rd[3].ToString();
                         contact = rd[4].ToString();
-                        myBooking.CurrentStaff = new Staff(iD, habibID, name, email, contact);
+                        myBooking.Staff = new Staff(iD, habibID, name, email, contact);
                     }
                     else
                     {
-                        myBooking.CurrentStaff = new Staff();
+                        myBooking.Staff = new Staff();
                     }
                     rd.Close();
-                    txtName.Text = myBooking.CurrentStaff.Name;
-                    txtContact.Text = myBooking.CurrentStaff.Contact;
+                    txtHabibID.Text = myBooking.Staff.HabibID;
+                    txtName.Text = myBooking.Staff.Name;
+                    txtContact.Text = myBooking.Staff.Contact;
                     btnSave.Enabled = true;
+                    //btnSave.Select();
                 }
                 else
                 {
@@ -1054,14 +790,14 @@ namespace FilmStudio
                     iD = rd[0].ToString();
                     name = rd[1].ToString();
                     code = rd[2].ToString();
-                    myBooking.CurrentCourse = new Course(iD, name, code);
+                    myBooking.Course = new Course(iD, name, code);
                 }
                 else
                 {
-                    myBooking.CurrentCourse = new Course();
+                    myBooking.Course = new Course();
                 }
                 rd.Close();
-
+                txtCourse.Text = myBooking.Course.CourseName;
                 btnSave.Enabled = false;
                 comboBoxInstructor.Items.Clear();
                 comboBoxInstructor.ResetText();
@@ -1070,8 +806,8 @@ namespace FilmStudio
                 cmd.CommandText = "select distinct Instructors.Name from Courses, Enrolments, Instructors " +
                     "where Courses.CourseID = Enrolments.CourseID and " +
                     "Instructors.InstructorID = Enrolments.InstructorID and " +
-                    "StudentID = " + myBooking.CurrentStudent.ID +
-                    " and Enrolments.CourseID = " + myBooking.CurrentCourse.ID;
+                    "StudentID = " + myBooking.Student.ID +
+                    " and Enrolments.CourseID = " + myBooking.Course.ID;
                 rd = cmd.ExecuteReader();
                 while (rd.Read())
                 {
@@ -1125,13 +861,14 @@ namespace FilmStudio
                     email = rd[3].ToString();
                     contact = rd[4].ToString();
                     //MessageBox.Show(iD + habibID + name + email + contact, "Instructor Details:");
-                    myBooking.CurrentInstructor = new Instructor(iD, habibID, name, email,contact);
+                    myBooking.Instructor = new Instructor(iD, habibID, name, email,contact);
                 }
                 else
                 {
-                    myBooking.CurrentInstructor = new Instructor();
+                    myBooking.Instructor = new Instructor();
                 }
                 rd.Close();
+                txtInstructor.Text = myBooking.Instructor.Name;
             }
             catch (Exception ex)
             {
@@ -1148,17 +885,17 @@ namespace FilmStudio
                 SqlDataReader rd;
 
                 cmd.CommandText = "select EnrolmentID,Term from Enrolments " +
-                    "where CourseID = " + myBooking.CurrentCourse.ID +
-                    " and StudentID = " + myBooking.CurrentStudent.ID +
-                    " and InstructorID = " + myBooking.CurrentInstructor.ID;
+                    "where CourseID = " + myBooking.Course.ID +
+                    " and StudentID = " + myBooking.Student.ID +
+                    " and InstructorID = " + myBooking.Instructor.ID;
                 rd = cmd.ExecuteReader();
                 while (rd.Read())
                 {
                     enrolments.Add(new Enrolment(
                         rd["EnrolmentID"].ToString(), 
-                        myBooking.CurrentStudent, 
-                        myBooking.CurrentCourse, 
-                        myBooking.CurrentInstructor, 
+                        myBooking.Student, 
+                        myBooking.Course, 
+                        myBooking.Instructor, 
                         rd["Term"].ToString()
                         ));
                 }
@@ -1166,7 +903,7 @@ namespace FilmStudio
 
                 if (enrolments.Count == 1)
                 {
-                    myBooking.CurrentEnrolment = enrolments[0];
+                    myBooking.Enrolment = enrolments[0];
                     btnSave.Enabled = true;
                 }
                 else if (enrolments.Count == 0)
@@ -1175,8 +912,9 @@ namespace FilmStudio
                 }
                 else
                 {
-                    myBooking.CurrentEnrolment = enrolments.Last<Enrolment>();
+                    myBooking.Enrolment = enrolments.Last<Enrolment>();
                     btnSave.Enabled = true;
+                    btnSave.Select();
                 }
             }
             catch (Exception ex)
@@ -1193,6 +931,540 @@ namespace FilmStudio
             txtBooked.Text = eq.QtyBooked.ToString();
 
             btnAddEquipment.Enabled = comboBoxEquipment.SelectedIndex >= 0;
+        }
+
+        private void UpdateBookingDetails(string type)
+        {
+            try
+            {
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.Text;
+
+                if (type == "Student")
+                {
+                    cmd.CommandText = "select HabibID from " + type + "s order by HabibID";
+                }
+                else if (type == "Instructor")
+                {
+                    cmd.CommandText = "select HabibID from " + type + "s order by HabibID";
+                }
+                else if (type == "Staff")
+                {
+                    cmd.CommandText = "select HabibID from " + type + " order by HabibID";
+                }
+                else
+                {
+                    MessageBox.Show("Invalid argument: " + type, "Error in UpdateBookingDetails");
+                }
+
+                comboBoxID.Items.Clear();
+                comboBoxID.ResetText();
+                txtHabibID.Clear();
+                comboBoxCourse.Items.Clear();
+                comboBoxCourse.ResetText();
+                txtCourse.Clear();
+                comboBoxInstructor.Items.Clear();
+                comboBoxInstructor.ResetText();
+                txtInstructor.Clear();
+
+                txtName.Clear();
+                txtContact.Clear();
+                txtAssignment.Clear();
+
+                SqlDataReader rd = cmd.ExecuteReader();
+                while (rd.Read())
+                {
+                    comboBoxID.Items.Add(rd["HabibID"]);
+                }
+                rd.Close();
+
+                int width = comboBoxID.DropDownWidth;
+                int maxWidth = DropDownWidth(comboBoxID);
+                if (maxWidth > width)
+                {
+                    comboBoxID.DropDownWidth = maxWidth;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error fetching Habib ID for " + type);
+            }
+            //MessageBox.Show("Press OK to continue","BookingDetails updated successfully");
+        }
+
+        private void UpdateFields(string e)
+        {
+            if (e == "View")
+            {
+                btnAddEquipment.Enabled = false;
+                btnAdd.Enabled = false;
+                btnClose.Enabled = true;
+                btnPrevious.Enabled = true;
+                btnNext.Enabled = true;
+                btnEdit.Enabled = true;
+                btnSave.Enabled = false;
+                btnDelete.Enabled = true;
+
+                //groupBoxBookedBy.Enabled = false;
+                rbtnInstructor.AutoCheck = false;
+                rbtnStaff.AutoCheck = false;
+                rbtnStudent.AutoCheck = false;
+
+                //groupBoxBooking.Enabled = false;
+                txtHabibID.Visible = true;
+                comboBoxID.Visible = false;
+                txtInstructor.Visible = true;
+                comboBoxInstructor.Visible = false;
+                txtCourse.Visible = true;
+                comboBoxCourse.Visible = false;
+
+                groupBoxEquipment.Enabled = false;
+
+                dateTimeIssued.Enabled = false;
+                dateTimeDue.Enabled = false;
+
+                txtNotes.ReadOnly = true;
+                txtAssignment.ReadOnly = true;
+
+                listViewBooking.Enabled = false;
+            }
+            else if (e == "Empty")
+            {
+                btnAdd.Enabled = true;
+                btnAddEquipment.Enabled = false;
+                btnClose.Enabled = true;
+                btnDelete.Enabled = false;
+                btnEdit.Enabled = false;
+                btnNext.Enabled = false;
+                btnPrevious.Enabled = false;
+                btnSave.Enabled = false;
+                groupBoxBookedBy.Enabled = true;
+                groupBoxBooking.Enabled = false;
+                groupBoxEquipment.Enabled = false;
+                listViewBooking.Enabled = false;
+                txtNotes.Enabled = false;
+
+                dateTimeDue.Value = myBooking.DueOn;
+                dateTimeIssued.Value = myBooking.IssuedOn;
+                numQuantity.Value = 1;
+                rbtnStudent.Checked = true;
+
+                btnAdd.Select();
+            }
+            else if (e == "Add")
+            {
+                btnAdd.Enabled = false;
+                btnAddEquipment.Enabled = true;
+                btnClose.Enabled = true;
+                btnDelete.Enabled = true;
+                btnEdit.Enabled = false;
+                btnNext.Enabled = false;
+                btnPrevious.Enabled = false;
+                btnSave.Enabled = true;
+                groupBoxBookedBy.Enabled = true;
+                groupBoxBooking.Enabled = true;
+                groupBoxEquipment.Enabled = true;
+                listViewBooking.Enabled = true;
+                txtNotes.Enabled = true;
+
+                UpdateComboBoxEquipment();
+
+                comboBoxID.Focus();
+            }
+            else if (e == "Edit")
+            {
+                btnAddEquipment.Enabled = false;
+                btnAdd.Enabled = false;
+                btnClose.Enabled = true;
+                btnEdit.Enabled = false;
+                btnNext.Enabled = true;
+                btnPrevious.Enabled = true;
+                btnSave.Enabled = true;
+                btnDelete.Enabled = true;
+
+                //groupBoxBookedBy.Enabled = true;
+                rbtnInstructor.AutoCheck = true;
+                rbtnStaff.AutoCheck = true;
+                rbtnStudent.AutoCheck = true;
+
+                //groupBoxBooking.Enabled = true;
+                txtHabibID.Visible = false;
+                comboBoxID.Visible = true;
+                txtInstructor.Visible = false;
+                comboBoxInstructor.Visible = true;
+                txtCourse.Visible = false;
+                comboBoxCourse.Visible = true;
+
+                groupBoxEquipment.Enabled = true;
+
+                dateTimeIssued.Enabled = true;
+                dateTimeDue.Enabled = true;
+
+                txtNotes.ReadOnly = false;
+
+                listViewBooking.Enabled = true;
+            }
+            else if (e == "Student")
+            {
+                btnSave.Enabled = false;
+                txtAssignment.Enabled = true;
+                comboBoxCourse.Enabled = true;
+                txtCourse.Enabled = true;
+                comboBoxInstructor.Enabled = true;
+                txtInstructor.Enabled = true;
+                UpdateBookingDetails("Student");
+            }
+            else if (e == "Instructor")
+            {
+                btnSave.Enabled = false;
+                txtAssignment.Enabled = false;
+                comboBoxCourse.Enabled = false;
+                txtCourse.Enabled = false;
+                comboBoxInstructor.Enabled = false;
+                txtInstructor.Enabled = false;
+                UpdateBookingDetails("Instructor");
+            }
+            else if (e == "Staff")
+            {
+                btnSave.Enabled = false;
+                txtAssignment.Enabled = false;
+                comboBoxCourse.Enabled = false;
+                txtCourse.Enabled = false;
+                comboBoxInstructor.Enabled = false;
+                txtInstructor.Enabled = false;
+                UpdateBookingDetails("Staff");
+            }
+            else
+            {
+                MessageBox.Show("Invalid argument: " + e, "Error in UpdateFields()");
+            }
+        }
+
+        public void AdvanceTo(string record, string id)
+        {
+            SqlDataReader rd;
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = con;
+            cmd.CommandType = CommandType.Text;
+
+            try
+            {
+                if (record == "NextRecord")
+                {
+                    cmd.CommandText = "select * from (select lead(BookingID) over " +
+                        "(order by BookingID) NextValue, BookingID from Bookings) as " +
+                        "NewTable where NewTable.BookingID = " + id;
+                    rd = cmd.ExecuteReader();
+                    if (rd.Read())
+                    {
+                        id = rd[0].ToString();
+                        if (id == "")
+                        {
+                            MessageBox.Show("The last available record is currently loaded", "No next record");
+                            rd.Close();
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show(id, "Next record not found");
+                    }
+                    rd.Close();
+                }
+                else if (record == "PrevRecord")
+                {
+                    cmd.CommandText = "select * from (select lag(BookingID) over " +
+                        "(order by BookingID) PrevValue, BookingID from Bookings) as " +
+                        "NewTable where NewTable.BookingID = " + id;
+                    rd = cmd.ExecuteReader();
+                    if (rd.Read())
+                    {
+                        id = rd[0].ToString();
+                        if (id == "")
+                        {
+                            MessageBox.Show("The first available record is currently loaded", "No previous record");
+                            rd.Close();
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show(id, "Previous record not found");
+                    }
+                    rd.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Incorrect value for record: " + record, "Error in AdvanceTo()");
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error in AdvanceTo()");
+            }
+            LoadRecord(id: id);
+        }
+
+        public void LoadRecord(string id)
+        {
+            SqlDataReader rd;
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = con;
+            cmd.CommandType = CommandType.Text;
+            string str1, str2;
+            ListViewItem item;
+
+            try
+            {
+                cmd.CommandText = "select UserID,Notes,BookedBy,BookingDate,BookingTime," +
+                    "IssueDate,IssueTime,DueDate,DueTime from Bookings where BookingID = " + id;
+                rd = cmd.ExecuteReader();
+                if (rd.Read())
+                {
+                    myBooking.ID = id;
+                    myBooking.User.ID = rd[0].ToString();
+                    myBooking.Notes = rd[1].ToString();
+                    myBooking.BookedBy = rd[2].ToString();
+                    str1 = rd[3].ToString();
+                    str2 = rd[4].ToString();
+                    myBooking.BookedOn = DateTimeOf(date: str1, time: str2);
+                    str1 = rd[5].ToString();
+                    str2 = rd[6].ToString();
+                    myBooking.IssuedOn = DateTimeOf(date: str1, time: str2);
+                    str1 = rd[7].ToString();
+                    str2 = rd[8].ToString();
+                    myBooking.DueOn = DateTimeOf(date: str1, time: str2);
+                }
+                rd.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error in LoadRecord()");
+                return;
+            }
+
+            dateTimeIssued.Value = myBooking.IssuedOn;
+            dateTimeDue.Value = myBooking.DueOn;
+            txtNotes.Text = myBooking.Notes;
+
+            UpdateBookingDetails(myBooking.BookedBy);
+
+            try
+            {
+                if (myBooking.BookedBy == "Student")
+                {
+                    rbtnStudent.Checked = true;
+                    rbtnInstructor.Checked = false;
+                    rbtnStaff.Checked = false;
+
+                    cmd.CommandText = "select Enrolments.EnrolmentID,Project,Term," +
+                        "Students.StudentID,Students.HabibID,Students.Name,Students.Email," +
+                        "Students.Contact,Courses.CourseID,Courses.CourseName," +
+                        "Courses.CourseCode,Instructors.InstructorID,Instructors.HabibID," +
+                        "Instructors.Name,Instructors.Email,Instructors.Contact from " +
+                        "BookingsByStudents, Enrolments, Students, Courses, Instructors " +
+                        "where BookingsByStudents.BookingID = " + myBooking.ID +
+                        " and BookingsByStudents.EnrolmentID = Enrolments.EnrolmentID " +
+                        "and Enrolments.StudentID = Students.StudentID and Enrolments.CourseID " +
+                        "= Courses.CourseID and Enrolments.InstructorID = Instructors.InstructorID";
+                    rd = cmd.ExecuteReader();
+                    if (rd.Read())
+                    {
+                        myBooking.Enrolment.ID = rd[0].ToString();
+                        myBooking.Project = rd[1].ToString();
+                        myBooking.Enrolment.Term = rd[2].ToString();
+                        myBooking.Student.ID = rd[3].ToString();
+                        myBooking.Student.HabibID = rd[4].ToString();
+                        myBooking.Student.Name = rd[5].ToString();
+                        myBooking.Student.Email = rd[6].ToString();
+                        myBooking.Student.Contact = rd[7].ToString();
+                        myBooking.Course.ID = rd[8].ToString();
+                        myBooking.Course.CourseName = rd[9].ToString();
+                        myBooking.Course.CourseCode = rd[10].ToString();
+                        myBooking.Instructor.ID = rd[11].ToString();
+                        myBooking.Instructor.HabibID = rd[12].ToString();
+                        myBooking.Instructor.Name = rd[13].ToString();
+                        myBooking.Instructor.Email = rd[14].ToString();
+                        myBooking.Instructor.Contact = rd[15].ToString();
+                    }
+                    rd.Close();
+                    txtAssignment.Text = myBooking.Project;
+                    txtContact.Text = myBooking.Student.Contact;
+                    txtCourse.Text = myBooking.Course.CourseName;
+                    txtHabibID.Text = myBooking.Student.HabibID;
+                    txtInstructor.Text = myBooking.Instructor.Name;
+                    txtName.Text = myBooking.Student.Name;
+                    comboBoxID.SelectedItem = txtHabibID.Text;
+                    comboBoxCourse.SelectedItem = txtCourse.Text;
+                    comboBoxInstructor.SelectedItem = txtInstructor.Text;
+                }
+                else if (myBooking.BookedBy == "Instructor")
+                {
+                    rbtnInstructor.Checked = true;
+                    rbtnStaff.Checked = false;
+                    rbtnStudent.Checked = false;
+
+                    cmd.CommandText = "select InstructorID from BookingsByInstructors where BookingID = " + myBooking.ID;
+                    rd = cmd.ExecuteReader();
+                    if (rd.Read())
+                    {
+                        myBooking.Instructor.ID = rd[0].ToString();
+                    }
+                    rd.Close();
+
+                    cmd.CommandText = "select HabibID,Name,Email,Contact from Instructors where InstructorID = " + myBooking.Instructor.ID;
+                    rd = cmd.ExecuteReader();
+                    if (rd.Read())
+                    {
+                        myBooking.Instructor.HabibID = rd[0].ToString();
+                        myBooking.Instructor.Name = rd[1].ToString();
+                        myBooking.Instructor.Email = rd[2].ToString();
+                        myBooking.Instructor.Contact = rd[3].ToString();
+                    }
+                    rd.Close();
+                    txtHabibID.Text = myBooking.Instructor.HabibID;
+                    txtName.Text = myBooking.Instructor.Name;
+                    txtContact.Text = myBooking.Instructor.Contact;
+                    comboBoxID.SelectedItem = txtHabibID.Text;
+                }
+                else if (myBooking.BookedBy == "Staff")
+                {
+                    rbtnStaff.Checked = true;
+                    rbtnStudent.Checked = false;
+                    rbtnInstructor.Checked = false;
+
+                    cmd.CommandText = "select StaffID from BookingsByStaff where BookingID = " + myBooking.ID;
+                    rd = cmd.ExecuteReader();
+                    if (rd.Read())
+                    {
+                        myBooking.Staff.ID = rd[0].ToString();
+                    }
+                    rd.Close();
+
+                    cmd.CommandText = "select HabibID,Name,Email,Contact from Staff where StaffID = " + myBooking.Staff.ID;
+                    rd = cmd.ExecuteReader();
+                    if (rd.Read())
+                    {
+                        myBooking.Staff.HabibID = rd[0].ToString();
+                        myBooking.Staff.Name = rd[1].ToString();
+                        myBooking.Staff.Email = rd[2].ToString();
+                        myBooking.Staff.Contact = rd[3].ToString();
+                    }
+                    rd.Close();
+                    txtHabibID.Text = myBooking.Staff.HabibID;
+                    txtName.Text = myBooking.Staff.Name;
+                    txtContact.Text = myBooking.Staff.Contact;
+                    comboBoxID.SelectedItem = txtHabibID.Text;
+                }
+                else
+                {
+                    MessageBox.Show("Invalid value of myBooking.BookedBy: " + myBooking.BookedBy, "Error in LoadRecord()");
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error in Load Record()");
+            }
+
+            try
+            {
+                listViewBooking.Items.Clear();
+                cmd.CommandText = "select Description,Quantity from BookedItems,Equipments" +
+                    " where BookedItems.EquipmentID=Equipments.EquipmentID " +
+                    "and BookingID = " + myBooking.ID + " order by Description";
+                rd = cmd.ExecuteReader();
+                while (rd.Read())
+                {
+                    str1 = rd[0].ToString();
+                    str2 = rd[1].ToString();
+                    item = new ListViewItem(str1);
+                    item.SubItems.Add(str2);
+                    listViewBooking.Items.Add(item);
+                }
+                rd.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error in Load Record()");
+            }
+        }
+
+        public void UpdateComboBoxEquipment()
+        {
+            Equipment eq;
+            string d = "";
+            int qtyA, qtyB;
+
+            try
+            {
+                comboBoxEquipment.Items.Clear();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.Text;
+
+                cmd.CommandText = "select Description,QuantityBooked,QuantityAvailable from Equipments order by Description";
+                SqlDataReader rd = cmd.ExecuteReader();
+                while (rd.Read())
+                {
+                    qtyA = Convert.ToInt32(rd[2].ToString());
+                    qtyB = Convert.ToInt32(rd[1].ToString());
+                    d = rd[0].ToString();
+                    eq = new Equipment(qtyA, qtyB, d);
+                    comboBoxEquipment.Items.Add(eq);
+                }
+                rd.Close();
+
+                int width = comboBoxEquipment.DropDownWidth;
+                int maxWidth = DropDownWidth(comboBoxEquipment);
+                if (maxWidth > width)
+                {
+                    comboBoxEquipment.DropDownWidth = maxWidth;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error in UpdateComboBoxEquipment()");
+            }
+        }
+
+        public static int DropDownWidth(ComboBox myCombo)
+        {
+            //Credits: stackoverflow.com/a/16435431
+            int maxWidth = 0, temp = 0;
+            foreach (var obj in myCombo.Items)
+            {
+                temp = TextRenderer.MeasureText(myCombo.GetItemText(obj), myCombo.Font).Width;
+                if (temp > maxWidth)
+                {
+                    maxWidth = temp;
+                }
+            }
+            return maxWidth + SystemInformation.VerticalScrollBarWidth;
+        }
+
+        public static string DateOf(DateTime dateTime)
+        {
+            string str = dateTime.ToString("yyyy-MM-dd");
+            return str;
+        }
+
+        public static DateTime DateTimeOf(string date, string time)
+        {
+            DateTime dateTime;
+            dateTime = Convert.ToDateTime(date);
+            date = dateTime.ToString("dd-MM-yyyy");
+            dateTime = Convert.ToDateTime(date + " " + time);
+            //MessageBox.Show(dateTime.ToString());
+            return dateTime;
+        }
+
+        public static string TimeOf(DateTime dateTime)
+        {
+            string str = dateTime.ToString("HH:mm:00");
+            return str;
         }
     }
 }

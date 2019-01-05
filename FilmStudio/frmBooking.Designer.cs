@@ -229,30 +229,30 @@
             // 
             // txtCourse
             // 
-            this.txtCourse.Location = new System.Drawing.Point(232, 43);
+            this.txtCourse.Location = new System.Drawing.Point(231, 43);
             this.txtCourse.Name = "txtCourse";
             this.txtCourse.ReadOnly = true;
             this.txtCourse.Size = new System.Drawing.Size(158, 20);
             this.txtCourse.TabIndex = 124;
-            this.txtCourse.Text = "Course";
+            this.txtCourse.Visible = false;
             // 
             // txtInstructor
             // 
-            this.txtInstructor.Location = new System.Drawing.Point(456, 43);
+            this.txtInstructor.Location = new System.Drawing.Point(455, 43);
             this.txtInstructor.Name = "txtInstructor";
             this.txtInstructor.ReadOnly = true;
             this.txtInstructor.Size = new System.Drawing.Size(100, 20);
             this.txtInstructor.TabIndex = 123;
-            this.txtInstructor.Text = "Instructor";
+            this.txtInstructor.Visible = false;
             // 
             // txtHabibID
             // 
-            this.txtHabibID.Location = new System.Drawing.Point(77, 16);
+            this.txtHabibID.Location = new System.Drawing.Point(76, 16);
             this.txtHabibID.Name = "txtHabibID";
             this.txtHabibID.ReadOnly = true;
             this.txtHabibID.Size = new System.Drawing.Size(100, 20);
             this.txtHabibID.TabIndex = 122;
-            this.txtHabibID.Text = "Habib ID";
+            this.txtHabibID.Visible = false;
             // 
             // comboBoxInstructor
             // 
@@ -344,7 +344,7 @@
             this.groupBoxBookedBy.Size = new System.Drawing.Size(561, 42);
             this.groupBoxBookedBy.TabIndex = 111;
             this.groupBoxBookedBy.TabStop = false;
-            this.groupBoxBookedBy.Text = "BookedBy";
+            this.groupBoxBookedBy.Text = "Booked By";
             // 
             // rbtnStaff
             // 
@@ -440,6 +440,7 @@
             this.btnDelete.TabIndex = 117;
             this.btnDelete.Text = "Delete";
             this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // btnAdd
             // 
