@@ -53,12 +53,7 @@ namespace FilmStudio
 
         private void btnGo_Click(object sender, EventArgs e)
         {
-            DialogResult dialogResult = MessageBox.Show(task + " " + type, "Confirm?", MessageBoxButtons.YesNo);
-            if (dialogResult == DialogResult.Yes)
-            {
-                OpenForm(type, task);
-                //Close();
-            }
+            OpenForm(type, task);
         }
 
         public void OpenForm(string type, string task)
@@ -67,7 +62,7 @@ namespace FilmStudio
             {
                 if (task == "Add")
                 {
-                    frmBooking frm = new frmBooking("Add");
+                    frmBooking frm = new frmBooking();
                     frm.Show();
                 }
                 else if (task == "Search")
