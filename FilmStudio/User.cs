@@ -14,10 +14,10 @@ namespace FilmStudio
         public User()
         {
             ID = "1";
-            Name = "Shakaib Saleem";
-            Username = "shakaib";
-            Passkey = "admin";
-            IsAdmin = true;
+            Name = "FName LName";
+            Username = "username";
+            Passkey = "password";
+            IsAdmin = false;
         }
 
         public User(string userID, string name, string username, string passkey, bool isAdmin)

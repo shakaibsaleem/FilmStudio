@@ -15,10 +15,12 @@ namespace FilmStudio
     {
         mySQLcon myCon;
         SqlConnection con;
+        string type;
 
-        public frmSearch()
+        public frmSearch(string t)
         {
             InitializeComponent();
+            type = t;
         }
 
         private void frmSearch_Load(object sender, EventArgs e)
@@ -26,9 +28,17 @@ namespace FilmStudio
             myCon = new mySQLcon();
             con = myCon.con;
 
-            HideFields();
-            PopulateCombos();
-            rbtnStudent.Select();
+            if (type == "Booking")
+            {
+                tabControl.SelectTab("tabBooking");
+                HideFieldsBooking();
+                PopulateCombosBooking();
+                rbtnStudent.Select();
+            }
+            else if (type == "User")
+            {
+                tabControl.SelectTab("tabUser");
+            }
         }
 
         private void rbtnStudent_CheckedChanged(object sender, EventArgs e)
@@ -89,60 +99,67 @@ namespace FilmStudio
 
         private void comboBoxStudent_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Search();
+            SearchBooking();
         }
 
         private void comboBoxEquip_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Search();
+            SearchBooking();
         }
 
         private void comboBoxCourse_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Search();
+            SearchBooking();
         }
 
         private void comboBoxInst_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Search();
+            SearchBooking();
         }
 
         private void comboBoxStaff_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Search();
+            SearchBooking();
         }
 
         private void dateTimeDueF_ValueChanged(object sender, EventArgs e)
         {
-            Search();
+            SearchBooking();
         }
 
         private void dateTimeDueT_ValueChanged(object sender, EventArgs e)
         {
-            Search();
+            SearchBooking();
         }
 
         private void dateTimeIssueF_ValueChanged(object sender, EventArgs e)
         {
-            Search();
+            SearchBooking();
         }
 
         private void dateTimeIssueT_ValueChanged(object sender, EventArgs e)
         {
-            Search();
+            SearchBooking();
         }
 
         private void dateTimeReturnF_ValueChanged(object sender, EventArgs e)
         {
-            Search();
+            SearchBooking();
         }
 
         private void dateTimeReturnT_ValueChanged(object sender, EventArgs e)
         {
-            Search();
+            SearchBooking();
         }
 
-        private void HideFields()
+        private void dataGridResults_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            string id = dataGridResults.CurrentRow.Cells[0].Value.ToString();
+            frmBooking frm = new frmBooking(id);
+            frm.Show();
+        }
+
+        private void HideFieldsBooking()
         {
             comboBoxCourse.Visible = false;
             comboBoxEquip.Visible = false;
@@ -158,7 +175,7 @@ namespace FilmStudio
             dateTimeReturnT.Visible = false;
         }
 
-        private void PopulateCombos()
+        private void PopulateCombosBooking()
         {
             SqlDataReader rd;
             SqlCommand cmd = new SqlCommand();
@@ -246,7 +263,7 @@ namespace FilmStudio
             }
         }
 
-        private void Search()
+        private void SearchBooking()
         {
             SqlDataReader rd;
             SqlCommand cmd = new SqlCommand();
@@ -462,13 +479,6 @@ namespace FilmStudio
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             da.Fill(dt);
             dataGridResults.DataSource = dt;
-        }
-
-        private void dataGridResults_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            string id = dataGridResults.CurrentRow.Cells[0].Value.ToString();
-            frmBooking frm = new frmBooking(id);
-            frm.Show();
         }
     }
 }

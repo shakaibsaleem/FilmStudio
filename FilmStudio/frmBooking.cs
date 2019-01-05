@@ -993,9 +993,9 @@ namespace FilmStudio
             //MessageBox.Show("Press OK to continue","BookingDetails updated successfully");
         }
 
-        private void UpdateFields(string e)
+        private void UpdateFields(string s)
         {
-            if (e == "View")
+            if (s == "View")
             {
                 btnAddEquipment.Enabled = false;
                 btnAdd.Enabled = false;
@@ -1029,7 +1029,7 @@ namespace FilmStudio
 
                 listViewBooking.Enabled = false;
             }
-            else if (e == "Empty")
+            else if (s == "Empty")
             {
                 btnAdd.Enabled = true;
                 btnAddEquipment.Enabled = false;
@@ -1052,7 +1052,7 @@ namespace FilmStudio
 
                 btnAdd.Select();
             }
-            else if (e == "Add")
+            else if (s == "Add")
             {
                 btnAdd.Enabled = false;
                 btnAddEquipment.Enabled = true;
@@ -1072,7 +1072,7 @@ namespace FilmStudio
 
                 comboBoxID.Focus();
             }
-            else if (e == "Edit")
+            else if (s == "Edit")
             {
                 btnAddEquipment.Enabled = false;
                 btnAdd.Enabled = false;
@@ -1105,7 +1105,7 @@ namespace FilmStudio
 
                 listViewBooking.Enabled = true;
             }
-            else if (e == "Student")
+            else if (s == "Student")
             {
                 btnSave.Enabled = false;
                 txtAssignment.Enabled = true;
@@ -1115,7 +1115,7 @@ namespace FilmStudio
                 txtInstructor.Enabled = true;
                 UpdateBookingDetails("Student");
             }
-            else if (e == "Instructor")
+            else if (s == "Instructor")
             {
                 btnSave.Enabled = false;
                 txtAssignment.Enabled = false;
@@ -1125,7 +1125,7 @@ namespace FilmStudio
                 txtInstructor.Enabled = false;
                 UpdateBookingDetails("Instructor");
             }
-            else if (e == "Staff")
+            else if (s == "Staff")
             {
                 btnSave.Enabled = false;
                 txtAssignment.Enabled = false;
@@ -1137,7 +1137,7 @@ namespace FilmStudio
             }
             else
             {
-                MessageBox.Show("Invalid argument: " + e, "Error in UpdateFields()");
+                MessageBox.Show("Invalid argument: " + s, "Error in UpdateFields()");
             }
         }
 

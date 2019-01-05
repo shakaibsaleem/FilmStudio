@@ -1,6 +1,0 @@
-
-next previous not working
-
-check delete
-
-what to do after delete? try next prev

@@ -1,4 +1,9 @@
-fix bug in next prev
+
+check delete
+
+frmUser add etc
+
+search User
 
 remove bug of login trick. strip password string till second last " starting scanning from right to left
 

@@ -13,6 +13,7 @@ namespace FilmStudio
     public partial class frmMenu : Form
     {
         public string task, type;
+
         public frmMenu()
         {
             InitializeComponent();
@@ -31,7 +32,7 @@ namespace FilmStudio
             comboBoxType.Items.Add("Student");
             comboBoxType.Items.Add("User");
             rbtnAdd.Select();
-            comboBoxType.SelectedIndex = 0;
+            comboBoxType.SelectedIndex = 7;
         }
 
         private void comboBoxType_SelectedIndexChanged(object sender, EventArgs e)
@@ -56,27 +57,6 @@ namespace FilmStudio
             OpenForm(type, task);
         }
 
-        public void OpenForm(string type, string task)
-        {
-            if (type == "Booking")
-            {
-                if (task == "Add")
-                {
-                    frmBooking frm = new frmBooking();
-                    frm.Show();
-                }
-                else if (task == "Search")
-                {
-                    frmSearch frm = new frmSearch();
-                    frm.Show();
-                }
-                else
-                {
-                    MessageBox.Show("Incorrect value for task: " + task, "Error in OpenForm()");
-                }
-            }
-        }
-
         private void frmMenu_KeyPress(object sender, KeyPressEventArgs e)
         {
             // pressing ESCAPE anywhere closes the form
@@ -96,6 +76,32 @@ namespace FilmStudio
             if (e.KeyChar == (char)Keys.Return)
             {
                 btnGo.PerformClick();
+            }
+        }
+
+        public void OpenForm(string type, string task)
+        {
+            if (task == "Search")
+            {
+                frmSearch frm = new frmSearch(type);
+                frm.Show();
+            }
+            else if (task == "Add")
+            {
+                if (type == "Booking")
+                {
+                    frmBooking frm = new frmBooking();
+                    frm.Show();
+                }
+                else if (type == "User")
+                {
+                    frmUser frm = new frmUser();
+                    frm.Show();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Incorrect value for task: " + task, "Error in OpenForm()");
             }
         }
     }

@@ -93,6 +93,8 @@ or DueDate = '2019-01-05'
 
 select Description from Equipments order by Description
 
+select UserID,Name,Username,Passkey,isAdmin from Users where UserID = 2
+
 select * from Equipments
 
 select * from BookedItems
