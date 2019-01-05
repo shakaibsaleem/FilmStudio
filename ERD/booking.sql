@@ -1,6 +1,16 @@
 
 DBCC CHECKIDENT (Equipments, RESEED, 0);
 
+select * from Students where HabibID = 'ms01036'
+
+select HabibID,Name,Email,Contact from Instructors where InstructorID = 1
+
+select Name from Instructors order by Name
+
+select HabibID from Students order by HabibID
+
+select CourseName from Courses order by CourseName
+
 delete from Students where StudentID >2
 
 delete from Equipments where EquipmentID > 0
@@ -94,8 +104,6 @@ select * from BookingsByStudents
 select * from BookingsByInstructors
 
 select * from BookingsByStaff
-
-select * from Bookings,BookedItems
 
 select Bookings.BookingID,HabibID,IssueDate,ReturnDate,DueDate
 from Bookings, BookingsByStudents, Enrolments, Students
