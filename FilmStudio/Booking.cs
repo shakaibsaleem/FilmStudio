@@ -8,29 +8,29 @@ namespace FilmStudio
 {
     public class Booking
     {
-        public User CurrentUser;
-        public Instructor CurrentInstructor;
-        public Staff CurrentStaff;
-        public Enrolment CurrentEnrolment;
-        public Student CurrentStudent;
-        public Course CurrentCourse;
+        public User User;
+        public Instructor Instructor;
+        public Staff Staff;
+        public Enrolment Enrolment;
+        public Student Student;
+        public Course Course;
 
         public DateTime IssuedOn, DueOn, ReturnedOn, BookedOn;
         public string ID, Notes, BookedBy, Project;
 
         public Booking()
         {
-            CurrentUser = new User();
-            CurrentInstructor = new Instructor();
-            CurrentStaff = new Staff();
-            CurrentStudent = new Student();
-            CurrentEnrolment = new Enrolment();
-            CurrentCourse = new Course();
+            User = new User();
+            Instructor = new Instructor();
+            Staff = new Staff();
+            Student = new Student();
+            Enrolment = new Enrolment();
+            Course = new Course();
 
             ID = "0";
             IssuedOn = DateTime.Now.AddDays(1);
-            DueOn = DateTime.Now.AddDays(3);
-            ReturnedOn = DateTime.Now.AddDays(2);
+            DueOn = DateTime.Now.AddDays(4);
+            ReturnedOn = DateTime.Now.AddDays(3);
             BookedOn = DateTime.Now;
             Notes = "";
             BookedBy = "";
@@ -39,12 +39,12 @@ namespace FilmStudio
 
         public Booking(User currentUser,Course currentCourse, Instructor currentInstructor, Staff currentStaff, Student currentStudent, Enrolment currentEnrolment, DateTime issuedOn, DateTime dueOn, DateTime returnedOn, DateTime bookedOn, string iD, string notes, string bookedBy, string project)
         {
-            CurrentUser = currentUser ?? throw new ArgumentNullException(nameof(currentUser));
-            CurrentCourse = currentCourse ?? throw new ArgumentNullException(nameof(currentCourse));
-            CurrentInstructor = currentInstructor ?? throw new ArgumentNullException(nameof(currentInstructor));
-            CurrentStaff = currentStaff ?? throw new ArgumentNullException(nameof(currentStaff));
-            CurrentEnrolment = currentEnrolment ?? throw new ArgumentNullException(nameof(currentEnrolment));
-            CurrentStudent = currentStudent ?? throw new ArgumentNullException(nameof(currentStudent));
+            User = currentUser ?? throw new ArgumentNullException(nameof(currentUser));
+            Course = currentCourse ?? throw new ArgumentNullException(nameof(currentCourse));
+            Instructor = currentInstructor ?? throw new ArgumentNullException(nameof(currentInstructor));
+            Staff = currentStaff ?? throw new ArgumentNullException(nameof(currentStaff));
+            Enrolment = currentEnrolment ?? throw new ArgumentNullException(nameof(currentEnrolment));
+            Student = currentStudent ?? throw new ArgumentNullException(nameof(currentStudent));
             IssuedOn = issuedOn;
             DueOn = dueOn;
             ReturnedOn = returnedOn;
