@@ -1,20 +1,14 @@
-remove bug of login trick. strip password string till second last " starting scanning from right to left
+fix bug in next prev
 
-instead of disabling, make text fields read-only, when needed
+remove bug of login trick. strip password string till second last " starting scanning from right to left
 
 issue updated when issued
 
 return updated when returned
 
-next previous
-
-search booking using id, item, date, course
-
 menu fix
 
 fix bug: when add, then previous next etc, error comes
-
-implement: show all details when next, prev and showing search result
 
 DONE:
 
