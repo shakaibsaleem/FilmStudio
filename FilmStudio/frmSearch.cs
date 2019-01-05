@@ -286,7 +286,7 @@ namespace FilmStudio
                     "where Bookings.BookingID = BookingsByStudents.BookingID " +
                     "and BookingsByStudents.EnrolmentID = Enrolments.EnrolmentID " +
                     "and Enrolments.StudentID = Students.StudentID " +
-                    "and Students.StudentID = " + id;
+                    "and Students.StudentID = " + id + " order by Bookings.BookingID desc";
                 cmd.ExecuteNonQuery();
             }
             else if (rbtnEquip.Checked)
@@ -467,48 +467,8 @@ namespace FilmStudio
         private void dataGridResults_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             string id = dataGridResults.CurrentRow.Cells[0].Value.ToString();
-            Booking myBooking = new Booking();
-
-            SqlDataReader rd;
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandType = CommandType.Text;
-            cmd.Connection = con;
-            string date, time;
-            try
-            {
-
-                cmd.CommandText = "select UserID,Notes,BookedBy,BookingDate,BookingTime,IssueDate," +
-                    "IssueTime,DueDate,DueTime,ReturnDate,ReturnTime from Bookings where BookingID = " + id;
-                rd = cmd.ExecuteReader();
-                if (rd.Read())
-                {
-                    myBooking.ID = id;
-                    myBooking.CurrentUser.UserID = rd[0].ToString();
-                    myBooking.Notes = rd[1].ToString();
-                    myBooking.BookedBy = rd[2].ToString();
-                    date = rd[3].ToString();
-                    time = rd[4].ToString();
-                    myBooking.BookedOn = frmBooking.DateTimeOf(date: date, time: time);
-                    date = rd[5].ToString();
-                    time = rd[6].ToString();
-                    myBooking.IssuedOn = frmBooking.DateTimeOf(date: date, time: time);
-                    date = rd[7].ToString();
-                    time = rd[8].ToString();
-                    myBooking.DueOn = frmBooking.DateTimeOf(date: date, time: time);
-                    date = rd[9].ToString();
-                    time = rd[10].ToString();
-                    myBooking.ReturnedOn = frmBooking.DateTimeOf(date: date, time: time);
-                }
-                rd.Close();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Record not found - id=" + id);
-            }
-            frmBooking frm = new frmBooking(myBooking, "Load");
+            frmBooking frm = new frmBooking(id);
             frm.Show();
-            MessageBox.Show("Exit?");
-            Close();
         }
     }
 }
