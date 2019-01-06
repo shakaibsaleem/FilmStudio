@@ -15,7 +15,7 @@ namespace FilmStudio
         {
             ID = "1";
             Name = "FName LName";
-            Username = "username";
+            Username = "";
             Passkey = "password";
             IsAdmin = false;
         }
