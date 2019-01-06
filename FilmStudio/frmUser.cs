@@ -543,7 +543,7 @@ namespace FilmStudio
             {
                 state = "Incomplete";
             }
-            else
+            else if (state == "Incomplete")
             {
                 state = "Filled";
             }
