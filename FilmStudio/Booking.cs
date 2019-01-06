@@ -18,9 +18,9 @@ namespace FilmStudio
         public DateTime IssuedOn, DueOn, ReturnedOn, BookedOn;
         public string ID, Notes, BookedBy, Project;
 
-        public Booking()
+        public Booking(User currentUser)
         {
-            User = new User();
+            User = currentUser;
             Instructor = new Instructor();
             Staff = new Staff();
             Student = new Student();
