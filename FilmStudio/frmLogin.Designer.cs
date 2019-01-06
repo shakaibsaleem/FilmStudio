@@ -69,9 +69,9 @@
             this.lblPasskey.AutoSize = true;
             this.lblPasskey.Location = new System.Drawing.Point(6, 48);
             this.lblPasskey.Name = "lblPasskey";
-            this.lblPasskey.Size = new System.Drawing.Size(50, 13);
+            this.lblPasskey.Size = new System.Drawing.Size(56, 13);
             this.lblPasskey.TabIndex = 6;
-            this.lblPasskey.Text = "Passkey:";
+            this.lblPasskey.Text = "Password:";
             // 
             // txtPasskey
             // 
