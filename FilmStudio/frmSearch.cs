@@ -16,11 +16,13 @@ namespace FilmStudio
         mySQLcon myCon;
         SqlConnection con;
         string type;
+        User CurrentUser;
 
-        public frmSearch(string t)
+        public frmSearch(string t, User currentUser)
         {
             InitializeComponent();
             type = t;
+            CurrentUser = currentUser;
         }
 
         private void frmSearch_Load(object sender, EventArgs e)
@@ -155,7 +157,7 @@ namespace FilmStudio
         private void dataGridResults_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             string id = dataGridResults.CurrentRow.Cells[0].Value.ToString();
-            frmBooking frm = new frmBooking(id);
+            frmBooking frm = new frmBooking(id, CurrentUser);
             frm.Show();
         }
 
