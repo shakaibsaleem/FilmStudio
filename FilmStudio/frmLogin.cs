@@ -15,11 +15,13 @@ namespace FilmStudio
     {
         mySQLcon myCon;
         SqlConnection con;
+        public User CurrentUser;
         public bool success { get; private set; }
 
         public frmLogin()
         {
             InitializeComponent();
+            CurrentUser = new User();
             success = false;
         }
 
@@ -31,25 +33,40 @@ namespace FilmStudio
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            SqlCommand cmd = con.CreateCommand();
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = con;
             cmd.CommandType = CommandType.Text;
-            cmd.CommandText = "select * from Users where Username='"+txtUsername.Text+"' and Passkey='"+txtPasskey.Text+"'";
-            cmd.ExecuteNonQuery();
-            DataTable dt = new DataTable();
-            SqlDataAdapter da = new SqlDataAdapter(cmd);
-            da.Fill(dt);
-            int i = Convert.ToInt32(dt.Rows.Count.ToString());
-
-            if (0==i)
+            cmd.CommandText = "select UserID,Name,Username,Passkey,isAdmin " +
+                "from Users where Username='" + txtUsername.Text + "'";
+            SqlDataReader rd = cmd.ExecuteReader();
+            if (rd.Read())
             {
-                MessageBox.Show("Incorrect Username or Passkey!");
-                txtUsername.Select();
+                CurrentUser.ID = rd[0].ToString();
+                CurrentUser.Name = rd[1].ToString();
+                CurrentUser.Username = rd[2].ToString();
+                CurrentUser.Passkey = rd[3].ToString();
+                CurrentUser.IsAdmin = rd[4].ToString() == "1";
             }
             else
             {
-                MessageBox.Show("Welcome, " + txtUsername.Text + "!", "Login Successful");
+                MessageBox.Show("The username you have provided does not exist", "User not found");
+                rd.Close();
+                txtUsername.Select();
+                return;
+            }
+            rd.Close();
+
+            if (CurrentUser.Passkey == txtPasskey.Text)
+            {
+                MessageBox.Show("Welcome, " + CurrentUser.Name + "!", "Login Successful");
                 success = true;
                 Close();
+            }
+            else
+            {
+                MessageBox.Show("If you are " + CurrentUser.Name + ", enter the " +
+                    "correct Password or contact an admin to reset your password",
+                    "Incorrect Password");
             }
         }
 
