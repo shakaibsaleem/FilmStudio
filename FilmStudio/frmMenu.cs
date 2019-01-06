@@ -13,12 +13,14 @@ namespace FilmStudio
     public partial class frmMenu : Form
     {
         public string task, type;
+        public User CurrentUser;
 
-        public frmMenu()
+        public frmMenu(User currentUser)
         {
             InitializeComponent();
             task = "";
             type = "";
+            CurrentUser = currentUser;
         }
 
         private void frmMenu_Load(object sender, EventArgs e)
@@ -83,19 +85,19 @@ namespace FilmStudio
         {
             if (task == "Search")
             {
-                frmSearch frm = new frmSearch(type);
+                frmSearch frm = new frmSearch(type, CurrentUser);
                 frm.Show();
             }
             else if (task == "Add")
             {
                 if (type == "Booking")
                 {
-                    frmBooking frm = new frmBooking();
+                    frmBooking frm = new frmBooking(CurrentUser);
                     frm.Show();
                 }
                 else if (type == "User")
                 {
-                    frmUser frm = new frmUser();
+                    frmUser frm = new frmUser(CurrentUser);
                     frm.Show();
                 }
             }
