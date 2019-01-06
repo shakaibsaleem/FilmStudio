@@ -18,22 +18,25 @@ namespace FilmStudio
         mySQLcon myCon;
         SqlConnection con;
         string state;
+        User CurrentUser;
 
-        public frmBooking()
+        public frmBooking(User currentUser)
         {
             InitializeComponent();
             myCon = new mySQLcon();
             con = myCon.con;
-            myBooking = new Booking();
+            CurrentUser = currentUser;
+            myBooking = new Booking(CurrentUser);
             state = "Empty";
         }
 
-        public frmBooking(string id)
+        public frmBooking(string id, User currentUser)
         {
             InitializeComponent();
             myCon = new mySQLcon();
             con = myCon.con;
-            myBooking = new Booking();
+            CurrentUser = currentUser;
+            myBooking = new Booking(CurrentUser);
             LoadRecord(id);
             state = "View";
         }
@@ -137,7 +140,7 @@ namespace FilmStudio
             }
             else
             {
-                MessageBox.Show("State = ", "Unexpected value in btnClose");
+                MessageBox.Show("State = " + state, "Unexpected value in btnClose");
             }
         }
 
@@ -520,7 +523,7 @@ namespace FilmStudio
             }
             else
             {
-                MessageBox.Show("State = ", "Unexpected value in btnNext");
+                MessageBox.Show("State = " + state, "Unexpected value in btnNext");
             }
         }
 
