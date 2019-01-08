@@ -1,5 +1,5 @@
 
-DBCC CHECKIDENT (Equipments, RESEED, 0);
+DBCC CHECKIDENT (Bookings, RESEED, 0);
 
 select * from Students where HabibID = 'ms01036'
 
@@ -21,7 +21,7 @@ select * from Instructors
 
 insert into BookingsByStudents (BookingID,EnrolmentID,Project) values (1,2,'ProjectX')
 
-delete from BookingsByStudents where EnrolmentID = 2
+delete from Bookings where BookingID = 0
 
 delete from BookingsByStudents where BookingID = 2
 
@@ -181,3 +181,6 @@ select * from Instructors
 select Enrolments.EnrolmentID,Project,Term,Students.StudentID,Students.HabibID,Students.Name,Students.Email,Students.Contact,Courses.CourseID,Courses.CourseName,Courses.CourseCode,Instructors.InstructorID,Instructors.HabibID,Instructors.Name,Instructors.Email,Instructors.Contact from BookingsByStudents, Enrolments, Students, Courses, Instructors where BookingsByStudents.BookingID = 74 and BookingsByStudents.EnrolmentID = Enrolments.EnrolmentID and Enrolments.StudentID = Students.StudentID and Enrolments.CourseID = Courses.CourseID and Enrolments.InstructorID = Instructors.InstructorID
 
 select Description,Quantity from BookedItems,Equipments where BookedItems.EquipmentID = Equipments.EquipmentID and BookingID = 14
+
+ALTER TABLE Bookings
+ADD OffCampus Bit
