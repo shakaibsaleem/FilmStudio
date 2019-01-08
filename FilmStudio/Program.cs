@@ -18,9 +18,9 @@ namespace FilmStudio
             Application.SetCompatibleTextRenderingDefault(false);
 
             frmLogin login = new frmLogin();
-            Application.Run(login);
+            //Application.Run(login);
 
-            if (login.success)
+            if (!login.success)
             {
                 Application.Run(new frmMenu(login.CurrentUser));
             }
