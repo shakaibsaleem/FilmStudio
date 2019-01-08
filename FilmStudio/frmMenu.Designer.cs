@@ -28,13 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMenu));
             this.groupBoxTask = new System.Windows.Forms.GroupBox();
-            this.rbtnAdd = new System.Windows.Forms.RadioButton();
             this.rbtnSearch = new System.Windows.Forms.RadioButton();
+            this.rbtnAdd = new System.Windows.Forms.RadioButton();
             this.comboBoxType = new System.Windows.Forms.ComboBox();
             this.btnGo = new System.Windows.Forms.Button();
             this.lblType = new System.Windows.Forms.Label();
+            this.notifyIconMenu = new System.Windows.Forms.NotifyIcon(this.components);
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBoxTask.SuspendLayout();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBoxTask
@@ -48,18 +54,6 @@
             this.groupBoxTask.TabStop = false;
             this.groupBoxTask.Text = "Task:";
             // 
-            // rbtnAdd
-            // 
-            this.rbtnAdd.AutoSize = true;
-            this.rbtnAdd.Location = new System.Drawing.Point(6, 19);
-            this.rbtnAdd.Name = "rbtnAdd";
-            this.rbtnAdd.Size = new System.Drawing.Size(82, 17);
-            this.rbtnAdd.TabIndex = 0;
-            this.rbtnAdd.TabStop = true;
-            this.rbtnAdd.Text = "Add Record";
-            this.rbtnAdd.UseVisualStyleBackColor = true;
-            this.rbtnAdd.CheckedChanged += new System.EventHandler(this.rbtnAdd_CheckedChanged);
-            // 
             // rbtnSearch
             // 
             this.rbtnSearch.AutoSize = true;
@@ -71,6 +65,18 @@
             this.rbtnSearch.Text = "Search Record";
             this.rbtnSearch.UseVisualStyleBackColor = true;
             this.rbtnSearch.CheckedChanged += new System.EventHandler(this.rbtnSearch_CheckedChanged);
+            // 
+            // rbtnAdd
+            // 
+            this.rbtnAdd.AutoSize = true;
+            this.rbtnAdd.Location = new System.Drawing.Point(6, 19);
+            this.rbtnAdd.Name = "rbtnAdd";
+            this.rbtnAdd.Size = new System.Drawing.Size(82, 17);
+            this.rbtnAdd.TabIndex = 0;
+            this.rbtnAdd.TabStop = true;
+            this.rbtnAdd.Text = "Add Record";
+            this.rbtnAdd.UseVisualStyleBackColor = true;
+            this.rbtnAdd.CheckedChanged += new System.EventHandler(this.rbtnAdd_CheckedChanged);
             // 
             // comboBoxType
             // 
@@ -101,6 +107,28 @@
             this.lblType.TabIndex = 3;
             this.lblType.Text = "Record Type:";
             // 
+            // notifyIconMenu
+            // 
+            this.notifyIconMenu.ContextMenuStrip = this.contextMenuStrip1;
+            this.notifyIconMenu.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIconMenu.Icon")));
+            this.notifyIconMenu.Text = "Film Studio";
+            this.notifyIconMenu.Visible = true;
+            this.notifyIconMenu.MouseClick += new System.Windows.Forms.MouseEventHandler(this.notifyIconMenu_MouseClick);
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.exitToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(93, 26);
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
+            this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
             // frmMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -111,16 +139,19 @@
             this.Controls.Add(this.comboBoxType);
             this.Controls.Add(this.groupBoxTask);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.MaximizeBox = false;
-            this.MinimizeBox = false;
             this.Name = "frmMenu";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Menu";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMenu_FormClosing);
             this.Load += new System.EventHandler(this.frmMenu_Load);
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.frmMenu_KeyPress);
             this.groupBoxTask.ResumeLayout(false);
             this.groupBoxTask.PerformLayout();
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -134,5 +165,8 @@
         private System.Windows.Forms.ComboBox comboBoxType;
         private System.Windows.Forms.Button btnGo;
         private System.Windows.Forms.Label lblType;
+        private System.Windows.Forms.NotifyIcon notifyIconMenu;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
     }
 }

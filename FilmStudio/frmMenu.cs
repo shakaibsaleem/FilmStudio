@@ -14,6 +14,7 @@ namespace FilmStudio
     {
         public string task, type;
         public User CurrentUser;
+        bool allowExit = false;
 
         public frmMenu(User currentUser)
         {
@@ -34,7 +35,9 @@ namespace FilmStudio
             comboBoxType.Items.Add("Student");
             comboBoxType.Items.Add("User");
             rbtnAdd.Select();
-            comboBoxType.SelectedIndex = 7;
+            comboBoxType.SelectedIndex = 0;
+            frmBooking frm = new frmBooking(CurrentUser);
+            frm.Show();
         }
 
         private void comboBoxType_SelectedIndexChanged(object sender, EventArgs e)
@@ -61,14 +64,10 @@ namespace FilmStudio
 
         private void frmMenu_KeyPress(object sender, KeyPressEventArgs e)
         {
-            // pressing ESCAPE anywhere closes the form
+            // pressing ESCAPE anywhere minimizes the form
             if (e.KeyChar == (char)Keys.Escape)
             {
-                DialogResult dialogResult = MessageBox.Show("Press YES to Exit.", "Are you sure you want to Exit?", MessageBoxButtons.YesNo);
-                if (dialogResult == DialogResult.Yes)
-                {
-                    Close();
-                }
+                WindowState = FormWindowState.Minimized;
             }
         }
 
@@ -78,6 +77,35 @@ namespace FilmStudio
             if (e.KeyChar == (char)Keys.Return)
             {
                 btnGo.PerformClick();
+            }
+        }
+
+        private void frmMenu_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (!allowExit)
+            {
+                notifyIconMenu.BalloonTipTitle = "Film Studio has been minimized";
+                notifyIconMenu.BalloonTipText = "Double-click the FilmStudio icon to open menu again. Right-click to exit the application.";
+                notifyIconMenu.BalloonTipIcon = ToolTipIcon.Info;
+                notifyIconMenu.ShowBalloonTip(1000);
+                WindowState = FormWindowState.Minimized;
+                e.Cancel = true;
+                //this.Click += new EventHandler(Form1_Click);
+            }
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            allowExit = true;
+            Close();
+        }
+
+        private void notifyIconMenu_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                WindowState = FormWindowState.Normal;
+                Activate();
             }
         }
 
