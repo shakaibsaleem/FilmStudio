@@ -1,3 +1,5 @@
+on campus or off campus
+
 show calendar instead of menu. then start whatever tasks from there only.
 or send bookings to outlook calendar instead.
 
