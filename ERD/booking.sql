@@ -70,8 +70,12 @@ where newtable.BookingID = 1
 select * from (SELECT LEAD(BookingID) OVER (ORDER BY BookingID) NextValue, BookingID FROM Bookings) as newtable
 WHERE newtable.BookingID = 25
 
-insert into Bookings (UserID,Notes,BookedBy,BookingDate,BookingTime,IssueDate,IssueTime,DueDate,DueTime)
-values (1, 'Note','Instructor','2018-12-30','11:1:2','2018-12-29','12:00:00','2018-12-30','09:00:00')
+insert into Bookings (UserID,Notes,BookedBy,BookingDate,BookingTime,IssueDate,IssueTime,DueDate,DueTime,ReturnDate,ReturnTime,OffCampus)
+values (1, 'Note','Instructor','2018-12-30','11:1:2','2018-12-29','12:00:00','2018-12-30','09:00:00','2018-12-30','09:00:00',1)
+
+update Bookings set ReturnDate = NULL where BookingID = 2
+
+select * from Bookings
 
 select Bookings.BookingID,Description,Quantity as QuantityIssued,IssueDate,ReturnDate,DueDate,QuantityAvailable,BookedBy,Notes
 from Equipments, BookedItems, Bookings
