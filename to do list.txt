@@ -1,3 +1,26 @@
+show calendar instead of menu. then start whatever tasks from there only.
+or send bookings to outlook calendar instead.
+
+show bookings made by a user
+
+when close, go to bg, when open, ask login
+
+should login straight to booking form. then add booking do whatever. then if needed, click button to go to menu
+
+option to add new booking again
+
+issue date and time set to rn, return next day 12noon
+
+show calnedar view of bookings
+
+print form. print on filmstudio printer.
+
+generate emails: whenever booking details altered, also remind when due
+std and filmstudio account
+email sent from film studio account
+
+
+show quantity available based on dates
 
 check delete
 
