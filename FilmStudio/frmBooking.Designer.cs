@@ -569,6 +569,7 @@
             // dateTimeReturned
             // 
             this.dateTimeReturned.CustomFormat = "dd/MM/yy ddd hh:mm tt";
+            this.dateTimeReturned.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dateTimeReturned.Location = new System.Drawing.Point(378, 56);
             this.dateTimeReturned.Name = "dateTimeReturned";
             this.dateTimeReturned.Size = new System.Drawing.Size(189, 20);
