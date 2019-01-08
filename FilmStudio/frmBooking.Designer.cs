@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmBooking));
             this.txtName = new System.Windows.Forms.TextBox();
             this.txtContact = new System.Windows.Forms.TextBox();
             this.lblHabibID = new System.Windows.Forms.Label();
@@ -73,6 +74,9 @@
             this.comboBoxEquipment = new System.Windows.Forms.ComboBox();
             this.numQuantity = new System.Windows.Forms.NumericUpDown();
             this.txtNotes = new System.Windows.Forms.TextBox();
+            this.checkBoxOffCampus = new System.Windows.Forms.CheckBox();
+            this.checkBoxReturned = new System.Windows.Forms.CheckBox();
+            this.dateTimeReturned = new System.Windows.Forms.DateTimePicker();
             this.groupBoxBooking.SuspendLayout();
             this.groupBoxBookedBy.SuspendLayout();
             this.groupBoxEquipment.SuspendLayout();
@@ -126,9 +130,9 @@
             // 
             this.dateTimeIssued.CustomFormat = "dd/MM/yy ddd hh:mm tt";
             this.dateTimeIssued.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimeIssued.Location = new System.Drawing.Point(88, 12);
+            this.dateTimeIssued.Location = new System.Drawing.Point(82, 12);
             this.dateTimeIssued.Name = "dateTimeIssued";
-            this.dateTimeIssued.Size = new System.Drawing.Size(210, 20);
+            this.dateTimeIssued.Size = new System.Drawing.Size(189, 20);
             this.dateTimeIssued.TabIndex = 50;
             this.dateTimeIssued.Value = new System.DateTime(2018, 11, 8, 12, 30, 0, 0);
             this.dateTimeIssued.ValueChanged += new System.EventHandler(this.dateTimeIssued_ValueChanged);
@@ -136,7 +140,7 @@
             // lblIssued
             // 
             this.lblIssued.AutoSize = true;
-            this.lblIssued.Location = new System.Drawing.Point(18, 18);
+            this.lblIssued.Location = new System.Drawing.Point(18, 15);
             this.lblIssued.Name = "lblIssued";
             this.lblIssued.Size = new System.Drawing.Size(58, 13);
             this.lblIssued.TabIndex = 100;
@@ -145,7 +149,7 @@
             // lblDue
             // 
             this.lblDue.AutoSize = true;
-            this.lblDue.Location = new System.Drawing.Point(304, 18);
+            this.lblDue.Location = new System.Drawing.Point(325, 15);
             this.lblDue.Name = "lblDue";
             this.lblDue.Size = new System.Drawing.Size(47, 13);
             this.lblDue.TabIndex = 101;
@@ -317,9 +321,9 @@
             // 
             this.dateTimeDue.CustomFormat = "dd/MM/yy ddd hh:mm tt";
             this.dateTimeDue.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimeDue.Location = new System.Drawing.Point(357, 12);
+            this.dateTimeDue.Location = new System.Drawing.Point(378, 12);
             this.dateTimeDue.Name = "dateTimeDue";
-            this.dateTimeDue.Size = new System.Drawing.Size(210, 20);
+            this.dateTimeDue.Size = new System.Drawing.Size(189, 20);
             this.dateTimeDue.TabIndex = 51;
             this.dateTimeDue.Value = new System.DateTime(2018, 11, 8, 12, 30, 0, 0);
             this.dateTimeDue.ValueChanged += new System.EventHandler(this.dateTimeDue_ValueChanged);
@@ -341,7 +345,7 @@
             this.groupBoxBookedBy.Controls.Add(this.rbtnStudent);
             this.groupBoxBookedBy.Location = new System.Drawing.Point(12, 38);
             this.groupBoxBookedBy.Name = "groupBoxBookedBy";
-            this.groupBoxBookedBy.Size = new System.Drawing.Size(561, 42);
+            this.groupBoxBookedBy.Size = new System.Drawing.Size(202, 42);
             this.groupBoxBookedBy.TabIndex = 111;
             this.groupBoxBookedBy.TabStop = false;
             this.groupBoxBookedBy.Text = "Booked By";
@@ -349,7 +353,7 @@
             // rbtnStaff
             // 
             this.rbtnStaff.AutoSize = true;
-            this.rbtnStaff.Location = new System.Drawing.Point(190, 19);
+            this.rbtnStaff.Location = new System.Drawing.Point(149, 19);
             this.rbtnStaff.Name = "rbtnStaff";
             this.rbtnStaff.Size = new System.Drawing.Size(47, 17);
             this.rbtnStaff.TabIndex = 2;
@@ -361,7 +365,7 @@
             // rbtnInstructor
             // 
             this.rbtnInstructor.AutoSize = true;
-            this.rbtnInstructor.Location = new System.Drawing.Point(95, 19);
+            this.rbtnInstructor.Location = new System.Drawing.Point(74, 19);
             this.rbtnInstructor.Name = "rbtnInstructor";
             this.rbtnInstructor.Size = new System.Drawing.Size(69, 17);
             this.rbtnInstructor.TabIndex = 1;
@@ -539,11 +543,47 @@
             this.txtNotes.Text = "Notes";
             this.txtNotes.TextChanged += new System.EventHandler(this.txtNotes_TextChanged);
             // 
+            // checkBoxOffCampus
+            // 
+            this.checkBoxOffCampus.AutoSize = true;
+            this.checkBoxOffCampus.Location = new System.Drawing.Point(220, 58);
+            this.checkBoxOffCampus.Name = "checkBoxOffCampus";
+            this.checkBoxOffCampus.Size = new System.Drawing.Size(81, 17);
+            this.checkBoxOffCampus.TabIndex = 121;
+            this.checkBoxOffCampus.Text = "Off Campus";
+            this.checkBoxOffCampus.UseVisualStyleBackColor = true;
+            this.checkBoxOffCampus.CheckedChanged += new System.EventHandler(this.checkBoxOffCampus_CheckedChanged);
+            // 
+            // checkBoxReturned
+            // 
+            this.checkBoxReturned.AutoSize = true;
+            this.checkBoxReturned.Enabled = false;
+            this.checkBoxReturned.Location = new System.Drawing.Point(307, 58);
+            this.checkBoxReturned.Name = "checkBoxReturned";
+            this.checkBoxReturned.Size = new System.Drawing.Size(73, 17);
+            this.checkBoxReturned.TabIndex = 123;
+            this.checkBoxReturned.Text = "Returned:";
+            this.checkBoxReturned.UseVisualStyleBackColor = true;
+            this.checkBoxReturned.CheckedChanged += new System.EventHandler(this.checkBoxReturned_CheckedChanged);
+            // 
+            // dateTimeReturned
+            // 
+            this.dateTimeReturned.CustomFormat = "dd/MM/yy ddd hh:mm tt";
+            this.dateTimeReturned.Location = new System.Drawing.Point(378, 56);
+            this.dateTimeReturned.Name = "dateTimeReturned";
+            this.dateTimeReturned.Size = new System.Drawing.Size(189, 20);
+            this.dateTimeReturned.TabIndex = 124;
+            this.dateTimeReturned.Visible = false;
+            this.dateTimeReturned.ValueChanged += new System.EventHandler(this.dateTimeReturned_ValueChanged);
+            // 
             // frmBooking
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(585, 405);
+            this.Controls.Add(this.dateTimeReturned);
+            this.Controls.Add(this.checkBoxReturned);
+            this.Controls.Add(this.checkBoxOffCampus);
             this.Controls.Add(this.txtNotes);
             this.Controls.Add(this.groupBoxEquipment);
             this.Controls.Add(this.btnAdd);
@@ -561,6 +601,7 @@
             this.Controls.Add(this.lblDue);
             this.Controls.Add(this.lblIssued);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmBooking";
@@ -625,5 +666,8 @@
         private System.Windows.Forms.TextBox txtCourse;
         private System.Windows.Forms.TextBox txtInstructor;
         private System.Windows.Forms.TextBox txtHabibID;
+        private System.Windows.Forms.CheckBox checkBoxOffCampus;
+        private System.Windows.Forms.CheckBox checkBoxReturned;
+        private System.Windows.Forms.DateTimePicker dateTimeReturned;
     }
 }

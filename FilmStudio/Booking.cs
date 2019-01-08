@@ -15,36 +15,41 @@ namespace FilmStudio
         public Student Student;
         public Course Course;
 
-        public DateTime IssuedOn, DueOn, ReturnedOn, BookedOn;
+        public DateTime IssuedOn, DueOn, BookedOn, ReturnedOn;
         public string ID, Notes, BookedBy, Project;
+        public bool OffCampus, Returned;
 
-        public Booking(User currentUser)
+        public Booking(User user)
         {
-            User = currentUser;
+            User = user;
             Instructor = new Instructor();
             Staff = new Staff();
             Student = new Student();
             Enrolment = new Enrolment();
             Course = new Course();
 
+            DateTime d = DateTime.Now;
+
             ID = "0";
-            IssuedOn = DateTime.Now.AddDays(1);
-            DueOn = DateTime.Now.AddDays(4);
-            ReturnedOn = DateTime.Now.AddDays(3);
+            IssuedOn = new DateTime(d.Year,d.Month,d.Day,12,0,0);
+            DueOn = new DateTime(d.Year, d.Month, d.AddDays(1).Day, 9, 0, 0);
             BookedOn = DateTime.Now;
+            //ReturnedOn = DateTime.Now.AddDays(3);
             Notes = "";
             BookedBy = "";
             Project = "";
-        }
+            OffCampus = false;
+            Returned = false;
+        }/*
 
-        public Booking(User currentUser,Course currentCourse, Instructor currentInstructor, Staff currentStaff, Student currentStudent, Enrolment currentEnrolment, DateTime issuedOn, DateTime dueOn, DateTime returnedOn, DateTime bookedOn, string iD, string notes, string bookedBy, string project)
+        public Booking(User user, Instructor instructor, Staff staff, Enrolment enrolment, Student student, Course course, DateTime issuedOn, DateTime dueOn, DateTime bookedOn, DateTime returnedOn, string iD, string notes, string bookedBy, string project, bool offCampus, bool returned)
         {
-            User = currentUser ?? throw new ArgumentNullException(nameof(currentUser));
-            Course = currentCourse ?? throw new ArgumentNullException(nameof(currentCourse));
-            Instructor = currentInstructor ?? throw new ArgumentNullException(nameof(currentInstructor));
-            Staff = currentStaff ?? throw new ArgumentNullException(nameof(currentStaff));
-            Enrolment = currentEnrolment ?? throw new ArgumentNullException(nameof(currentEnrolment));
-            Student = currentStudent ?? throw new ArgumentNullException(nameof(currentStudent));
+            User = user ?? throw new ArgumentNullException(nameof(user));
+            Instructor = instructor ?? throw new ArgumentNullException(nameof(instructor));
+            Staff = staff ?? throw new ArgumentNullException(nameof(staff));
+            Enrolment = enrolment ?? throw new ArgumentNullException(nameof(enrolment));
+            Student = student ?? throw new ArgumentNullException(nameof(student));
+            Course = course ?? throw new ArgumentNullException(nameof(course));
             IssuedOn = issuedOn;
             DueOn = dueOn;
             ReturnedOn = returnedOn;
@@ -53,6 +58,27 @@ namespace FilmStudio
             Notes = notes ?? throw new ArgumentNullException(nameof(notes));
             BookedBy = bookedBy ?? throw new ArgumentNullException(nameof(bookedBy));
             Project = project ?? throw new ArgumentNullException(nameof(project));
+            OffCampus = offCampus;
+            Returned = returned;
         }
+
+        public Booking(User user, Instructor instructor, Staff staff, Enrolment enrolment, Student student, Course course, DateTime issuedOn, DateTime dueOn, DateTime bookedOn, string iD, string notes, string bookedBy, string project, bool offCampus, bool returned)
+        {
+            User = user ?? throw new ArgumentNullException(nameof(user));
+            Instructor = instructor ?? throw new ArgumentNullException(nameof(instructor));
+            Staff = staff ?? throw new ArgumentNullException(nameof(staff));
+            Enrolment = enrolment ?? throw new ArgumentNullException(nameof(enrolment));
+            Student = student ?? throw new ArgumentNullException(nameof(student));
+            Course = course ?? throw new ArgumentNullException(nameof(course));
+            IssuedOn = issuedOn;
+            DueOn = dueOn;
+            BookedOn = bookedOn;
+            ID = iD ?? throw new ArgumentNullException(nameof(iD));
+            Notes = notes ?? throw new ArgumentNullException(nameof(notes));
+            BookedBy = bookedBy ?? throw new ArgumentNullException(nameof(bookedBy));
+            Project = project ?? throw new ArgumentNullException(nameof(project));
+            OffCampus = offCampus;
+            Returned = returned;
+        }*/
     }
 }

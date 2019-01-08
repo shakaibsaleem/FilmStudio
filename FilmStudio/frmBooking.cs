@@ -106,18 +106,19 @@ namespace FilmStudio
         {
             if (state == "Empty")
             {
-                DialogResult dialogResult = MessageBox.Show("You have not added the record." +
-                    " Press Yes to add the record and then close. Press No to close without" +
-                    " adding.","Add record before closing?", MessageBoxButtons.YesNoCancel);
-                if (dialogResult == DialogResult.Yes)
-                {
-                    btnAdd.PerformClick();
-                    Close();
-                }
-                else if (dialogResult == DialogResult.No)
-                {
-                    Close();
-                }
+                Close();
+                //DialogResult dialogResult = MessageBox.Show("You have not added the record." +
+                //    " Press Yes to add the record and then close. Press No to close without" +
+                //    " adding.","Add record before closing?", MessageBoxButtons.YesNoCancel);
+                //if (dialogResult == DialogResult.Yes)
+                //{
+                //    btnAdd.PerformClick();
+                //    Close();
+                //}
+                //else if (dialogResult == DialogResult.No)
+                //{
+                //    Close();
+                //}
             }
             else if (state == "Add" || state == "Edit")
             {
@@ -155,16 +156,17 @@ namespace FilmStudio
                 cmd.CommandType = CommandType.Text;
                 cmd.CommandText = "insert into Bookings " +
                     "(UserID,BookedBy,Notes,BookingDate,BookingTime,IssueDate," +
-                    "IssueTime,DueDate,DueTime)values(" + myBooking.User.ID + ",'" + 
+                    "IssueTime,DueDate,DueTime,OffCampus)values(" + myBooking.User.ID + ",'" + 
                     myBooking.BookedBy + "','" + myBooking.Notes +"','" +
                     DateOf(myBooking.BookedOn) + "','" + TimeOf(myBooking.BookedOn) + "','" +
                     DateOf(myBooking.IssuedOn) + "','" + TimeOf(myBooking.IssuedOn) + "','" +
-                    DateOf(myBooking.DueOn) + "','" + TimeOf(myBooking.DueOn) + "')";
+                    DateOf(myBooking.DueOn) + "','" + TimeOf(myBooking.DueOn) + "'," +
+                    (myBooking.OffCampus ? "1" : "0") + ")";
                 cmd.ExecuteNonQuery();
 
                 cmd.CommandText = "select top 1 BookingID from Bookings order by BookingID desc";
                 SqlDataReader rd = cmd.ExecuteReader();
-                if (rd.Read() == true)
+                if (rd.Read())
                 {
                     myBooking.ID = rd[0].ToString();
                 }
@@ -334,6 +336,7 @@ namespace FilmStudio
 
                 cmd.CommandText = "update Bookings set " +
                     "   UserID = " + myBooking.User.ID +
+                    " , OffCampus=" + (myBooking.OffCampus ? "1" : "0")+
                     " , Notes = '" + myBooking.Notes +
                     "', BookedBy = '" + myBooking.BookedBy +
                     "', BookingDate = '" + DateOf(myBooking.BookedOn) +
@@ -343,6 +346,21 @@ namespace FilmStudio
                     "', DueDate = '" + DateOf(myBooking.DueOn) +
                     "', DueTime = '" + TimeOf(myBooking.DueOn) +
                     "'  where BookingID = " + myBooking.ID;
+                cmd.ExecuteNonQuery();
+                if (myBooking.Returned)
+                {
+                    cmd.CommandText = "update Bookings set " +
+                        "ReturnDate = '" + DateOf(myBooking.ReturnedOn) +
+                        "', ReturnTime = '" + TimeOf(myBooking.ReturnedOn) +
+                        "' where BookingID = " + myBooking.ID;
+                    MessageBox.Show("true");
+                }
+                else
+                {
+                    cmd.CommandText = "update Bookings set ReturnDate = NULL" +
+                        ",ReturnTime = NULL where BookingID = " + myBooking.ID;
+                    MessageBox.Show("false");
+                }
                 cmd.ExecuteNonQuery();
 
                 string myDescription, myID;
@@ -609,22 +627,6 @@ namespace FilmStudio
 
                 tran.Commit();
                 Close();
-
-                //try
-                //{
-                //    btnNext.PerformClick();
-                //}
-                //catch (Exception)
-                //{
-                //    try
-                //    {
-                //        btnPrevious.PerformClick();
-                //    }
-                //    catch (Exception)
-                //    {
-                //        Close();
-                //    }
-                //}
             }
             catch (Exception ex)
             {
@@ -936,6 +938,27 @@ namespace FilmStudio
             btnAddEquipment.Enabled = comboBoxEquipment.SelectedIndex >= 0;
         }
 
+        private void checkBoxReturned_CheckedChanged(object sender, EventArgs e)
+        {
+            myBooking.Returned = checkBoxReturned.Checked;
+            dateTimeReturned.Visible = checkBoxReturned.Checked;
+
+            if (checkBoxReturned.Checked)
+            {
+                dateTimeReturned.Value = DateTime.Now;
+            }
+        }
+
+        private void dateTimeReturned_ValueChanged(object sender, EventArgs e)
+        {
+            myBooking.ReturnedOn = dateTimeReturned.Value;
+        }
+
+        private void checkBoxOffCampus_CheckedChanged(object sender, EventArgs e)
+        {
+            myBooking.OffCampus = checkBoxOffCampus.Checked;
+        }
+
         private void UpdateBookingDetails(string type)
         {
             try
@@ -1031,6 +1054,12 @@ namespace FilmStudio
                 txtAssignment.ReadOnly = true;
 
                 listViewBooking.Enabled = false;
+
+                checkBoxOffCampus.AutoCheck = false;
+                checkBoxReturned.AutoCheck = false;
+                checkBoxReturned.Enabled = true;
+                dateTimeReturned.Visible = checkBoxReturned.Checked;
+                dateTimeReturned.Enabled = false;
             }
             else if (s == "Empty")
             {
@@ -1071,6 +1100,8 @@ namespace FilmStudio
                 listViewBooking.Enabled = true;
                 txtNotes.Enabled = true;
 
+                checkBoxReturned.Enabled = true;
+
                 UpdateComboBoxEquipment();
 
                 comboBoxID.Focus();
@@ -1107,6 +1138,12 @@ namespace FilmStudio
                 txtNotes.ReadOnly = false;
 
                 listViewBooking.Enabled = true;
+
+                checkBoxOffCampus.AutoCheck = true;
+                checkBoxReturned.AutoCheck = true;
+                checkBoxReturned.Enabled = true;
+                dateTimeReturned.Visible = checkBoxReturned.Checked;
+                dateTimeReturned.Enabled = true;
             }
             else if (s == "Student")
             {
@@ -1221,7 +1258,7 @@ namespace FilmStudio
             try
             {
                 cmd.CommandText = "select UserID,Notes,BookedBy,BookingDate,BookingTime," +
-                    "IssueDate,IssueTime,DueDate,DueTime from Bookings where BookingID = " + id;
+                    "IssueDate,IssueTime,DueDate,DueTime,OffCampus from Bookings where BookingID = " + id;
                 rd = cmd.ExecuteReader();
                 if (rd.Read())
                 {
@@ -1231,13 +1268,19 @@ namespace FilmStudio
                     myBooking.BookedBy = rd[2].ToString();
                     str1 = rd[3].ToString();
                     str2 = rd[4].ToString();
-                    myBooking.BookedOn = DateTimeOf(date: str1, time: str2);
+                    if (str1 != "NULL" && str2 != "NULL")
+                    {
+                        myBooking.Returned = true;
+                        myBooking.BookedOn = DateTimeOf(date: str1, time: str2);
+
+                    }
                     str1 = rd[5].ToString();
                     str2 = rd[6].ToString();
                     myBooking.IssuedOn = DateTimeOf(date: str1, time: str2);
                     str1 = rd[7].ToString();
                     str2 = rd[8].ToString();
                     myBooking.DueOn = DateTimeOf(date: str1, time: str2);
+                    myBooking.OffCampus = rd[9].ToString() == "1";
                 }
                 rd.Close();
             }
@@ -1250,6 +1293,8 @@ namespace FilmStudio
             dateTimeIssued.Value = myBooking.IssuedOn;
             dateTimeDue.Value = myBooking.DueOn;
             txtNotes.Text = myBooking.Notes;
+            checkBoxOffCampus.Checked = myBooking.OffCampus;
+            checkBoxReturned.Checked = myBooking.Returned;
 
             UpdateBookingDetails(myBooking.BookedBy);
 
