@@ -73,6 +73,7 @@ CREATE TABLE Bookings (
   UserID INTEGER  NOT NULL  ,
   Notes VARCHAR(50)    ,
   BookedBy VARCHAR(10)  NOT NULL  ,
+  OffCampus BIT    ,
   BookingDate DATE  NOT NULL  ,
   BookingTime TIME  NOT NULL  ,
   IssueDate DATE    ,
