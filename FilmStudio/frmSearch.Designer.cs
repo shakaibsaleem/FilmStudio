@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmSearch));
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabBooking = new System.Windows.Forms.TabPage();
             this.comboBoxStaff = new System.Windows.Forms.ComboBox();
@@ -346,6 +347,7 @@
             this.Controls.Add(this.dataGridResults);
             this.Controls.Add(this.tabControl);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmSearch";
