@@ -1486,10 +1486,10 @@ namespace FilmStudio
                     qtyA = Convert.ToInt32(rd[2].ToString());
                     qtyB = Convert.ToInt32(rd[1].ToString());
                     d = rd[0].ToString();
-                    if (d == "Nikon D3200")
-                    {
-                        qtyA = GetAvailableQty(con, 3, 4, myBooking.IssuedOn, myBooking.DueOn);
-                    }
+                    //if (d == "Nikon D3200")
+                    //{
+                        qtyA = GetAvailableQty(id, 4, myBooking.IssuedOn, myBooking.DueOn);
+                    //}
                     eq = new Equipment(qtyA, qtyB, d);
                     comboBoxEquipment.Items.Add(eq);
                 }
@@ -1508,21 +1508,104 @@ namespace FilmStudio
             }
         }
 
-        public static int GetAvailableQty(SqlConnection con, int ItemID, int TotalQty, DateTime Issue, DateTime Due)
+        public static int GetAvailableQty(string ItemID, int TotalQty, DateTime myIssue, DateTime myDue)
         {
-            SqlDataReader rd;
+            //SqlDataReader rd;
+            SqlConnection con = new mySQLcon().con;
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = con;
             cmd.CommandType = CommandType.Text;
 
             cmd.CommandText = "select Bookings.BookingID,EquipmentID,Quantity," +
-                "IssueDate,IssueTime,DueDate,Duetime from BookedItems, Bookings" +
-                " where Bookings.BookingID = BookedItems.BookingID and " +
-                "IssueDate <= '" + DateOf(Due) + "' and DueDate >= '" + DateOf(Issue) +
-                "' and EquipmentID = " + ItemID;
-            rd = cmd.ExecuteReader();
+                "IssueDate,IssueTime,DueDate,Duetime from BookedItems, Bookings " +
+                " where Bookings.BookingID = BookedItems.BookingID and IssueDate " +
+                "<= '" + DateOf(myDue) + "' and DueDate >= '" + DateOf(myIssue) + "' and " +
+                "EquipmentID = " + ItemID + " order by IssueDate,IssueTime,DueDate,DueTime";
+            //rd = cmd.ExecuteReader();
+            DataTable dt = new DataTable();
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            da.Fill(dt);
 
-            return 99;
+            con.Close();
+
+            int numBookings = 0;
+            DateTime IssuedOn, DueOn;
+
+            foreach(DataRow row in dt.Rows)
+            {
+                IssuedOn = GetDateTime(row["IssueDate"], row["IssueTime"]);
+                DueOn = GetDateTime(row["DueDate"], row["DueTime"]);
+                if (IssuedOn < myIssue && DueOn > myIssue)
+                {
+                    numBookings += 1;
+                }
+            }
+
+            int maxBookings = numBookings;
+            //List<DateTime> todayIssue = new List<DateTime>();
+            //List<DateTime> todayDue = new List<DateTime>();
+
+            foreach (DateTime day in EachDay(myIssue, myDue))
+            {
+                foreach (DataRow row in dt.Rows)
+                {
+                    DueOn = GetDateTime(row["DueDate"], row["DueTime"]);
+                    if (DateOf(DueOn) == DateOf(day))//<<----------masla here onwards----------
+                    {
+                        //todayDue.Add(DueOn);
+                        numBookings -= 1;
+                    }
+                    IssuedOn = GetDateTime(row["IssueDate"], row["IssueTime"]);
+                    if (DateOf(IssuedOn) == DateOf(day))
+                    {
+                        //todayIssue.Add(IssuedOn);
+                        numBookings += 1;
+                    }
+                }
+
+                ////pair the bookings that are due today to the first possible booking issued today
+                //todayIssue.Sort();
+                //todayDue.Sort();
+
+                //int i = 0; //index for todayIssue
+                //int j = 0; //index for todayDue
+                //DateTime currentIssue, currentDue;
+
+                //while (i < todayIssue.Count || j < todayDue.Count)
+                //{
+                //    currentIssue = todayIssue[i];
+                //    currentDue = todayDue[j];
+
+                //    if (currentIssue < currentDue)
+                //    {
+                //        numBookings += 1;
+                //        i += 1;
+                //    }
+                //    //if
+
+                //}
+
+                if (numBookings > maxBookings)
+                {
+                    maxBookings = numBookings;
+                }
+                //MessageBox.Show(day.ToString() + "\n" + numBookings.ToString() + "\n" + maxBookings.ToString());
+            }
+            return TotalQty - maxBookings;
+        }
+
+        public static DateTime GetDateTime(Object date, Object time)
+        {
+            DateTime myDate = Convert.ToDateTime(date);
+            DateTime myTime = DateTime.Parse(time.ToString());
+            DateTime myDateTime = new DateTime(myDate.Year,myDate.Month,myDate.Day,myTime.Hour,myTime.Minute,myTime.Second);
+            return myDateTime;
+        }
+
+        public static IEnumerable<DateTime> EachDay(DateTime from, DateTime thru)
+        {
+            for (var day = from.Date; day.Date <= thru.Date; day = day.AddDays(1))
+                yield return day;
         }
 
         public static int DropDownWidth(ComboBox myCombo)
