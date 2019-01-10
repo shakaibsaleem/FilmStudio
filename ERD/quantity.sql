@@ -30,5 +30,6 @@ select * from Bookings
 select Bookings.BookingID,EquipmentID,Quantity,IssueDate,IssueTime,DueDate,Duetime
 from BookedItems, Bookings 
 where Bookings.BookingID = BookedItems.BookingID 
-and IssueDate <= '2019-01-16' and DueDate >= '2019-01-10'
+and IssueDate <= '2019-01-16'
+and DueDate >= '2019-01-10'
 and EquipmentID = 3
