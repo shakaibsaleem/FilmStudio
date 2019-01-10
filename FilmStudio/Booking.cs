@@ -31,8 +31,8 @@ namespace FilmStudio
             DateTime d = DateTime.Now;
 
             ID = "0";
-            IssuedOn = new DateTime(d.Year,d.Month,d.Day,12,0,0);
-            DueOn = new DateTime(d.Year, d.Month, d.AddDays(1).Day, 9, 0, 0);
+            IssuedOn = DateTime.Now;
+            DueOn = new DateTime(d.Year, d.Month, d.AddDays(1).Day, 10, 0, 0);
             BookedOn = DateTime.Now;
             //ReturnedOn = DateTime.Now.AddDays(3);
             Notes = "";
