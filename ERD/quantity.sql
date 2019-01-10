@@ -27,7 +27,7 @@ select * from Bookings
 
 --select * from Bookings, BookedItems where (IssueDate < '2019-01-10' and (IssueDate > '2019-01-09' or (ReturnDate is NULL or ReturnDate > '2019-01-09')))
 
-select Bookings.BookingID,Quantity,IssueDate,DueDate,ReturnDate 
+select Bookings.BookingID,EquipmentID,Quantity,IssueDate,IssueTime,DueDate,Duetime
 from BookedItems, Bookings 
 where Bookings.BookingID = BookedItems.BookingID 
 and IssueDate <= '2019-01-16' and DueDate >= '2019-01-10'
