@@ -1,0 +1,42 @@
+
+offcampus/returned/date in booking
+
+print form. print on filmstudio printer.
+
+show quantity available based on dates
+
+generate emails: whenever booking details altered, also remind when due
+std and filmstudio account
+email sent from film studio account
+
+
+show calendar instead of menu. then start whatever tasks from there only.
+or send bookings to outlook calendar instead.
+for start, show simple view for bookings for the day
+
+show bookings made by a user
+
+issue date and time set to rn, return next day at 10am
+
+show calnedar view of bookings
+
+check delete
+
+frmUser add etc
+
+search User
+
+DONE:
+
+change bookings to allow booking to be made for faculty or staff too
+enrolment id k baghair
+
+dont use date and time in one field in erd. store date and time separately in erd. update stuff accordingly
+
+when booking form opens, enter all info and then allow add record and then allow add equipment
+
+in frmbooking: for equipments, allow delete edit too. not just add
+
+fix bug when added equipment is substring of existing item in list view
+
+add items of equipment list to database when saving
