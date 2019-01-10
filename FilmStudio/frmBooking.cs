@@ -156,8 +156,8 @@ namespace FilmStudio
                 cmd.CommandType = CommandType.Text;
                 cmd.CommandText = "insert into Bookings " +
                     "(UserID,BookedBy,Notes,BookingDate,BookingTime,IssueDate," +
-                    "IssueTime,DueDate,DueTime,OffCampus)values(" + myBooking.User.ID + ",'" + 
-                    myBooking.BookedBy + "','" + myBooking.Notes +"','" +
+                    "IssueTime,DueDate,DueTime,OffCampus)values(" + myBooking.User.ID + ",'" +
+                    myBooking.BookedBy + "','" + myBooking.Notes + "','" +
                     DateOf(myBooking.BookedOn) + "','" + TimeOf(myBooking.BookedOn) + "','" +
                     DateOf(myBooking.IssuedOn) + "','" + TimeOf(myBooking.IssuedOn) + "','" +
                     DateOf(myBooking.DueOn) + "','" + TimeOf(myBooking.DueOn) + "'," +
@@ -174,6 +174,7 @@ namespace FilmStudio
                 tran.Commit();
                 state = "Add";
                 UpdateFields(state);
+                UpdateComboBoxEquipment();
             }
             catch (Exception ex)
             {
@@ -482,9 +483,9 @@ namespace FilmStudio
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
-            UpdateFields("Edit");
-            UpdateComboBoxEquipment();
             state = "Edit";
+            UpdateFields(state);
+            UpdateComboBoxEquipment();
         }
 
         private void listViewBooking_KeyDown(object sender, KeyEventArgs e)
@@ -1100,8 +1101,6 @@ namespace FilmStudio
 
                 checkBoxReturned.Enabled = true;
 
-                UpdateComboBoxEquipment();
-
                 comboBoxID.Focus();
             }
             else if (s == "Edit")
@@ -1256,7 +1255,8 @@ namespace FilmStudio
             try
             {
                 cmd.CommandText = "select UserID,Notes,BookedBy,BookingDate,BookingTime," +
-                    "IssueDate,IssueTime,DueDate,DueTime,OffCampus,ReturnDate,ReturnTime from Bookings where BookingID = " + id;
+                    "IssueDate,IssueTime,DueDate,DueTime,OffCampus,ReturnDate,ReturnTime" +
+                    " from Bookings where BookingID = " + id;
                 rd = cmd.ExecuteReader();
                 if (rd.Read())
                 {
@@ -1264,34 +1264,41 @@ namespace FilmStudio
                     myBooking.User.ID = rd[0].ToString();
                     myBooking.Notes = rd[1].ToString();
                     myBooking.BookedBy = rd[2].ToString();
+
                     str1 = rd[3].ToString();
                     str2 = rd[4].ToString();
-                    if (str1 != "NULL" && str2 != "NULL")
-                    {
-                        myBooking.Returned = true;
-                        myBooking.BookedOn = DateTimeOf(date: str1, time: str2);
+                    myBooking.BookedOn = DateTimeOf(date: str1, time: str2);
 
+                    if (!rd.IsDBNull(5) && !rd.IsDBNull(6))
+                    {
+                        str1 = rd[5].ToString();
+                        str2 = rd[6].ToString();
+                        myBooking.IssuedOn = DateTimeOf(date: str1, time: str2);
                     }
-                    str1 = rd[5].ToString();
-                    str2 = rd[6].ToString();
-                    myBooking.IssuedOn = DateTimeOf(date: str1, time: str2);
+                    else
+                    {
+                        MessageBox.Show("Please update Issue Date and Time");
+                    }
+
                     str1 = rd[7].ToString();
                     str2 = rd[8].ToString();
                     myBooking.DueOn = DateTimeOf(date: str1, time: str2);
                     myBooking.OffCampus = rd[9].ToString() == "1";
+
                     str1 = rd[10].ToString();
                     str2 = rd[11].ToString();
-                    if (str1 != "NULL" && str2 != "NULL")
+                    if (!rd.IsDBNull(10) && !rd.IsDBNull(11))
                     {
                         myBooking.ReturnedOn = DateTimeOf(date: str1, time: str2);
                         myBooking.Returned = true;
                     }
-                    else if (str1 == "NULL" && str2 == "NULL")
+                    else if (rd.IsDBNull(10) && rd.IsDBNull(11))
                     {
                         myBooking.Returned = false;
                     }
                     else
                     {
+                        myBooking.Returned = false;
                         MessageBox.Show(
                             "Unexpected value encountered:" + "\n" +
                             "ReturnDate = " + str1 + "\n" +
@@ -1460,6 +1467,7 @@ namespace FilmStudio
         {
             Equipment eq;
             string d = "";
+            string id = "";
             int qtyA, qtyB;
 
             try
@@ -1469,13 +1477,19 @@ namespace FilmStudio
                 cmd.Connection = con;
                 cmd.CommandType = CommandType.Text;
 
-                cmd.CommandText = "select Description,QuantityBooked,QuantityAvailable from Equipments order by Description";
+                cmd.CommandText = "select Description,QuantityBooked,QuantityAvailable," +
+                    "EquipmentID from Equipments order by Description";
                 SqlDataReader rd = cmd.ExecuteReader();
                 while (rd.Read())
                 {
+                    id = rd[3].ToString();
                     qtyA = Convert.ToInt32(rd[2].ToString());
                     qtyB = Convert.ToInt32(rd[1].ToString());
                     d = rd[0].ToString();
+                    if (d == "Nikon D3200")
+                    {
+                        qtyA = GetAvailableQty(con, 3, 4, myBooking.IssuedOn, myBooking.DueOn);
+                    }
                     eq = new Equipment(qtyA, qtyB, d);
                     comboBoxEquipment.Items.Add(eq);
                 }
@@ -1492,6 +1506,23 @@ namespace FilmStudio
             {
                 MessageBox.Show(ex.Message, "Error in UpdateComboBoxEquipment()");
             }
+        }
+
+        public static int GetAvailableQty(SqlConnection con, int ItemID, int TotalQty, DateTime Issue, DateTime Due)
+        {
+            SqlDataReader rd;
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = con;
+            cmd.CommandType = CommandType.Text;
+
+            cmd.CommandText = "select Bookings.BookingID,EquipmentID,Quantity," +
+                "IssueDate,IssueTime,DueDate,Duetime from BookedItems, Bookings" +
+                " where Bookings.BookingID = BookedItems.BookingID and " +
+                "IssueDate <= '" + DateOf(Due) + "' and DueDate >= '" + DateOf(Issue) +
+                "' and EquipmentID = " + ItemID;
+            rd = cmd.ExecuteReader();
+
+            return 99;
         }
 
         public static int DropDownWidth(ComboBox myCombo)
