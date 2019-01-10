@@ -482,6 +482,7 @@
             this.lblBooked.Size = new System.Drawing.Size(47, 13);
             this.lblBooked.TabIndex = 115;
             this.lblBooked.Text = "Booked:";
+            this.lblBooked.Visible = false;
             // 
             // txtBooked
             // 
@@ -490,6 +491,7 @@
             this.txtBooked.ReadOnly = true;
             this.txtBooked.Size = new System.Drawing.Size(100, 20);
             this.txtBooked.TabIndex = 114;
+            this.txtBooked.Visible = false;
             // 
             // txtAvailable
             // 
