@@ -353,13 +353,11 @@ namespace FilmStudio
                         "ReturnDate = '" + DateOf(myBooking.ReturnedOn) +
                         "', ReturnTime = '" + TimeOf(myBooking.ReturnedOn) +
                         "' where BookingID = " + myBooking.ID;
-                    MessageBox.Show("true");
                 }
                 else
                 {
                     cmd.CommandText = "update Bookings set ReturnDate = NULL" +
                         ",ReturnTime = NULL where BookingID = " + myBooking.ID;
-                    MessageBox.Show("false");
                 }
                 cmd.ExecuteNonQuery();
 
