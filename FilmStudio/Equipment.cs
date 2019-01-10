@@ -40,7 +40,7 @@ namespace FilmStudio
 
         public override string ToString()
         {
-            return Description + " - " + QtyBooked + " booked, " + QtyAvailable + " available";
+            return Description + " - " + QtyAvailable + " available";
         }
     }
 }
