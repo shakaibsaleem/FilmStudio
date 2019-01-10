@@ -1,4 +1,6 @@
 
+offcampus/returned/date in booking
+
 print form. print on filmstudio printer.
 
 show quantity available based on dates
@@ -10,10 +12,11 @@ email sent from film studio account
 
 show calendar instead of menu. then start whatever tasks from there only.
 or send bookings to outlook calendar instead.
+for start, show simple view for bookings for the day
 
 show bookings made by a user
 
-issue date and time set to rn, return next day 12noon
+issue date and time set to rn, return next day at 10am
 
 show calnedar view of bookings
 
