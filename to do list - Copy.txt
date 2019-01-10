@@ -1,0 +1,57 @@
+
+change equipment table: total quantity instead of available and booked. change UpdateComboBoxEquipment accordingly. change equipment class to total quantity and available quantity. call UpdateComboBoxEquipment whenever Dates are changed
+
+show calendar instead of menu. then start whatever tasks from there only.
+or send bookings to outlook calendar instead.
+
+show bookings made by a user
+
+when close, go to bg, when open, ask login
+
+should login straight to booking form. then add booking do whatever. then if needed, click button to go to menu
+
+option to add new booking again
+
+issue date and time set to rn, return next day 12noon
+
+show calnedar view of bookings
+
+print form. print on filmstudio printer.
+
+generate emails: whenever booking details altered, also remind when due
+std and filmstudio account
+email sent from film studio account
+
+
+show quantity available based on dates
+
+check delete
+
+frmUser add etc
+
+search User
+
+remove bug of login trick. strip password string till second last " starting scanning from right to left
+
+issue updated when issued
+
+return updated when returned
+
+menu fix
+
+fix bug: when add, then previous next etc, error comes
+
+DONE:
+
+change bookings to allow booking to be made for faculty or staff too
+enrolment id k baghair
+
+dont use date and time in one field in erd. store date and time separately in erd. update stuff accordingly
+
+when booking form opens, enter all info and then allow add record and then allow add equipment
+
+in frmbooking: for equipments, allow delete edit too. not just add
+
+fix bug when added equipment is substring of existing item in list view
+
+add items of equipment list to database when saving
