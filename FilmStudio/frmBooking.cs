@@ -361,7 +361,7 @@ namespace FilmStudio
                 }
                 cmd.ExecuteNonQuery();
 
-                string myDescription, myID;
+                string myDescription, myItemID;
                 int myQuantity, oldQuantity, qtyAvailable, qtyBooked;
                 SqlDataReader rd;
                 List<string> myList = new List<string>();
@@ -376,29 +376,29 @@ namespace FilmStudio
                     rd = cmd.ExecuteReader();
                     if (rd.Read() == true)
                     {
-                        myID = rd[0].ToString();
+                        myItemID = rd[0].ToString();
                         qtyAvailable = Convert.ToInt32(rd[1].ToString());
                         qtyBooked = Convert.ToInt32(rd[2].ToString());
-                        myList.Add(myID);
+                        myList.Add(myItemID);
                     }
                     else
                     {
                         MessageBox.Show("Invalid value of description: " + myDescription,"Error in fetching equipment details");
-                        myID = "1";
+                        myItemID = "1";
                         qtyAvailable = 0;
                         qtyBooked = 0;
                     }
                     rd.Close();
 
                     cmd.CommandText = "select Quantity from BookedItems where " +
-                        "BookingID = " + myBooking.ID + " and EquipmentID = " + myID;
+                        "BookingID = " + myBooking.ID + " and EquipmentID = " + myItemID;
                     rd = cmd.ExecuteReader();
                     if (rd.Read() == true)
                     {
                         oldQuantity = Convert.ToInt32(rd[0].ToString());
                         rd.Close();
                         cmd.CommandText = "update BookedItems set Quantity = " + myQuantity + 
-                            " where BookingID = " + myBooking.ID + " and EquipmentID = " + myID;
+                            " where BookingID = " + myBooking.ID + " and EquipmentID = " + myItemID;
                         cmd.ExecuteNonQuery();
                     }
                     else
@@ -406,28 +406,28 @@ namespace FilmStudio
                         oldQuantity = 0;
                         rd.Close();
                         cmd.CommandText = "insert into BookedItems (BookingID,EquipmentID,Quantity) values " +
-                            "(" + myBooking.ID + ", " + myID + ", " + myQuantity + ")";
+                            "(" + myBooking.ID + ", " + myItemID + ", " + myQuantity + ")";
                         cmd.ExecuteNonQuery();
                     }
 
                     cmd.CommandText = "update Equipments set " +
                         "QuantityBooked = " + (qtyBooked + (myQuantity-oldQuantity)) +
                         ", QuantityAvailable = " + (qtyAvailable - (myQuantity - oldQuantity)) +
-                        " where EquipmentID = " + myID;
+                        " where EquipmentID = " + myItemID;
                     cmd.ExecuteNonQuery();
                 }
 
                 List<string> toDelete = new List<string>();
-                myID = "";
+                myItemID = "";
 
                 cmd.CommandText = "select EquipmentID from BookedItems where BookingID = " + myBooking.ID;
                 rd = cmd.ExecuteReader();
                 while (rd.Read())
                 {
-                    myID = rd[0].ToString();
-                    if (myList.Contains(myID) == false)
+                    myItemID = rd[0].ToString();
+                    if (myList.Contains(myItemID) == false)
                     {
-                        toDelete.Add(myID);
+                        toDelete.Add(myItemID);
                     }
                 }
                 rd.Close();
@@ -1256,7 +1256,7 @@ namespace FilmStudio
             try
             {
                 cmd.CommandText = "select UserID,Notes,BookedBy,BookingDate,BookingTime," +
-                    "IssueDate,IssueTime,DueDate,DueTime,OffCampus from Bookings where BookingID = " + id;
+                    "IssueDate,IssueTime,DueDate,DueTime,OffCampus,ReturnDate,ReturnTime from Bookings where BookingID = " + id;
                 rd = cmd.ExecuteReader();
                 if (rd.Read())
                 {
@@ -1279,6 +1279,25 @@ namespace FilmStudio
                     str2 = rd[8].ToString();
                     myBooking.DueOn = DateTimeOf(date: str1, time: str2);
                     myBooking.OffCampus = rd[9].ToString() == "1";
+                    str1 = rd[10].ToString();
+                    str2 = rd[11].ToString();
+                    if (str1 != "NULL" && str2 != "NULL")
+                    {
+                        myBooking.ReturnedOn = DateTimeOf(date: str1, time: str2);
+                        myBooking.Returned = true;
+                    }
+                    else if (str1 == "NULL" && str2 == "NULL")
+                    {
+                        myBooking.Returned = false;
+                    }
+                    else
+                    {
+                        MessageBox.Show(
+                            "Unexpected value encountered:" + "\n" +
+                            "ReturnDate = " + str1 + "\n" +
+                            "ReturnTime = " + str2 + "\n" +
+                            "where BookingID = " + myBooking.ID, "Error in LoadRecord()");
+                    }
                 }
                 rd.Close();
             }
