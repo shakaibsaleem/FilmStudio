@@ -14,7 +14,7 @@ namespace FilmStudio
         public Equipment()
         {
             ID = "1";
-            QtyAvailable = 5;
+            QtyAvailable = 4;
             QtyBooked = 0;
             Description = "description";
             Remarks = "remarks";
@@ -40,7 +40,8 @@ namespace FilmStudio
 
         public override string ToString()
         {
-            return Description + " - " + QtyAvailable + " available";
+            return Description;
+            //return Description + " - " + QtyAvailable + " available";
         }
     }
 }
