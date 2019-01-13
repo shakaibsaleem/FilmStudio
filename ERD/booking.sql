@@ -1,5 +1,5 @@
 
---DBCC CHECKIDENT (Bookings, RESEED, 0);
+--DBCC CHECKIDENT (Bookings, RESEED, 4);
 
 --select * from Students where HabibID = 'ms01036'
 
@@ -21,7 +21,7 @@
 
 --insert into BookingsByStudents (BookingID,EnrolmentID,Project) values (1,2,'ProjectX')
 
---delete from Bookings where BookingID = 0
+--delete from Bookings where BookingID > 4
 
 --delete from BookingsByStudents where BookingID = 2
 
