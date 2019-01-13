@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="textBox1.Text" xml:space="preserve">
+    <value>I agree that I have booked the equipment listed above for my use during the indicated time. I am familiar with the proper operating and care procedures for all of the equipment mentioned above, which I have checked is in working order. I understand that by signing this form, I am soley responsible for the equipment mentioned above, if anything is lost, damaged or stolen, I will be responsible for the cost of such a loss and will pay it in due time. I will return the above mentioned equipment on the given date and time. If I fail to return the equipment timely, I understand I may be charged for it and equipment booking privileges might be suspended for my carelessness. Any cost imposed on me by the virtue of this agreement shall be charged as damages with the fee for the next semester. Failure to pay the damages in a timely manner might also result in ineligibility to register or graduate.</value>
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
