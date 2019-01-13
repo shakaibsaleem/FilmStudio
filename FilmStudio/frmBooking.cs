@@ -9,6 +9,11 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 
+using System.Drawing.Imaging;
+using System.IO;
+using System.Drawing.Printing;
+using System.Runtime.InteropServices;
+
 namespace FilmStudio
 {
     public partial class frmBooking : Form
@@ -469,16 +474,66 @@ namespace FilmStudio
                 tran.Rollback();
                 MessageBox.Show(ex.Message, "Error in Save");
             }
+
+            DialogResult dialogResult =  MessageBox.Show("Do you want to send emails" +
+                " confirming the booking?","Send emails?",MessageBoxButtons.YesNo);
+
+            if (dialogResult == DialogResult.Yes)
+            {
+                EmailHandler email = new EmailHandler();
+                string recipient = "";
+
+                string subject = "Your booking has been confirmed";
+                string body = "Dear " + txtName.Text + ",\n\nThis is to confirm" +
+                    " your booking of the following equipment. Please review " +
+                    "the following details and let us know in case of any issues" +
+                    ".\nIssue Date: " + myBooking.IssuedOn.ToString("dddd dd-MM-yyyy") +
+                    "\nDue On: " + myBooking.DueOn.ToString("hh:mm tt dddd dd-MM-yyyy") +
+                    "\nOff Campus: " + (myBooking.OffCampus ? "Yes" : "No") +
+                    "\nEquipment Details:\n";
+                foreach (ListViewItem item in listViewBooking.Items)
+                {
+                    body = body + item.SubItems[0].Text + ", Quantity = " + item.SubItems[1].Text + "\n";
+                }
+
+                body = body + "\nRegards,\nFilmStudio@HU";
+
+                if (myBooking.BookedBy == "Instructor")
+                {
+                    //recipient = myBooking.Instructor.Email;
+                    recipient = "kr03917@st.habib.edu.pk";
+                    email.Send(recipient: recipient, subject: subject, body: body);
+                }
+                else if (myBooking.BookedBy == "Student")
+                {
+                    recipient = myBooking.Student.Email;
+                    //recipient = "kr03917@st.habib.edu.pk";
+                    email.Send(recipient: recipient, subject: subject, body: body);
+                }
+                else if (myBooking.BookedBy == "Staff")
+                {
+                    //recipient = myBooking.Staff.Email;
+                    recipient = "kr03917@st.habib.edu.pk";
+                    email.Send(recipient: recipient, subject: subject, body: body);
+                }
+                MessageBox.Show("Email has been sent");
+            }
+            //else if (dialogResult == DialogResult.No)
+            //{
+            //    MessageBox.Show("Email not sent");
+            //}
         }
 
         private void dateTimeIssued_ValueChanged(object sender, EventArgs e)
         {
             myBooking.IssuedOn = dateTimeIssued.Value;
+            UpdateComboBoxEquipment();
         }
 
         private void dateTimeDue_ValueChanged(object sender, EventArgs e)
         {
             myBooking.DueOn = dateTimeDue.Value;
+            UpdateComboBoxEquipment();
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
@@ -632,6 +687,40 @@ namespace FilmStudio
                 tran.Rollback();
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void btnPrint_Click(object sender, EventArgs e)
+        {
+            PrintDocument printDocument = new PrintDocument();
+            printDocument.PrintPage += new PrintPageEventHandler(PrintImage);
+
+            PrintDialog printDialog = new PrintDialog();
+            printDialog.AllowSomePages = true;
+            printDialog.ShowHelp = true;
+            printDialog.Document = printDocument;
+            DialogResult result = printDialog.ShowDialog();
+
+            if (result == DialogResult.OK)
+            {
+                //printDocument.Print();
+                //MessageBox.Show("Printed");
+            }
+        }
+
+        public void PrintImage(object o, PrintPageEventArgs e)
+        {
+            int x = SystemInformation.WorkingArea.X;
+            int y = SystemInformation.WorkingArea.Y;
+            int width = this.Width;
+            int height = this.Height;
+
+            Rectangle bounds = new Rectangle(x, y, width, height);
+
+            Bitmap img = new Bitmap(width, height);
+
+            this.DrawToBitmap(img, bounds);
+            Point p = new Point(100, 100);
+            e.Graphics.DrawImage(img, p);
         }
 
         private void comboBoxID_SelectedIndexChanged(object sender, EventArgs e)
@@ -1023,13 +1112,17 @@ namespace FilmStudio
             if (s == "View")
             {
                 btnAddEquipment.Enabled = false;
-                btnAdd.Enabled = false;
                 btnClose.Enabled = true;
                 btnPrevious.Enabled = true;
                 btnNext.Enabled = true;
                 btnEdit.Enabled = true;
                 btnSave.Enabled = false;
                 btnDelete.Enabled = true;
+
+                btnPrint.Visible = true;
+                btnPrint.Enabled = true;
+                btnAdd.Visible = false;
+                btnAdd.Enabled = false;
 
                 //groupBoxBookedBy.Enabled = false;
                 rbtnInstructor.AutoCheck = false;
@@ -1062,7 +1155,11 @@ namespace FilmStudio
             }
             else if (s == "Empty")
             {
+                btnPrint.Visible = false;
+                btnPrint.Enabled = false;
+                btnAdd.Visible = true;
                 btnAdd.Enabled = true;
+
                 btnAddEquipment.Enabled = false;
                 btnClose.Enabled = true;
                 btnDelete.Enabled = false;
@@ -1085,14 +1182,18 @@ namespace FilmStudio
             }
             else if (s == "Add")
             {
+                btnAdd.Visible = false;
                 btnAdd.Enabled = false;
+                btnPrint.Visible = true;
+                btnPrint.Enabled = false;
+
                 btnAddEquipment.Enabled = true;
                 btnClose.Enabled = true;
                 btnDelete.Enabled = true;
                 btnEdit.Enabled = false;
                 btnNext.Enabled = false;
                 btnPrevious.Enabled = false;
-                btnSave.Enabled = true;
+                btnSave.Enabled = false;
                 groupBoxBookedBy.Enabled = true;
                 groupBoxBooking.Enabled = true;
                 groupBoxEquipment.Enabled = true;
@@ -1105,8 +1206,12 @@ namespace FilmStudio
             }
             else if (s == "Edit")
             {
-                btnAddEquipment.Enabled = false;
+                btnPrint.Visible = true;
+                btnPrint.Enabled = false;
+                btnAdd.Visible = false;
                 btnAdd.Enabled = false;
+
+                btnAddEquipment.Enabled = false;
                 btnClose.Enabled = true;
                 btnEdit.Enabled = false;
                 btnNext.Enabled = true;
@@ -1472,6 +1577,22 @@ namespace FilmStudio
 
             try
             {
+                int i;
+                try
+                {
+                    if (comboBoxEquipment.SelectedItem != null)
+                    {
+                        i = comboBoxEquipment.SelectedIndex;
+                    }
+                    else
+                    {
+                        i = 0;
+                    }
+                }
+                catch (Exception)
+                {
+                    i = 0;
+                }
                 comboBoxEquipment.Items.Clear();
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = con;
@@ -1500,6 +1621,10 @@ namespace FilmStudio
                 if (maxWidth > width)
                 {
                     comboBoxEquipment.DropDownWidth = maxWidth;
+                }
+                if (i!=0)
+                {
+                    comboBoxEquipment.SelectedIndex = i;
                 }
             }
             catch (Exception ex)
@@ -1594,8 +1719,18 @@ namespace FilmStudio
             return TotalQty - maxBookings;
         }
 
-        public static DateTime GetDateTime(Object date, Object time)
+        public static DateTime GetDateTime(object date, object time)
         {
+            if (date == null)
+            {
+                throw new ArgumentNullException(nameof(date));
+            }
+
+            if (time == null)
+            {
+                throw new ArgumentNullException(nameof(time));
+            }
+
             DateTime myDate = Convert.ToDateTime(date);
             DateTime myTime = DateTime.Parse(time.ToString());
             DateTime myDateTime = new DateTime(myDate.Year,myDate.Month,myDate.Day,myTime.Hour,myTime.Minute,myTime.Second);
