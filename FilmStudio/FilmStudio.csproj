@@ -48,6 +48,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EASendMail45">
+      <HintPath>C:\Program Files (x86)\EASendMail\EASendMail45.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -63,6 +66,7 @@
   <ItemGroup>
     <Compile Include="Booking.cs" />
     <Compile Include="Course.cs" />
+    <Compile Include="EmailHandler.cs" />
     <Compile Include="Enrolment.cs" />
     <Compile Include="Equipment.cs" />
     <Compile Include="frmBooking.cs">
