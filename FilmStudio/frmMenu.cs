@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Data.SqlClient;
 
 namespace FilmStudio
 {
@@ -15,6 +16,8 @@ namespace FilmStudio
         public string task, type;
         public User CurrentUser;
         bool allowExit = false;
+        mySQLcon myCon;
+        SqlConnection con;
 
         public frmMenu(User currentUser)
         {
@@ -26,18 +29,22 @@ namespace FilmStudio
 
         private void frmMenu_Load(object sender, EventArgs e)
         {
+            myCon = new mySQLcon();
+            con = myCon.con;
+
             comboBoxType.Items.Add("Booking");
-            comboBoxType.Items.Add("Course");
-            comboBoxType.Items.Add("Enrolment");
-            comboBoxType.Items.Add("Equipment");
-            comboBoxType.Items.Add("Instructor");
-            comboBoxType.Items.Add("Staff");
-            comboBoxType.Items.Add("Student");
+            //comboBoxType.Items.Add("Course");
+            //comboBoxType.Items.Add("Enrolment");
+            //comboBoxType.Items.Add("Equipment");
+            //comboBoxType.Items.Add("Instructor");
+            //comboBoxType.Items.Add("Staff");
+            //comboBoxType.Items.Add("Student");
             comboBoxType.Items.Add("User");
             rbtnAdd.Select();
             comboBoxType.SelectedIndex = 0;
             frmBooking frm = new frmBooking(CurrentUser);
             frm.Show();
+            ShowBookings();
         }
 
         private void comboBoxType_SelectedIndexChanged(object sender, EventArgs e)
@@ -87,7 +94,7 @@ namespace FilmStudio
                 notifyIconMenu.BalloonTipTitle = "Film Studio has been minimized";
                 notifyIconMenu.BalloonTipText = "Double-click the FilmStudio icon to open menu again. Right-click to exit the application.";
                 notifyIconMenu.BalloonTipIcon = ToolTipIcon.Info;
-                notifyIconMenu.ShowBalloonTip(1000);
+                notifyIconMenu.ShowBalloonTip(700);
                 WindowState = FormWindowState.Minimized;
                 e.Cancel = true;
                 //this.Click += new EventHandler(Form1_Click);
@@ -113,8 +120,11 @@ namespace FilmStudio
         {
             if (task == "Search")
             {
-                frmSearch frm = new frmSearch(type, CurrentUser);
-                frm.Show();
+                if (type == "Booking")
+                {
+                    frmSearch frm = new frmSearch(type, CurrentUser);
+                    frm.Show();
+                }
             }
             else if (task == "Add")
             {
@@ -133,6 +143,40 @@ namespace FilmStudio
             {
                 MessageBox.Show("Incorrect value for task: " + task, "Error in OpenForm()");
             }
+        }
+
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            ShowBookings();
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            string id = dataGridView1.CurrentRow.Cells[0].Value.ToString();
+            frmBooking frm = new frmBooking(id, CurrentUser);
+            frm.Show();
+        }
+
+        public void ShowBookings()
+        {
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = con;
+
+            //SqlDataReader rd;
+            //cmd.CommandText = "select * from Bookings where IssueDate = '" + frmBooking.DateOf(DateTime.Now) +
+            //        "' or DueDate = '" + frmBooking.DateOf(DateTime.Now) + "'";
+            //rd = cmd.ExecuteReader();
+            //rd.Close();
+
+            cmd.CommandText = "select BookingID,IssueDate,DueDate,ReturnDate,BookedBy,Notes " +
+                    "from Bookings where IssueDate = '" + frmBooking.DateOf(DateTime.Now) +
+                    "' or DueDate = '" + frmBooking.DateOf(DateTime.Now) + "'";
+            cmd.ExecuteNonQuery();
+            DataTable dt = new DataTable();
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            da.Fill(dt);
+            dataGridView1.DataSource = dt;
         }
     }
 }
