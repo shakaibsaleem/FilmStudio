@@ -37,10 +37,10 @@ namespace FilmStudio
                 PopulateCombosBooking();
                 rbtnStudent.Select();
             }
-            else if (type == "User")
-            {
-                tabControl.SelectTab("tabUser");
-            }
+            //else if (type == "User")
+            //{
+            //    tabControl.SelectTab("tabUser");
+            //}
         }
 
         private void rbtnStudent_CheckedChanged(object sender, EventArgs e)
