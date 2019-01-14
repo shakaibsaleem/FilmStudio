@@ -33,7 +33,7 @@ namespace FilmStudio
             con = myCon.con;
 
             comboBoxType.Items.Add("Booking");
-            //comboBoxType.Items.Add("Course");
+            comboBoxType.Items.Add("Course");
             //comboBoxType.Items.Add("Enrolment");
             //comboBoxType.Items.Add("Equipment");
             //comboBoxType.Items.Add("Instructor");
@@ -136,6 +136,11 @@ namespace FilmStudio
                 else if (type == "User")
                 {
                     frmUser frm = new frmUser(CurrentUser);
+                    frm.Show();
+                }
+                else if (type == "Course")
+                {
+                    frmCourse frm = new frmCourse(CurrentUser);
                     frm.Show();
                 }
             }
