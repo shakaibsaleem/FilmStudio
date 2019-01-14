@@ -482,6 +482,9 @@ namespace FilmStudio
             {
                 EmailHandler email = new EmailHandler();
                 string recipient = "";
+                StreamReader r = new StreamReader("C:\\Users\\Public\\passkey.txt");
+                string s = r.ReadLine();
+                email.Passkey = s;
 
                 string subject = "Your booking has been confirmed";
                 string body = "Dear " + txtName.Text + ",\n\nThis is to confirm" +
