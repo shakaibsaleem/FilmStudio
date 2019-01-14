@@ -14,6 +14,8 @@ namespace FilmStudio
         SmtpClient client;
         SmtpServer server;
 
+        public string Passkey { get; set; }
+
         public EmailHandler()
         {
             mail = new SmtpMail("TryIt");
@@ -21,6 +23,7 @@ namespace FilmStudio
             server = new SmtpServer("smtp.office365.com");
 
             server.User = "ms01036@st.habib.edu.pk";
+            server.Password = "";
             server.Port = 587;
             server.ConnectType = SmtpConnectType.ConnectSSLAuto;
 
@@ -38,6 +41,7 @@ namespace FilmStudio
 
             server.User = user;
             server.Password = pass;
+            Passkey = pass;
             server.Port = 587;
             server.ConnectType = SmtpConnectType.ConnectSSLAuto;
 
@@ -49,6 +53,7 @@ namespace FilmStudio
 
         public bool Send()
         {
+            server.Password = Passkey;
             try
             {
                 client.SendMail(server, mail);
@@ -66,6 +71,7 @@ namespace FilmStudio
             mail.To = recipient;
             mail.Subject = subject;
             mail.TextBody = body;
+            server.Password = Passkey;
 
             try
             {
@@ -102,6 +108,7 @@ namespace FilmStudio
             // User authentication should use your
             // email address as the user name.
             oServer.User = "kr03917@st.habib.edu.pk";
+            oServer.Password = "";
 
             // use 587 TLS port
             oServer.Port = 587;
