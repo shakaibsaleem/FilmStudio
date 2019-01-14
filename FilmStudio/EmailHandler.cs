@@ -21,7 +21,6 @@ namespace FilmStudio
             server = new SmtpServer("smtp.office365.com");
 
             server.User = "ms01036@st.habib.edu.pk";
-            server.Password = "haya123-/:";
             server.Port = 587;
             server.ConnectType = SmtpConnectType.ConnectSSLAuto;
 
@@ -103,7 +102,6 @@ namespace FilmStudio
             // User authentication should use your
             // email address as the user name.
             oServer.User = "kr03917@st.habib.edu.pk";
-            oServer.Password = "Kevin1975!";
 
             // use 587 TLS port
             oServer.Port = 587;
