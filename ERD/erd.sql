@@ -22,13 +22,11 @@ GO
 
 
 
-CREATE TABLE Staff (
-  StaffID INTEGER  NOT NULL   IDENTITY ,
-  HabibID VARCHAR(50)  NOT NULL  ,
-  Name VARCHAR(50)    ,
-  Email VARCHAR(100)  NOT NULL  ,
-  Contact VARCHAR(20)      ,
-PRIMARY KEY(StaffID));
+CREATE TABLE EmailAccount (
+  EmailAccountID INTEGER  NOT NULL   IDENTITY ,
+  Username VARCHAR(100)  NOT NULL  ,
+  Passkey VARCHAR(50)  NOT NULL    ,
+PRIMARY KEY(EmailAccountID));
 GO
 
 
@@ -53,6 +51,18 @@ CREATE TABLE Students (
   Email VARCHAR(23)  NOT NULL  ,
   Contact VARCHAR(20)      ,
 PRIMARY KEY(StudentID));
+GO
+
+
+
+
+CREATE TABLE Staff (
+  StaffID INTEGER  NOT NULL   IDENTITY ,
+  HabibID VARCHAR(50)  NOT NULL  ,
+  Name VARCHAR(50)    ,
+  Email VARCHAR(100)  NOT NULL  ,
+  Contact VARCHAR(20)      ,
+PRIMARY KEY(StaffID));
 GO
 
 
