@@ -92,6 +92,11 @@ namespace FilmStudio
                     tran.Commit();
                     state = "Incomplete";
                     UpdateFields(state);
+
+                    //temp scene
+                    MessageBox.Show(myCourse.CourseCode + ": " + myCourse.CourseName +
+                        " has been added to courses", "Course added");
+                    Close();
                 }
                 catch (Exception ex)
                 {
