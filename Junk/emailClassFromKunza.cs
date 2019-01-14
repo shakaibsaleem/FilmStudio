@@ -26,10 +26,10 @@ namespace test
             SmtpClient oSmtp = new SmtpClient();
 
             // Your email address
-            oMail.From = "kr03917@st.habib.edu.pk";
+            oMail.From = "xx01234@st.habib.edu.pk";
 
             // Set recipient email address
-            oMail.To = "ms01036@st.habib.edu.pk";
+            oMail.To = "xx01234@st.habib.edu.pk";
 
             // Set email subject
             oMail.Subject = "test email";
@@ -42,8 +42,8 @@ namespace test
 
             // User authentication should use your
             // email address as the user name.
-            oServer.User = "kr03917@st.habib.edu.pk";
-            oServer.Password = "Kevin1975!";
+            oServer.User = "xx01234@st.habib.edu.pk";
+            oServer.Password = "";
 
             // use 587 TLS port
             oServer.Port = 587;
