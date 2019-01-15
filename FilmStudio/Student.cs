@@ -27,5 +27,10 @@ namespace FilmStudio
             Email = email ?? throw new ArgumentNullException(nameof(email));
             Contact = contact ?? throw new ArgumentNullException(nameof(contact));
         }
+
+        public override string ToString()
+        {
+            return HabibID;
+        }
     }
 }
