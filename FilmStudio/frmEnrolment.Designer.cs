@@ -36,7 +36,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.txtName = new System.Windows.Forms.TextBox();
+            this.txtTerm = new System.Windows.Forms.TextBox();
             this.btnStudent = new System.Windows.Forms.Button();
             this.btnCourse = new System.Windows.Forms.Button();
             this.btnInstructor = new System.Windows.Forms.Button();
@@ -106,13 +106,13 @@
             this.label4.TabIndex = 6;
             this.label4.Text = "Term";
             // 
-            // txtName
+            // txtTerm
             // 
-            this.txtName.Location = new System.Drawing.Point(100, 93);
-            this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(163, 20);
-            this.txtName.TabIndex = 7;
-            this.txtName.TextChanged += new System.EventHandler(this.txtName_TextChanged);
+            this.txtTerm.Location = new System.Drawing.Point(100, 93);
+            this.txtTerm.Name = "txtTerm";
+            this.txtTerm.Size = new System.Drawing.Size(163, 20);
+            this.txtTerm.TabIndex = 7;
+            this.txtTerm.TextChanged += new System.EventHandler(this.txtTerm_TextChanged);
             // 
             // btnStudent
             // 
@@ -122,6 +122,7 @@
             this.btnStudent.TabIndex = 8;
             this.btnStudent.Text = "Add New";
             this.btnStudent.UseVisualStyleBackColor = true;
+            this.btnStudent.Click += new System.EventHandler(this.btnStudent_Click);
             // 
             // btnCourse
             // 
@@ -131,6 +132,7 @@
             this.btnCourse.TabIndex = 9;
             this.btnCourse.Text = "Add New";
             this.btnCourse.UseVisualStyleBackColor = true;
+            this.btnCourse.Click += new System.EventHandler(this.btnCourse_Click);
             // 
             // btnInstructor
             // 
@@ -140,6 +142,7 @@
             this.btnInstructor.TabIndex = 10;
             this.btnInstructor.Text = "Add New";
             this.btnInstructor.UseVisualStyleBackColor = true;
+            this.btnInstructor.Click += new System.EventHandler(this.btnInstructor_Click);
             // 
             // btnEnrolment
             // 
@@ -149,6 +152,7 @@
             this.btnEnrolment.TabIndex = 11;
             this.btnEnrolment.Text = "Add Enrolment";
             this.btnEnrolment.UseVisualStyleBackColor = true;
+            this.btnEnrolment.Click += new System.EventHandler(this.btnEnrolment_Click);
             // 
             // frmEnrolment
             // 
@@ -159,7 +163,7 @@
             this.Controls.Add(this.btnInstructor);
             this.Controls.Add(this.btnCourse);
             this.Controls.Add(this.btnStudent);
-            this.Controls.Add(this.txtName);
+            this.Controls.Add(this.txtTerm);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -186,7 +190,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox txtName;
+        private System.Windows.Forms.TextBox txtTerm;
         private System.Windows.Forms.Button btnStudent;
         private System.Windows.Forms.Button btnCourse;
         private System.Windows.Forms.Button btnInstructor;
