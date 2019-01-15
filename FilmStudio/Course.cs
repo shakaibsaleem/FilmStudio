@@ -23,5 +23,10 @@ namespace FilmStudio
             CourseName = courseName ?? throw new ArgumentNullException(nameof(courseName));
             CourseCode = courseCode ?? throw new ArgumentNullException(nameof(courseCode));
         }
+
+        public override string ToString()
+        {
+            return CourseName;
+        }
     }
 }
