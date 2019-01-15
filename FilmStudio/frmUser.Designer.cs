@@ -199,6 +199,7 @@
             this.Controls.Add(this.label2);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmUser";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "User Details Form";
             this.Load += new System.EventHandler(this.frmUser_Load);
             this.ResumeLayout(false);
