@@ -1,3 +1,6 @@
+
+email account, erd finalise, login screen
+
 email and rollout
 
 test and fix bugs
