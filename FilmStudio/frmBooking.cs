@@ -24,6 +24,7 @@ namespace FilmStudio
         SqlConnection con;
         string state;
         User CurrentUser;
+        int indexEquipment;
 
         public frmBooking(User currentUser)
         {
@@ -86,7 +87,7 @@ namespace FilmStudio
             }
             myEquipment.Description = "";
             txtAvailable.Clear();
-            txtBooked.Clear();
+            txtTotal.Clear();
             numQuantity.Value = 1;
             comboBoxEquipment.ResetText();
             comboBoxEquipment.Select();
@@ -95,7 +96,11 @@ namespace FilmStudio
 
         private void numQuantity_ValueChanged(object sender, EventArgs e)
         {
-            btnAddEquipment.Enabled = Convert.ToInt32(numQuantity.Value) > 0;
+            btnAddEquipment.Enabled = Convert.ToInt32(numQuantity.Value) > 0 && (comboBoxEquipment.SelectedItem != null);
+            if (numQuantity.Value > Convert.ToInt32(txtAvailable.Text))
+            {
+                btnAddEquipment.Enabled = false;
+            }
         }
 
         private void numQuantity_KeyPress(object sender, KeyPressEventArgs e)
@@ -368,7 +373,7 @@ namespace FilmStudio
                 cmd.ExecuteNonQuery();
 
                 string myDescription, myItemID;
-                int myQuantity, oldQuantity, qtyAvailable, qtyBooked;
+                int myQuantity, oldQuantity, qtyTotal;
                 SqlDataReader rd;
                 List<string> myList = new List<string>();
 
@@ -377,33 +382,31 @@ namespace FilmStudio
                     myDescription = item.SubItems[0].Text;
                     myQuantity = Convert.ToInt32(item.SubItems[1].Text);
 
-                    cmd.CommandText = "select EquipmentID,QuantityAvailable,QuantityBooked " +
-                        "from Equipments where Description = '" + myDescription + "'";
+                    cmd.CommandText = "select EquipmentID,QuantityTotal from " +
+                        "Equipments where Description = '" + myDescription + "'";
                     rd = cmd.ExecuteReader();
                     if (rd.Read() == true)
                     {
                         myItemID = rd[0].ToString();
-                        qtyAvailable = Convert.ToInt32(rd[1].ToString());
-                        qtyBooked = Convert.ToInt32(rd[2].ToString());
+                        qtyTotal = Convert.ToInt32(rd[1].ToString());
                         myList.Add(myItemID);
                     }
                     else
                     {
                         MessageBox.Show("Invalid value of description: " + myDescription,"Error in fetching equipment details");
                         myItemID = "1";
-                        qtyAvailable = 0;
-                        qtyBooked = 0;
+                        qtyTotal = 0;
                     }
                     rd.Close();
 
-                    cmd.CommandText = "select Quantity from BookedItems where " +
+                    cmd.CommandText = "select QuantityBooked from BookedItems where " +
                         "BookingID = " + myBooking.ID + " and EquipmentID = " + myItemID;
                     rd = cmd.ExecuteReader();
                     if (rd.Read() == true)
                     {
                         oldQuantity = Convert.ToInt32(rd[0].ToString());
                         rd.Close();
-                        cmd.CommandText = "update BookedItems set Quantity = " + myQuantity + 
+                        cmd.CommandText = "update BookedItems set QuantityBooked = " + myQuantity + 
                             " where BookingID = " + myBooking.ID + " and EquipmentID = " + myItemID;
                         cmd.ExecuteNonQuery();
                     }
@@ -411,16 +414,16 @@ namespace FilmStudio
                     {
                         oldQuantity = 0;
                         rd.Close();
-                        cmd.CommandText = "insert into BookedItems (BookingID,EquipmentID,Quantity) values " +
+                        cmd.CommandText = "insert into BookedItems (BookingID,EquipmentID,QuantityBooked) values " +
                             "(" + myBooking.ID + ", " + myItemID + ", " + myQuantity + ")";
                         cmd.ExecuteNonQuery();
                     }
 
-                    cmd.CommandText = "update Equipments set " +
-                        "QuantityBooked = " + (qtyBooked + (myQuantity-oldQuantity)) +
-                        ", QuantityAvailable = " + (qtyAvailable - (myQuantity - oldQuantity)) +
-                        " where EquipmentID = " + myItemID;
-                    cmd.ExecuteNonQuery();
+                    //cmd.CommandText = "update Equipments set " +
+                    //    "QuantityBooked = " + (qtyBooked + (myQuantity-oldQuantity)) +
+                    //    ", QuantityAvailable = " + (qtyAvailable - (myQuantity - oldQuantity)) +
+                    //    " where EquipmentID = " + myItemID;
+                    //cmd.ExecuteNonQuery();
                 }
 
                 List<string> toDelete = new List<string>();
@@ -440,26 +443,26 @@ namespace FilmStudio
 
                 foreach (string id in toDelete)
                 {
-                    cmd.CommandText = "select Quantity,QuantityAvailable,QuantityBooked " +
-                        "from BookedItems,Equipments where BookingID = " +
-                        myBooking.ID + " and BookedItems.EquipmentID = " + id +
-                        " and BookedItems.EquipmentID = Equipments.EquipmentID";
-                    rd = cmd.ExecuteReader();
+                    //cmd.CommandText = "select Quantity,QuantityAvailable,QuantityBooked " +
+                    //    "from BookedItems,Equipments where BookingID = " +
+                    //    myBooking.ID + " and BookedItems.EquipmentID = " + id +
+                    //    " and BookedItems.EquipmentID = Equipments.EquipmentID";
+                    //rd = cmd.ExecuteReader();
 
-                    if (rd.Read() == true)
-                    {
-                        oldQuantity = Convert.ToInt32(rd[0].ToString());
-                        qtyAvailable = Convert.ToInt32(rd[1].ToString());
-                        qtyBooked = Convert.ToInt32(rd[2].ToString());
-                        rd.Close();
+                    //if (rd.Read() == true)
+                    //{
+                    //    oldQuantity = Convert.ToInt32(rd[0].ToString());
+                    //    qtyAvailable = Convert.ToInt32(rd[1].ToString());
+                    //    qtyBooked = Convert.ToInt32(rd[2].ToString());
+                    //    rd.Close();
 
-                        cmd.CommandText = "update Equipments set " +
-                        "QuantityBooked = " + (qtyBooked - oldQuantity) +
-                        ", QuantityAvailable = " + (qtyAvailable + oldQuantity) +
-                        " where EquipmentID = " + id;
-                        cmd.ExecuteNonQuery();
-                    }
-                    rd.Close();
+                    //    cmd.CommandText = "update Equipments set " +
+                    //    "QuantityBooked = " + (qtyBooked - oldQuantity) +
+                    //    ", QuantityAvailable = " + (qtyAvailable + oldQuantity) +
+                    //    " where EquipmentID = " + id;
+                    //    cmd.ExecuteNonQuery();
+                    //}
+                    //rd.Close();
                     cmd.CommandText = "delete from BookedItems where EquipmentID = " 
                         + id + " and BookingID = " + myBooking.ID;
                     cmd.ExecuteNonQuery();
@@ -475,25 +478,39 @@ namespace FilmStudio
                 MessageBox.Show(ex.Message, "Error in Save");
             }
 
-            DialogResult dialogResult =  MessageBox.Show("Do you want to send emails" +
-                " confirming the booking?","Send emails?",MessageBoxButtons.YesNo);
+            DialogResult dialogResult =  MessageBox.Show("Do you want to send email" +
+                " confirming the booking?","Send email?",MessageBoxButtons.YesNo);
 
             if (dialogResult == DialogResult.Yes)
             {
                 EmailHandler email = new EmailHandler();
-                string recipient = "";
-                StreamReader r = new StreamReader("C:\\Users\\Public\\passkey.txt");
-                string s = r.ReadLine();
-                email.Passkey = s;
+
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = "select top 1 Username,Passkey from EmailAccount";
+                SqlDataReader rd = cmd.ExecuteReader();
+
+                if (rd.Read())
+                {
+                    email.User = rd[0].ToString();
+                    email.Passkey = rd[1].ToString();
+                }
+                else
+                {
+                    StreamReader r = new StreamReader("C:\\Users\\Public\\passkey.txt");
+                    email.User = "ms01036@st.habib.edu.pk";
+                    email.Passkey = r.ReadLine();
+                }
 
                 string subject = "Your booking has been confirmed";
                 string body = "Dear " + txtName.Text + ",\n\nThis is to confirm" +
                     " your booking of the following equipment. Please review " +
-                    "the following details and let us know in case of any issues" +
-                    ".\nIssue Date: " + myBooking.IssuedOn.ToString("dddd dd-MM-yyyy") +
+                    "the following details and let us know in case of any issues.\n" +
+                    "\nIssue Date: " + myBooking.IssuedOn.ToString("dddd dd-MM-yyyy") +
                     "\nDue On: " + myBooking.DueOn.ToString("hh:mm tt dddd dd-MM-yyyy") +
                     "\nOff Campus: " + (myBooking.OffCampus ? "Yes" : "No") +
-                    "\nEquipment Details:\n";
+                    "\n\nEquipment Details:\n";
                 foreach (ListViewItem item in listViewBooking.Items)
                 {
                     body = body + item.SubItems[0].Text + ", Quantity = " + item.SubItems[1].Text + "\n";
@@ -501,30 +518,37 @@ namespace FilmStudio
 
                 body = body + "\nRegards,\nFilmStudio@HU";
 
+                string recipient = "";
+                bool isSent = false;
+
                 if (myBooking.BookedBy == "Instructor")
                 {
-                    //recipient = myBooking.Instructor.Email;
-                    recipient = "kr03917@st.habib.edu.pk";
-                    email.Send(recipient: recipient, subject: subject, body: body);
+                    recipient = myBooking.Instructor.Email;
+                    //recipient = "kr03917@st.habib.edu.pk";
+                    isSent = email.Send(recipient: recipient, subject: subject, body: body);
                 }
                 else if (myBooking.BookedBy == "Student")
                 {
                     recipient = myBooking.Student.Email;
                     //recipient = "kr03917@st.habib.edu.pk";
-                    email.Send(recipient: recipient, subject: subject, body: body);
+                    isSent = email.Send(recipient: recipient, subject: subject, body: body);
                 }
                 else if (myBooking.BookedBy == "Staff")
                 {
-                    //recipient = myBooking.Staff.Email;
-                    recipient = "kr03917@st.habib.edu.pk";
-                    email.Send(recipient: recipient, subject: subject, body: body);
+                    recipient = myBooking.Staff.Email;
+                    //recipient = "kr03917@st.habib.edu.pk";
+                    isSent = email.Send(recipient: recipient, subject: subject, body: body);
                 }
-                MessageBox.Show("Email has been sent");
+
+                if (isSent)
+                {
+                    MessageBox.Show("Email has been sent");
+                }
+                else
+                {
+                    MessageBox.Show("Email could NOT be sent");
+                }
             }
-            //else if (dialogResult == DialogResult.No)
-            //{
-            //    MessageBox.Show("Email not sent");
-            //}
         }
 
         private void dateTimeIssued_ValueChanged(object sender, EventArgs e)
@@ -1021,12 +1045,29 @@ namespace FilmStudio
 
         private void comboBoxEquipment_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Equipment eq = (Equipment)comboBoxEquipment.SelectedItem;
-            myEquipment.Description = eq.Description;
-            txtAvailable.Text = eq.QtyAvailable.ToString();
-            txtBooked.Text = eq.QtyBooked.ToString();
+            if (comboBoxEquipment.SelectedItem != null)
+            {
+                indexEquipment = comboBoxEquipment.SelectedIndex;
+                Equipment eq = (Equipment)comboBoxEquipment.SelectedItem;
+                myEquipment.ID = eq.ID;
+                myEquipment.Description = eq.Description;
+                myEquipment.QuantityTotal = eq.QuantityTotal;
+                myEquipment.QuantityAvailable = eq.QuantityAvailable;
+                myEquipment.Remarks = eq.Remarks;
 
-            btnAddEquipment.Enabled = comboBoxEquipment.SelectedIndex >= 0;
+                txtAvailable.Text = eq.QuantityAvailable.ToString();
+                txtTotal.Text = eq.QuantityTotal.ToString();
+
+                btnAddEquipment.Enabled = comboBoxEquipment.SelectedIndex >= 0;
+                if (numQuantity.Value > Convert.ToInt32(txtAvailable.Text))
+                {
+                    btnAddEquipment.Enabled = false;
+                }
+            }
+            else
+            {
+                btnAddEquipment.Enabled = false;
+            }
         }
 
         private void checkBoxReturned_CheckedChanged(object sender, EventArgs e)
@@ -1551,7 +1592,7 @@ namespace FilmStudio
             try
             {
                 listViewBooking.Items.Clear();
-                cmd.CommandText = "select Description,Quantity from BookedItems,Equipments" +
+                cmd.CommandText = "select Description,QuantityBooked from BookedItems,Equipments" +
                     " where BookedItems.EquipmentID=Equipments.EquipmentID " +
                     "and BookingID = " + myBooking.ID + " order by Description";
                 rd = cmd.ExecuteReader();
@@ -1574,9 +1615,10 @@ namespace FilmStudio
         public void UpdateComboBoxEquipment()
         {
             Equipment eq;
-            string d = "";
+            string desc = "";
             string id = "";
-            int qtyA, qtyB;
+            string remarks = "";
+            int qtyTotal,qtyAvail;
 
             try
             {
@@ -1601,20 +1643,24 @@ namespace FilmStudio
                 cmd.Connection = con;
                 cmd.CommandType = CommandType.Text;
 
-                cmd.CommandText = "select Description,QuantityBooked,QuantityAvailable," +
-                    "EquipmentID from Equipments order by Description";
+                cmd.CommandText = "select EquipmentID,Description,QuantityTotal," +
+                    "Remarks from Equipments order by Description";
                 SqlDataReader rd = cmd.ExecuteReader();
                 while (rd.Read())
                 {
-                    id = rd[3].ToString();
-                    qtyA = Convert.ToInt32(rd[2].ToString());
-                    qtyB = Convert.ToInt32(rd[1].ToString());
-                    d = rd[0].ToString();
+                    id = rd[0].ToString();
+                    desc = rd[1].ToString();
+                    qtyTotal = Convert.ToInt32(rd[2].ToString());
+                    remarks = rd[3].ToString();
+                    qtyAvail = GetAvailableQty(id, qtyTotal, myBooking.IssuedOn, myBooking.DueOn);
+                    //qtyA = Convert.ToInt32(rd[2].ToString());
+                    //qtyB = Convert.ToInt32(rd[1].ToString());
+                    //d = rd[0].ToString();
                     //if (d == "Nikon D3200")
                     //{
-                        qtyA = GetAvailableQty(id, 4, myBooking.IssuedOn, myBooking.DueOn);
+                    //qtyA = GetAvailableQty(id, 4, myBooking.IssuedOn, myBooking.DueOn);
                     //}
-                    eq = new Equipment(qtyA, qtyB, d);
+                    eq = new Equipment(iD: id, description: desc, quantityTotal: qtyTotal, quantityAvail: qtyAvail, remarks: remarks);
                     comboBoxEquipment.Items.Add(eq);
                 }
                 rd.Close();
@@ -1633,6 +1679,7 @@ namespace FilmStudio
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error in UpdateComboBoxEquipment()");
+                return;
             }
         }
 
@@ -1644,7 +1691,7 @@ namespace FilmStudio
             cmd.Connection = con;
             cmd.CommandType = CommandType.Text;
 
-            cmd.CommandText = "select Bookings.BookingID,EquipmentID,Quantity," +
+            cmd.CommandText = "select Bookings.BookingID,EquipmentID,QuantityBooked," +
                 "IssueDate,IssueTime,DueDate,Duetime from BookedItems, Bookings " +
                 " where Bookings.BookingID = BookedItems.BookingID and IssueDate " +
                 "<= '" + DateOf(myDue) + "' and DueDate >= '" + DateOf(myIssue) + "' and " +
@@ -1719,7 +1766,8 @@ namespace FilmStudio
                 }
                 //MessageBox.Show(day.ToString() + "\n" + numBookings.ToString() + "\n" + maxBookings.ToString());
             }
-            return TotalQty - maxBookings;
+            int qtyAvail = TotalQty - maxBookings;
+            return qtyAvail;
         }
 
         public static DateTime GetDateTime(object date, object time)
