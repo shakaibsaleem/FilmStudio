@@ -13,7 +13,8 @@ GO
 CREATE TABLE Equipments (
   EquipmentID INTEGER  NOT NULL   IDENTITY ,
   Description VARCHAR(100)  NOT NULL  ,
-  QuantityTotal INTEGER  NOT NULL  ,
+  QuantityAvailable INTEGER  NOT NULL  ,
+  QuantityBooked INTEGER  NOT NULL  ,
   Remarks VARCHAR(50)      ,
 PRIMARY KEY(EquipmentID));
 GO
@@ -131,7 +132,7 @@ GO
 CREATE TABLE BookedItems (
   BookingID INTEGER  NOT NULL  ,
   EquipmentID INTEGER  NOT NULL  ,
-  QuantityBooked INTEGER  NOT NULL    ,
+  Quantity INTEGER  NOT NULL    ,
 PRIMARY KEY(BookingID, EquipmentID)    ,
   FOREIGN KEY(BookingID)
     REFERENCES Bookings(BookingID),
