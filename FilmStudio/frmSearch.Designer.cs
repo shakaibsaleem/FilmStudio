@@ -31,26 +31,26 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmSearch));
             this.dataGridResults = new System.Windows.Forms.DataGridView();
             this.tabBooking = new System.Windows.Forms.TabPage();
-            this.groupBoxBookingCriteria = new System.Windows.Forms.GroupBox();
-            this.rbtnStudent = new System.Windows.Forms.RadioButton();
-            this.rbtnEquip = new System.Windows.Forms.RadioButton();
-            this.rbtnDue = new System.Windows.Forms.RadioButton();
-            this.rbtnIssue = new System.Windows.Forms.RadioButton();
-            this.rbtnReturn = new System.Windows.Forms.RadioButton();
-            this.rbtnCourse = new System.Windows.Forms.RadioButton();
-            this.rbtnInst = new System.Windows.Forms.RadioButton();
-            this.rbtnStaff = new System.Windows.Forms.RadioButton();
-            this.comboBoxStudent = new System.Windows.Forms.ComboBox();
-            this.comboBoxEquip = new System.Windows.Forms.ComboBox();
-            this.dateTimeDueF = new System.Windows.Forms.DateTimePicker();
-            this.dateTimeDueT = new System.Windows.Forms.DateTimePicker();
-            this.dateTimeIssueF = new System.Windows.Forms.DateTimePicker();
-            this.dateTimeIssueT = new System.Windows.Forms.DateTimePicker();
-            this.dateTimeReturnF = new System.Windows.Forms.DateTimePicker();
-            this.dateTimeReturnT = new System.Windows.Forms.DateTimePicker();
-            this.comboBoxCourse = new System.Windows.Forms.ComboBox();
-            this.comboBoxInst = new System.Windows.Forms.ComboBox();
             this.comboBoxStaff = new System.Windows.Forms.ComboBox();
+            this.comboBoxInst = new System.Windows.Forms.ComboBox();
+            this.comboBoxCourse = new System.Windows.Forms.ComboBox();
+            this.dateTimeReturnT = new System.Windows.Forms.DateTimePicker();
+            this.dateTimeReturnF = new System.Windows.Forms.DateTimePicker();
+            this.dateTimeIssueT = new System.Windows.Forms.DateTimePicker();
+            this.dateTimeIssueF = new System.Windows.Forms.DateTimePicker();
+            this.dateTimeDueT = new System.Windows.Forms.DateTimePicker();
+            this.dateTimeDueF = new System.Windows.Forms.DateTimePicker();
+            this.comboBoxEquip = new System.Windows.Forms.ComboBox();
+            this.comboBoxStudent = new System.Windows.Forms.ComboBox();
+            this.groupBoxBookingCriteria = new System.Windows.Forms.GroupBox();
+            this.rbtnStaff = new System.Windows.Forms.RadioButton();
+            this.rbtnInst = new System.Windows.Forms.RadioButton();
+            this.rbtnCourse = new System.Windows.Forms.RadioButton();
+            this.rbtnReturn = new System.Windows.Forms.RadioButton();
+            this.rbtnIssue = new System.Windows.Forms.RadioButton();
+            this.rbtnDue = new System.Windows.Forms.RadioButton();
+            this.rbtnEquip = new System.Windows.Forms.RadioButton();
+            this.rbtnStudent = new System.Windows.Forms.RadioButton();
             this.tabControl = new System.Windows.Forms.TabControl();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridResults)).BeginInit();
             this.tabBooking.SuspendLayout();
@@ -94,6 +94,105 @@
             this.tabBooking.TabIndex = 0;
             this.tabBooking.Text = "Booking";
             // 
+            // comboBoxStaff
+            // 
+            this.comboBoxStaff.FormattingEnabled = true;
+            this.comboBoxStaff.Location = new System.Drawing.Point(157, 186);
+            this.comboBoxStaff.Name = "comboBoxStaff";
+            this.comboBoxStaff.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxStaff.TabIndex = 11;
+            this.comboBoxStaff.SelectedIndexChanged += new System.EventHandler(this.comboBoxStaff_SelectedIndexChanged);
+            // 
+            // comboBoxInst
+            // 
+            this.comboBoxInst.FormattingEnabled = true;
+            this.comboBoxInst.Location = new System.Drawing.Point(157, 163);
+            this.comboBoxInst.Name = "comboBoxInst";
+            this.comboBoxInst.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxInst.TabIndex = 10;
+            this.comboBoxInst.SelectedIndexChanged += new System.EventHandler(this.comboBoxInst_SelectedIndexChanged);
+            // 
+            // comboBoxCourse
+            // 
+            this.comboBoxCourse.FormattingEnabled = true;
+            this.comboBoxCourse.Location = new System.Drawing.Point(157, 140);
+            this.comboBoxCourse.Name = "comboBoxCourse";
+            this.comboBoxCourse.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxCourse.TabIndex = 9;
+            this.comboBoxCourse.SelectedIndexChanged += new System.EventHandler(this.comboBoxCourse_SelectedIndexChanged);
+            // 
+            // dateTimeReturnT
+            // 
+            this.dateTimeReturnT.CustomFormat = "dd/MM/yy dddd";
+            this.dateTimeReturnT.Location = new System.Drawing.Point(364, 117);
+            this.dateTimeReturnT.Name = "dateTimeReturnT";
+            this.dateTimeReturnT.Size = new System.Drawing.Size(200, 20);
+            this.dateTimeReturnT.TabIndex = 8;
+            this.dateTimeReturnT.ValueChanged += new System.EventHandler(this.dateTimeReturnT_ValueChanged);
+            // 
+            // dateTimeReturnF
+            // 
+            this.dateTimeReturnF.CustomFormat = "dd/MM/yy dddd";
+            this.dateTimeReturnF.Location = new System.Drawing.Point(157, 117);
+            this.dateTimeReturnF.Name = "dateTimeReturnF";
+            this.dateTimeReturnF.Size = new System.Drawing.Size(200, 20);
+            this.dateTimeReturnF.TabIndex = 7;
+            this.dateTimeReturnF.ValueChanged += new System.EventHandler(this.dateTimeReturnF_ValueChanged);
+            // 
+            // dateTimeIssueT
+            // 
+            this.dateTimeIssueT.CustomFormat = "dd/MM/yy dddd";
+            this.dateTimeIssueT.Location = new System.Drawing.Point(364, 94);
+            this.dateTimeIssueT.Name = "dateTimeIssueT";
+            this.dateTimeIssueT.Size = new System.Drawing.Size(200, 20);
+            this.dateTimeIssueT.TabIndex = 6;
+            this.dateTimeIssueT.ValueChanged += new System.EventHandler(this.dateTimeIssueT_ValueChanged);
+            // 
+            // dateTimeIssueF
+            // 
+            this.dateTimeIssueF.CustomFormat = "dd/MM/yy dddd";
+            this.dateTimeIssueF.Location = new System.Drawing.Point(157, 94);
+            this.dateTimeIssueF.Name = "dateTimeIssueF";
+            this.dateTimeIssueF.Size = new System.Drawing.Size(200, 20);
+            this.dateTimeIssueF.TabIndex = 5;
+            this.dateTimeIssueF.ValueChanged += new System.EventHandler(this.dateTimeIssueF_ValueChanged);
+            // 
+            // dateTimeDueT
+            // 
+            this.dateTimeDueT.CustomFormat = "dd/MM/yy dddd";
+            this.dateTimeDueT.Location = new System.Drawing.Point(364, 71);
+            this.dateTimeDueT.Name = "dateTimeDueT";
+            this.dateTimeDueT.Size = new System.Drawing.Size(200, 20);
+            this.dateTimeDueT.TabIndex = 4;
+            this.dateTimeDueT.ValueChanged += new System.EventHandler(this.dateTimeDueT_ValueChanged);
+            // 
+            // dateTimeDueF
+            // 
+            this.dateTimeDueF.CustomFormat = "dd/MM/yy dddd";
+            this.dateTimeDueF.Location = new System.Drawing.Point(157, 71);
+            this.dateTimeDueF.Name = "dateTimeDueF";
+            this.dateTimeDueF.Size = new System.Drawing.Size(200, 20);
+            this.dateTimeDueF.TabIndex = 3;
+            this.dateTimeDueF.ValueChanged += new System.EventHandler(this.dateTimeDueF_ValueChanged);
+            // 
+            // comboBoxEquip
+            // 
+            this.comboBoxEquip.FormattingEnabled = true;
+            this.comboBoxEquip.Location = new System.Drawing.Point(157, 48);
+            this.comboBoxEquip.Name = "comboBoxEquip";
+            this.comboBoxEquip.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxEquip.TabIndex = 2;
+            this.comboBoxEquip.SelectedIndexChanged += new System.EventHandler(this.comboBoxEquip_SelectedIndexChanged);
+            // 
+            // comboBoxStudent
+            // 
+            this.comboBoxStudent.FormattingEnabled = true;
+            this.comboBoxStudent.Location = new System.Drawing.Point(157, 25);
+            this.comboBoxStudent.Name = "comboBoxStudent";
+            this.comboBoxStudent.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxStudent.TabIndex = 1;
+            this.comboBoxStudent.SelectedIndexChanged += new System.EventHandler(this.comboBoxStudent_SelectedIndexChanged);
+            // 
             // groupBoxBookingCriteria
             // 
             this.groupBoxBookingCriteria.Controls.Add(this.rbtnStaff);
@@ -111,77 +210,17 @@
             this.groupBoxBookingCriteria.TabStop = false;
             this.groupBoxBookingCriteria.Text = "Criteria";
             // 
-            // rbtnStudent
+            // rbtnStaff
             // 
-            this.rbtnStudent.AutoSize = true;
-            this.rbtnStudent.Location = new System.Drawing.Point(6, 19);
-            this.rbtnStudent.Name = "rbtnStudent";
-            this.rbtnStudent.Size = new System.Drawing.Size(111, 17);
-            this.rbtnStudent.TabIndex = 0;
-            this.rbtnStudent.TabStop = true;
-            this.rbtnStudent.Text = "Student\'s HabibID";
-            this.rbtnStudent.UseVisualStyleBackColor = true;
-            this.rbtnStudent.CheckedChanged += new System.EventHandler(this.rbtnStudent_CheckedChanged);
-            // 
-            // rbtnEquip
-            // 
-            this.rbtnEquip.AutoSize = true;
-            this.rbtnEquip.Location = new System.Drawing.Point(6, 42);
-            this.rbtnEquip.Name = "rbtnEquip";
-            this.rbtnEquip.Size = new System.Drawing.Size(131, 17);
-            this.rbtnEquip.TabIndex = 1;
-            this.rbtnEquip.TabStop = true;
-            this.rbtnEquip.Text = "Equipment Description";
-            this.rbtnEquip.UseVisualStyleBackColor = true;
-            this.rbtnEquip.CheckedChanged += new System.EventHandler(this.rbtnEquip_CheckedChanged);
-            // 
-            // rbtnDue
-            // 
-            this.rbtnDue.AutoSize = true;
-            this.rbtnDue.Location = new System.Drawing.Point(6, 65);
-            this.rbtnDue.Name = "rbtnDue";
-            this.rbtnDue.Size = new System.Drawing.Size(112, 17);
-            this.rbtnDue.TabIndex = 2;
-            this.rbtnDue.TabStop = true;
-            this.rbtnDue.Text = "Due Date (Range)";
-            this.rbtnDue.UseVisualStyleBackColor = true;
-            this.rbtnDue.CheckedChanged += new System.EventHandler(this.rbtnDue_CheckedChanged);
-            // 
-            // rbtnIssue
-            // 
-            this.rbtnIssue.AutoSize = true;
-            this.rbtnIssue.Location = new System.Drawing.Point(6, 88);
-            this.rbtnIssue.Name = "rbtnIssue";
-            this.rbtnIssue.Size = new System.Drawing.Size(117, 17);
-            this.rbtnIssue.TabIndex = 3;
-            this.rbtnIssue.TabStop = true;
-            this.rbtnIssue.Text = "Issue Date (Range)";
-            this.rbtnIssue.UseVisualStyleBackColor = true;
-            this.rbtnIssue.CheckedChanged += new System.EventHandler(this.rbtnIssue_CheckedChanged);
-            // 
-            // rbtnReturn
-            // 
-            this.rbtnReturn.AutoSize = true;
-            this.rbtnReturn.Location = new System.Drawing.Point(6, 111);
-            this.rbtnReturn.Name = "rbtnReturn";
-            this.rbtnReturn.Size = new System.Drawing.Size(124, 17);
-            this.rbtnReturn.TabIndex = 4;
-            this.rbtnReturn.TabStop = true;
-            this.rbtnReturn.Text = "Return Date (Range)";
-            this.rbtnReturn.UseVisualStyleBackColor = true;
-            this.rbtnReturn.CheckedChanged += new System.EventHandler(this.rbtnReturn_CheckedChanged);
-            // 
-            // rbtnCourse
-            // 
-            this.rbtnCourse.AutoSize = true;
-            this.rbtnCourse.Location = new System.Drawing.Point(6, 134);
-            this.rbtnCourse.Name = "rbtnCourse";
-            this.rbtnCourse.Size = new System.Drawing.Size(105, 17);
-            this.rbtnCourse.TabIndex = 5;
-            this.rbtnCourse.TabStop = true;
-            this.rbtnCourse.Text = "Student\'s Course";
-            this.rbtnCourse.UseVisualStyleBackColor = true;
-            this.rbtnCourse.CheckedChanged += new System.EventHandler(this.rbtnCourse_CheckedChanged);
+            this.rbtnStaff.AutoSize = true;
+            this.rbtnStaff.Location = new System.Drawing.Point(6, 180);
+            this.rbtnStaff.Name = "rbtnStaff";
+            this.rbtnStaff.Size = new System.Drawing.Size(47, 17);
+            this.rbtnStaff.TabIndex = 7;
+            this.rbtnStaff.TabStop = true;
+            this.rbtnStaff.Text = "Staff";
+            this.rbtnStaff.UseVisualStyleBackColor = true;
+            this.rbtnStaff.CheckedChanged += new System.EventHandler(this.rbtnStaff_CheckedChanged);
             // 
             // rbtnInst
             // 
@@ -195,116 +234,77 @@
             this.rbtnInst.UseVisualStyleBackColor = true;
             this.rbtnInst.CheckedChanged += new System.EventHandler(this.rbtnInst_CheckedChanged);
             // 
-            // rbtnStaff
+            // rbtnCourse
             // 
-            this.rbtnStaff.AutoSize = true;
-            this.rbtnStaff.Location = new System.Drawing.Point(6, 180);
-            this.rbtnStaff.Name = "rbtnStaff";
-            this.rbtnStaff.Size = new System.Drawing.Size(47, 17);
-            this.rbtnStaff.TabIndex = 7;
-            this.rbtnStaff.TabStop = true;
-            this.rbtnStaff.Text = "Staff";
-            this.rbtnStaff.UseVisualStyleBackColor = true;
-            this.rbtnStaff.CheckedChanged += new System.EventHandler(this.rbtnStaff_CheckedChanged);
+            this.rbtnCourse.AutoSize = true;
+            this.rbtnCourse.Location = new System.Drawing.Point(6, 134);
+            this.rbtnCourse.Name = "rbtnCourse";
+            this.rbtnCourse.Size = new System.Drawing.Size(105, 17);
+            this.rbtnCourse.TabIndex = 5;
+            this.rbtnCourse.TabStop = true;
+            this.rbtnCourse.Text = "Student\'s Course";
+            this.rbtnCourse.UseVisualStyleBackColor = true;
+            this.rbtnCourse.CheckedChanged += new System.EventHandler(this.rbtnCourse_CheckedChanged);
             // 
-            // comboBoxStudent
+            // rbtnReturn
             // 
-            this.comboBoxStudent.FormattingEnabled = true;
-            this.comboBoxStudent.Location = new System.Drawing.Point(157, 25);
-            this.comboBoxStudent.Name = "comboBoxStudent";
-            this.comboBoxStudent.Size = new System.Drawing.Size(121, 21);
-            this.comboBoxStudent.TabIndex = 1;
-            this.comboBoxStudent.SelectedIndexChanged += new System.EventHandler(this.comboBoxStudent_SelectedIndexChanged);
+            this.rbtnReturn.AutoSize = true;
+            this.rbtnReturn.Location = new System.Drawing.Point(6, 111);
+            this.rbtnReturn.Name = "rbtnReturn";
+            this.rbtnReturn.Size = new System.Drawing.Size(124, 17);
+            this.rbtnReturn.TabIndex = 4;
+            this.rbtnReturn.TabStop = true;
+            this.rbtnReturn.Text = "Return Date (Range)";
+            this.rbtnReturn.UseVisualStyleBackColor = true;
+            this.rbtnReturn.CheckedChanged += new System.EventHandler(this.rbtnReturn_CheckedChanged);
             // 
-            // comboBoxEquip
+            // rbtnIssue
             // 
-            this.comboBoxEquip.FormattingEnabled = true;
-            this.comboBoxEquip.Location = new System.Drawing.Point(157, 48);
-            this.comboBoxEquip.Name = "comboBoxEquip";
-            this.comboBoxEquip.Size = new System.Drawing.Size(121, 21);
-            this.comboBoxEquip.TabIndex = 2;
-            this.comboBoxEquip.SelectedIndexChanged += new System.EventHandler(this.comboBoxEquip_SelectedIndexChanged);
+            this.rbtnIssue.AutoSize = true;
+            this.rbtnIssue.Location = new System.Drawing.Point(6, 88);
+            this.rbtnIssue.Name = "rbtnIssue";
+            this.rbtnIssue.Size = new System.Drawing.Size(117, 17);
+            this.rbtnIssue.TabIndex = 3;
+            this.rbtnIssue.TabStop = true;
+            this.rbtnIssue.Text = "Issue Date (Range)";
+            this.rbtnIssue.UseVisualStyleBackColor = true;
+            this.rbtnIssue.CheckedChanged += new System.EventHandler(this.rbtnIssue_CheckedChanged);
             // 
-            // dateTimeDueF
+            // rbtnDue
             // 
-            this.dateTimeDueF.CustomFormat = "dd/MM/yy dddd";
-            this.dateTimeDueF.Location = new System.Drawing.Point(157, 71);
-            this.dateTimeDueF.Name = "dateTimeDueF";
-            this.dateTimeDueF.Size = new System.Drawing.Size(200, 20);
-            this.dateTimeDueF.TabIndex = 3;
-            this.dateTimeDueF.ValueChanged += new System.EventHandler(this.dateTimeDueF_ValueChanged);
+            this.rbtnDue.AutoSize = true;
+            this.rbtnDue.Location = new System.Drawing.Point(6, 65);
+            this.rbtnDue.Name = "rbtnDue";
+            this.rbtnDue.Size = new System.Drawing.Size(112, 17);
+            this.rbtnDue.TabIndex = 2;
+            this.rbtnDue.TabStop = true;
+            this.rbtnDue.Text = "Due Date (Range)";
+            this.rbtnDue.UseVisualStyleBackColor = true;
+            this.rbtnDue.CheckedChanged += new System.EventHandler(this.rbtnDue_CheckedChanged);
             // 
-            // dateTimeDueT
+            // rbtnEquip
             // 
-            this.dateTimeDueT.CustomFormat = "dd/MM/yy dddd";
-            this.dateTimeDueT.Location = new System.Drawing.Point(364, 71);
-            this.dateTimeDueT.Name = "dateTimeDueT";
-            this.dateTimeDueT.Size = new System.Drawing.Size(200, 20);
-            this.dateTimeDueT.TabIndex = 4;
-            this.dateTimeDueT.ValueChanged += new System.EventHandler(this.dateTimeDueT_ValueChanged);
+            this.rbtnEquip.AutoSize = true;
+            this.rbtnEquip.Location = new System.Drawing.Point(6, 42);
+            this.rbtnEquip.Name = "rbtnEquip";
+            this.rbtnEquip.Size = new System.Drawing.Size(131, 17);
+            this.rbtnEquip.TabIndex = 1;
+            this.rbtnEquip.TabStop = true;
+            this.rbtnEquip.Text = "Equipment Description";
+            this.rbtnEquip.UseVisualStyleBackColor = true;
+            this.rbtnEquip.CheckedChanged += new System.EventHandler(this.rbtnEquip_CheckedChanged);
             // 
-            // dateTimeIssueF
+            // rbtnStudent
             // 
-            this.dateTimeIssueF.CustomFormat = "dd/MM/yy dddd";
-            this.dateTimeIssueF.Location = new System.Drawing.Point(157, 94);
-            this.dateTimeIssueF.Name = "dateTimeIssueF";
-            this.dateTimeIssueF.Size = new System.Drawing.Size(200, 20);
-            this.dateTimeIssueF.TabIndex = 5;
-            this.dateTimeIssueF.ValueChanged += new System.EventHandler(this.dateTimeIssueF_ValueChanged);
-            // 
-            // dateTimeIssueT
-            // 
-            this.dateTimeIssueT.CustomFormat = "dd/MM/yy dddd";
-            this.dateTimeIssueT.Location = new System.Drawing.Point(364, 94);
-            this.dateTimeIssueT.Name = "dateTimeIssueT";
-            this.dateTimeIssueT.Size = new System.Drawing.Size(200, 20);
-            this.dateTimeIssueT.TabIndex = 6;
-            this.dateTimeIssueT.ValueChanged += new System.EventHandler(this.dateTimeIssueT_ValueChanged);
-            // 
-            // dateTimeReturnF
-            // 
-            this.dateTimeReturnF.CustomFormat = "dd/MM/yy dddd";
-            this.dateTimeReturnF.Location = new System.Drawing.Point(157, 117);
-            this.dateTimeReturnF.Name = "dateTimeReturnF";
-            this.dateTimeReturnF.Size = new System.Drawing.Size(200, 20);
-            this.dateTimeReturnF.TabIndex = 7;
-            this.dateTimeReturnF.ValueChanged += new System.EventHandler(this.dateTimeReturnF_ValueChanged);
-            // 
-            // dateTimeReturnT
-            // 
-            this.dateTimeReturnT.CustomFormat = "dd/MM/yy dddd";
-            this.dateTimeReturnT.Location = new System.Drawing.Point(364, 117);
-            this.dateTimeReturnT.Name = "dateTimeReturnT";
-            this.dateTimeReturnT.Size = new System.Drawing.Size(200, 20);
-            this.dateTimeReturnT.TabIndex = 8;
-            this.dateTimeReturnT.ValueChanged += new System.EventHandler(this.dateTimeReturnT_ValueChanged);
-            // 
-            // comboBoxCourse
-            // 
-            this.comboBoxCourse.FormattingEnabled = true;
-            this.comboBoxCourse.Location = new System.Drawing.Point(157, 140);
-            this.comboBoxCourse.Name = "comboBoxCourse";
-            this.comboBoxCourse.Size = new System.Drawing.Size(121, 21);
-            this.comboBoxCourse.TabIndex = 9;
-            this.comboBoxCourse.SelectedIndexChanged += new System.EventHandler(this.comboBoxCourse_SelectedIndexChanged);
-            // 
-            // comboBoxInst
-            // 
-            this.comboBoxInst.FormattingEnabled = true;
-            this.comboBoxInst.Location = new System.Drawing.Point(157, 163);
-            this.comboBoxInst.Name = "comboBoxInst";
-            this.comboBoxInst.Size = new System.Drawing.Size(121, 21);
-            this.comboBoxInst.TabIndex = 10;
-            this.comboBoxInst.SelectedIndexChanged += new System.EventHandler(this.comboBoxInst_SelectedIndexChanged);
-            // 
-            // comboBoxStaff
-            // 
-            this.comboBoxStaff.FormattingEnabled = true;
-            this.comboBoxStaff.Location = new System.Drawing.Point(157, 186);
-            this.comboBoxStaff.Name = "comboBoxStaff";
-            this.comboBoxStaff.Size = new System.Drawing.Size(121, 21);
-            this.comboBoxStaff.TabIndex = 11;
-            this.comboBoxStaff.SelectedIndexChanged += new System.EventHandler(this.comboBoxStaff_SelectedIndexChanged);
+            this.rbtnStudent.AutoSize = true;
+            this.rbtnStudent.Location = new System.Drawing.Point(6, 19);
+            this.rbtnStudent.Name = "rbtnStudent";
+            this.rbtnStudent.Size = new System.Drawing.Size(111, 17);
+            this.rbtnStudent.TabIndex = 0;
+            this.rbtnStudent.TabStop = true;
+            this.rbtnStudent.Text = "Student\'s HabibID";
+            this.rbtnStudent.UseVisualStyleBackColor = true;
+            this.rbtnStudent.CheckedChanged += new System.EventHandler(this.rbtnStudent_CheckedChanged);
             // 
             // tabControl
             // 
@@ -327,6 +327,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmSearch";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Search";
             this.Load += new System.EventHandler(this.frmSearch_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridResults)).EndInit();
