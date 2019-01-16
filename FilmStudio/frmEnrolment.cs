@@ -168,7 +168,7 @@ namespace FilmStudio
             if (comboBoxStudent.SelectedItem != null)
             {
                 myEnrolment.Student = (Student)comboBoxStudent.Items[comboBoxStudent.SelectedIndex];
-                MessageBox.Show("Name = " + myEnrolment.Student.Name + ", ID  = " + myEnrolment.Student.ID, "Student selected");
+                //MessageBox.Show("Name = " + myEnrolment.Student.Name + ", ID  = " + myEnrolment.Student.ID, "Student selected");
             }
         }
 
