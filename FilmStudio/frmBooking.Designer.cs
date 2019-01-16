@@ -68,7 +68,7 @@
             this.btnAdd = new System.Windows.Forms.Button();
             this.groupBoxEquipment = new System.Windows.Forms.GroupBox();
             this.lblBooked = new System.Windows.Forms.Label();
-            this.txtBooked = new System.Windows.Forms.TextBox();
+            this.txtTotal = new System.Windows.Forms.TextBox();
             this.txtAvailable = new System.Windows.Forms.TextBox();
             this.lblAvailable = new System.Windows.Forms.Label();
             this.comboBoxEquipment = new System.Windows.Forms.ComboBox();
@@ -467,7 +467,7 @@
             // groupBoxEquipment
             // 
             this.groupBoxEquipment.Controls.Add(this.lblBooked);
-            this.groupBoxEquipment.Controls.Add(this.txtBooked);
+            this.groupBoxEquipment.Controls.Add(this.txtTotal);
             this.groupBoxEquipment.Controls.Add(this.txtAvailable);
             this.groupBoxEquipment.Controls.Add(this.lblAvailable);
             this.groupBoxEquipment.Controls.Add(this.comboBoxEquipment);
@@ -487,19 +487,19 @@
             this.lblBooked.AutoSize = true;
             this.lblBooked.Location = new System.Drawing.Point(182, 50);
             this.lblBooked.Name = "lblBooked";
-            this.lblBooked.Size = new System.Drawing.Size(47, 13);
+            this.lblBooked.Size = new System.Drawing.Size(34, 13);
             this.lblBooked.TabIndex = 115;
-            this.lblBooked.Text = "Booked:";
+            this.lblBooked.Text = "Total:";
             this.lblBooked.Visible = false;
             // 
-            // txtBooked
+            // txtTotal
             // 
-            this.txtBooked.Location = new System.Drawing.Point(231, 47);
-            this.txtBooked.Name = "txtBooked";
-            this.txtBooked.ReadOnly = true;
-            this.txtBooked.Size = new System.Drawing.Size(100, 20);
-            this.txtBooked.TabIndex = 114;
-            this.txtBooked.Visible = false;
+            this.txtTotal.Location = new System.Drawing.Point(231, 47);
+            this.txtTotal.Name = "txtTotal";
+            this.txtTotal.ReadOnly = true;
+            this.txtTotal.Size = new System.Drawing.Size(100, 20);
+            this.txtTotal.TabIndex = 114;
+            this.txtTotal.Visible = false;
             // 
             // txtAvailable
             // 
@@ -746,7 +746,7 @@
         private System.Windows.Forms.ComboBox comboBoxInstructor;
         private System.Windows.Forms.ComboBox comboBoxEquipment;
         private System.Windows.Forms.Label lblBooked;
-        private System.Windows.Forms.TextBox txtBooked;
+        private System.Windows.Forms.TextBox txtTotal;
         private System.Windows.Forms.TextBox txtAvailable;
         private System.Windows.Forms.Label lblAvailable;
         private System.Windows.Forms.TextBox txtCourse;
