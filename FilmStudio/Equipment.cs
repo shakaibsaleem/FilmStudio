@@ -8,32 +8,31 @@ namespace FilmStudio
 {
     public class Equipment
     {
-        public int QtyAvailable, QtyBooked;
+        public int QuantityTotal, QuantityAvailable;
         public string ID, Description, Remarks;
 
         public Equipment()
         {
             ID = "1";
-            QtyAvailable = 4;
-            QtyBooked = 0;
+            QuantityTotal = 4;
+            QuantityAvailable = 4;
             Description = "description";
             Remarks = "remarks";
         }
 
-        public Equipment(int qtyAvailable, int qtyBooked, string description)
+        public Equipment(int quantityTotal, string description)
         {
             ID = "1";
-            QtyAvailable = qtyAvailable;
-            QtyBooked = qtyBooked;
+            QuantityTotal = quantityTotal;
             Description = description ?? throw new ArgumentNullException(nameof(description));
             Remarks = "remarks";
         }
 
-        public Equipment(string iD, int qtyAvailable, int qtyBooked, string description, string remarks)
+        public Equipment(string iD, int quantityTotal, int quantityAvail, string description, string remarks)
         {
             ID = iD ?? throw new ArgumentNullException(nameof(iD));
-            QtyAvailable = qtyAvailable;
-            QtyBooked = qtyBooked;
+            QuantityTotal = quantityTotal;
+            QuantityAvailable = quantityAvail;
             Description = description ?? throw new ArgumentNullException(nameof(description));
             Remarks = remarks ?? throw new ArgumentNullException(nameof(remarks));
         }
