@@ -35,7 +35,7 @@ namespace FilmStudio
             comboBoxType.Items.Add("Booking");
             comboBoxType.Items.Add("Course");
             comboBoxType.Items.Add("Enrolment");
-            //comboBoxType.Items.Add("Equipment");
+            comboBoxType.Items.Add("Equipment");
             comboBoxType.Items.Add("Instructor");
             //comboBoxType.Items.Add("Staff");
             comboBoxType.Items.Add("Student");
@@ -158,6 +158,11 @@ namespace FilmStudio
                     frmEnrolment frm = new frmEnrolment(CurrentUser);
                     frm.Show();
                 }
+                else if (type == "Equipment")
+                {
+                    frmEquipment frm = new frmEquipment();
+                    frm.Show();
+                }
             }
             else
             {
@@ -190,8 +195,8 @@ namespace FilmStudio
             //rd.Close();
 
             cmd.CommandText = "select BookingID,IssueDate,DueDate,ReturnDate,BookedBy,Notes " +
-                    "from Bookings where IssueDate = '" + frmBooking.DateOf(DateTime.Now) +
-                    "' or DueDate = '" + frmBooking.DateOf(DateTime.Now) + "'";
+                    "from Bookings where IssueDate < '" + frmBooking.DateOf(DateTime.Now) +
+                    "' and DueDate > '" + frmBooking.DateOf(DateTime.Now) + "'";
             cmd.ExecuteNonQuery();
             DataTable dt = new DataTable();
             SqlDataAdapter da = new SqlDataAdapter(cmd);
