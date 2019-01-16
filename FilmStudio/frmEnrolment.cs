@@ -64,6 +64,7 @@ namespace FilmStudio
                 SqlDataReader rd = cmd.ExecuteReader();
                 while (rd.Read())
                 {
+                    course = new Course();
                     course.ID = rd[0].ToString();
                     course.CourseName = rd[1].ToString();
                     course.CourseCode = rd[2].ToString();
@@ -100,6 +101,7 @@ namespace FilmStudio
                 SqlDataReader rd = cmd.ExecuteReader();
                 while (rd.Read())
                 {
+                    instructor = new Instructor();
                     instructor.ID = rd[0].ToString();
                     instructor.HabibID = rd[1].ToString();
                     instructor.Name = rd[2].ToString();
@@ -138,6 +140,7 @@ namespace FilmStudio
                 SqlDataReader rd = cmd.ExecuteReader();
                 while (rd.Read())
                 {
+                    student = new Student();
                     student.ID = rd[0].ToString();
                     student.HabibID = rd[1].ToString();
                     student.Name = rd[2].ToString();
@@ -164,7 +167,8 @@ namespace FilmStudio
         {
             if (comboBoxStudent.SelectedItem != null)
             {
-                myEnrolment.Student = (Student)comboBoxStudent.SelectedItem;
+                myEnrolment.Student = (Student)comboBoxStudent.Items[comboBoxStudent.SelectedIndex];
+                MessageBox.Show("Name = " + myEnrolment.Student.Name + ", ID  = " + myEnrolment.Student.ID, "Student selected");
             }
         }
 
