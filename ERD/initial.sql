@@ -52,6 +52,8 @@ values (3,5,3,'Fall2018')
 insert into Enrolments (StudentID,CourseID,InstructorID)
 values (1,1,1)
 
+insert into EmailAccount (Username,Passkey) values ('ms01036@st.habib.edu.pk','haya123,./')
+
 select * from Enrolments
 
 select * from Students
