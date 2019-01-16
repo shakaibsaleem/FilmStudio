@@ -337,10 +337,9 @@ namespace FilmStudio
                     return;
                 }
 
-                cmd.CommandText = "select Bookings.BookingID,Description,Quantity as " +
-                    "QuantityIssued,IssueDate,ReturnDate,DueDate,QuantityAvailable," +
-                    "BookedBy,Notes from Equipments, BookedItems, Bookings where " +
-                    "Equipments.EquipmentID = BookedItems.EquipmentID and " +
+                cmd.CommandText = "select Bookings.BookingID,Description,QuantityBooked," +
+                    "IssueDate,ReturnDate,DueDate,BookedBy,Notes from Equipments,BookedItems" +
+                    ",Bookings where Equipments.EquipmentID = BookedItems.EquipmentID and " +
                     "BookedItems.BookingID = Bookings.BookingID and " +
                     "Equipments.EquipmentID = " + id;
                 cmd.ExecuteNonQuery();
