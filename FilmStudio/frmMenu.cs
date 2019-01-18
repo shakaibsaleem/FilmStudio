@@ -39,7 +39,10 @@ namespace FilmStudio
             comboBoxType.Items.Add("Instructor");
             //comboBoxType.Items.Add("Staff");
             comboBoxType.Items.Add("Student");
-            comboBoxType.Items.Add("User");
+            if (CurrentUser.IsAdmin)
+            {
+                comboBoxType.Items.Add("User");
+            }
             rbtnAdd.Select();
             comboBoxType.SelectedIndex = 0;
             frmBooking frm = new frmBooking(CurrentUser);
