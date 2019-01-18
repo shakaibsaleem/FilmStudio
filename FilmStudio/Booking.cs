@@ -15,6 +15,8 @@ namespace FilmStudio
         public Student Student;
         public Course Course;
 
+        //public List<Equipment> Equipments;
+
         public DateTime IssuedOn, DueOn, BookedOn, ReturnedOn;
         public string ID, Notes, BookedBy, Project;
         public bool OffCampus, Returned;
@@ -27,6 +29,7 @@ namespace FilmStudio
             Student = new Student();
             Enrolment = new Enrolment();
             Course = new Course();
+            //Equipments = new List<Equipment>();
 
             DateTime d = DateTime.Now;
 
@@ -40,7 +43,8 @@ namespace FilmStudio
             Project = "";
             OffCampus = false;
             Returned = false;
-        }/*
+        }
+        /*
 
         public Booking(User user, Instructor instructor, Staff staff, Enrolment enrolment, Student student, Course course, DateTime issuedOn, DateTime dueOn, DateTime bookedOn, DateTime returnedOn, string iD, string notes, string bookedBy, string project, bool offCampus, bool returned)
         {
