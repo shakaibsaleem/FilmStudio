@@ -25,6 +25,7 @@ namespace FilmStudio
         string state;
         User CurrentUser;
         int indexEquipment;
+        List<MyItem> myItems;
 
         public frmBooking(User currentUser)
         {
@@ -33,6 +34,7 @@ namespace FilmStudio
             con = myCon.con;
             CurrentUser = currentUser;
             myBooking = new Booking(CurrentUser);
+            myItems = new List<MyItem>();
             state = "Empty";
         }
 
@@ -43,6 +45,7 @@ namespace FilmStudio
             con = myCon.con;
             CurrentUser = currentUser;
             myBooking = new Booking(CurrentUser);
+            myItems = new List<MyItem>();
             LoadRecord(id);
             state = "View";
         }
@@ -718,20 +721,43 @@ namespace FilmStudio
 
         private void btnPrint_Click(object sender, EventArgs e)
         {
-            PrintDocument printDocument = new PrintDocument();
-            printDocument.PrintPage += new PrintPageEventHandler(PrintImage);
+            string myDesc = "";
+            int myQuantity = 0;
 
-            PrintDialog printDialog = new PrintDialog();
-            printDialog.AllowSomePages = true;
-            printDialog.ShowHelp = true;
-            printDialog.Document = printDocument;
-            DialogResult result = printDialog.ShowDialog();
-
-            if (result == DialogResult.OK)
+            int c = listViewBooking.Items.Count;
+            for (int i = 0; i < c; i++)
             {
-                //printDocument.Print();
-                //MessageBox.Show("Printed");
+                ListViewItem item = listViewBooking.Items[i];
+
+                //ListViewItem.ListViewSubItemCollection col = item.SubItems;
+                //string d = col[0].Text;
+                //string q = col[1].Text;
+                //int qty = Convert.ToInt32(q);
+
+                myDesc = item.SubItems[0].Text.ToString();
+                myQuantity = Convert.ToInt32(item.SubItems[1].Text.ToString());
+
+                myItems.Add(new MyItem(myDesc, myQuantity));
+                //myBooking.Equipments.Add(new Equipment(myQuantity, myDesc));
             }
+
+            frmReportBooking frm = new frmReportBooking(myBooking, myItems);
+            frm.ShowDialog();
+
+            //PrintDocument printDocument = new PrintDocument();
+            //printDocument.PrintPage += new PrintPageEventHandler(PrintImage);
+
+            //PrintDialog printDialog = new PrintDialog();
+            //printDialog.AllowSomePages = true;
+            //printDialog.ShowHelp = true;
+            //printDialog.Document = printDocument;
+            //DialogResult result = printDialog.ShowDialog();
+
+            //if (result == DialogResult.OK)
+            //{
+            //    //printDocument.Print();
+            //    //MessageBox.Show("Printed");
+            //}
         }
 
         public void PrintImage(object o, PrintPageEventArgs e)
