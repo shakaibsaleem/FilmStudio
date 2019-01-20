@@ -1,3 +1,12 @@
+check tab order
+
+date time format issue
+
+update combos when records added
+
+print equipment
+
+calendar
 
 email account, erd finalise, login screen
 
