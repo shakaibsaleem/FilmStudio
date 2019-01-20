@@ -58,6 +58,11 @@ namespace FilmStudio
 
         private void btnAddEquipment_Click(object sender, EventArgs e)
         {
+            if (listViewBooking.Items.Count >= 9)
+            {
+                MessageBox.Show("You cannot add more items to this booking. Consider creating another booking for the remaining items.","Max capacity for items");
+                return;
+            }
             // check for duplication
             ListViewItem listViewItem = listViewBooking.FindItemWithText(myEquipment.Description);
             if (listViewItem == null)
@@ -89,7 +94,7 @@ namespace FilmStudio
                 listViewBooking.Items.Add(listViewItem);
             }
             myEquipment.Description = "";
-            txtAvailable.Clear();
+            txtAvailable.Text = "0";
             txtTotal.Clear();
             numQuantity.Value = 1;
             comboBoxEquipment.ResetText();

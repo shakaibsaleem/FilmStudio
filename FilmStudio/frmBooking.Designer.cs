@@ -508,6 +508,7 @@
             this.txtAvailable.ReadOnly = true;
             this.txtAvailable.Size = new System.Drawing.Size(100, 20);
             this.txtAvailable.TabIndex = 113;
+            this.txtAvailable.Text = "0";
             // 
             // lblAvailable
             // 
