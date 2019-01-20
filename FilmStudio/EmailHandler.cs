@@ -74,6 +74,7 @@ namespace FilmStudio
             mail.Subject = subject;
             mail.TextBody = body;
             server.Password = Passkey;
+            server.User = User;
 
             try
             {

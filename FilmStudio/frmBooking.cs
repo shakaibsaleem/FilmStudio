@@ -498,6 +498,7 @@ namespace FilmStudio
                 {
                     email.User = rd[0].ToString();
                     email.Passkey = rd[1].ToString();
+                    MessageBox.Show(email.User + "\n" + email.Passkey);
                 }
                 else
                 {
@@ -505,6 +506,7 @@ namespace FilmStudio
                     email.User = "ms01036@st.habib.edu.pk";
                     email.Passkey = r.ReadLine();
                 }
+                rd.Close();
 
                 string subject = "Your booking has been confirmed";
                 string body = "Dear " + txtName.Text + ",\n\nThis is to confirm" +
