@@ -195,7 +195,7 @@
             this.txtAssignment.Location = new System.Drawing.Point(76, 42);
             this.txtAssignment.Name = "txtAssignment";
             this.txtAssignment.Size = new System.Drawing.Size(100, 20);
-            this.txtAssignment.TabIndex = 3;
+            this.txtAssignment.TabIndex = 57;
             // 
             // lblEquipment
             // 
@@ -235,7 +235,7 @@
             this.groupBoxBooking.Location = new System.Drawing.Point(12, 86);
             this.groupBoxBooking.Name = "groupBoxBooking";
             this.groupBoxBooking.Size = new System.Drawing.Size(561, 69);
-            this.groupBoxBooking.TabIndex = 102;
+            this.groupBoxBooking.TabIndex = 56;
             this.groupBoxBooking.TabStop = false;
             this.groupBoxBooking.Text = "Booking Details";
             // 
@@ -274,7 +274,7 @@
             this.comboBoxInstructor.Location = new System.Drawing.Point(455, 42);
             this.comboBoxInstructor.Name = "comboBoxInstructor";
             this.comboBoxInstructor.Size = new System.Drawing.Size(100, 21);
-            this.comboBoxInstructor.TabIndex = 4;
+            this.comboBoxInstructor.TabIndex = 59;
             this.comboBoxInstructor.SelectedIndexChanged += new System.EventHandler(this.comboBoxInstructor_SelectedIndexChanged);
             // 
             // comboBoxID
@@ -285,7 +285,7 @@
             this.comboBoxID.Location = new System.Drawing.Point(76, 15);
             this.comboBoxID.Name = "comboBoxID";
             this.comboBoxID.Size = new System.Drawing.Size(100, 21);
-            this.comboBoxID.TabIndex = 121;
+            this.comboBoxID.TabIndex = 56;
             this.comboBoxID.SelectedIndexChanged += new System.EventHandler(this.comboBoxID_SelectedIndexChanged);
             // 
             // comboBoxCourse
@@ -296,7 +296,7 @@
             this.comboBoxCourse.Location = new System.Drawing.Point(231, 42);
             this.comboBoxCourse.Name = "comboBoxCourse";
             this.comboBoxCourse.Size = new System.Drawing.Size(158, 21);
-            this.comboBoxCourse.TabIndex = 3;
+            this.comboBoxCourse.TabIndex = 58;
             this.comboBoxCourse.SelectedIndexChanged += new System.EventHandler(this.comboBoxCourse_SelectedIndexChanged);
             // 
             // listViewBooking
@@ -341,7 +341,7 @@
             this.btnAddEquipment.Location = new System.Drawing.Point(480, 45);
             this.btnAddEquipment.Name = "btnAddEquipment";
             this.btnAddEquipment.Size = new System.Drawing.Size(75, 23);
-            this.btnAddEquipment.TabIndex = 8;
+            this.btnAddEquipment.TabIndex = 62;
             this.btnAddEquipment.Text = "Add to list";
             this.btnAddEquipment.UseVisualStyleBackColor = true;
             this.btnAddEquipment.Click += new System.EventHandler(this.btnAddEquipment_Click);
@@ -354,7 +354,7 @@
             this.groupBoxBookedBy.Location = new System.Drawing.Point(12, 38);
             this.groupBoxBookedBy.Name = "groupBoxBookedBy";
             this.groupBoxBookedBy.Size = new System.Drawing.Size(202, 42);
-            this.groupBoxBookedBy.TabIndex = 111;
+            this.groupBoxBookedBy.TabIndex = 52;
             this.groupBoxBookedBy.TabStop = false;
             this.groupBoxBookedBy.Text = "Booked By";
             // 
@@ -364,7 +364,7 @@
             this.rbtnStaff.Location = new System.Drawing.Point(149, 19);
             this.rbtnStaff.Name = "rbtnStaff";
             this.rbtnStaff.Size = new System.Drawing.Size(47, 17);
-            this.rbtnStaff.TabIndex = 2;
+            this.rbtnStaff.TabIndex = 52;
             this.rbtnStaff.TabStop = true;
             this.rbtnStaff.Text = "Staff";
             this.rbtnStaff.UseVisualStyleBackColor = true;
@@ -376,7 +376,7 @@
             this.rbtnInstructor.Location = new System.Drawing.Point(74, 19);
             this.rbtnInstructor.Name = "rbtnInstructor";
             this.rbtnInstructor.Size = new System.Drawing.Size(69, 17);
-            this.rbtnInstructor.TabIndex = 1;
+            this.rbtnInstructor.TabIndex = 52;
             this.rbtnInstructor.TabStop = true;
             this.rbtnInstructor.Text = "Instructor";
             this.rbtnInstructor.UseVisualStyleBackColor = true;
@@ -388,7 +388,7 @@
             this.rbtnStudent.Location = new System.Drawing.Point(6, 19);
             this.rbtnStudent.Name = "rbtnStudent";
             this.rbtnStudent.Size = new System.Drawing.Size(62, 17);
-            this.rbtnStudent.TabIndex = 0;
+            this.rbtnStudent.TabIndex = 52;
             this.rbtnStudent.TabStop = true;
             this.rbtnStudent.Text = "Student";
             this.rbtnStudent.UseVisualStyleBackColor = true;
@@ -399,7 +399,7 @@
             this.btnClose.Location = new System.Drawing.Point(12, 370);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
-            this.btnClose.TabIndex = 112;
+            this.btnClose.TabIndex = 65;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
@@ -409,7 +409,7 @@
             this.btnPrevious.Location = new System.Drawing.Point(93, 370);
             this.btnPrevious.Name = "btnPrevious";
             this.btnPrevious.Size = new System.Drawing.Size(75, 23);
-            this.btnPrevious.TabIndex = 113;
+            this.btnPrevious.TabIndex = 68;
             this.btnPrevious.Text = "Previous";
             this.btnPrevious.UseVisualStyleBackColor = true;
             this.btnPrevious.Click += new System.EventHandler(this.btnPrevious_Click);
@@ -419,7 +419,7 @@
             this.btnNext.Location = new System.Drawing.Point(174, 370);
             this.btnNext.Name = "btnNext";
             this.btnNext.Size = new System.Drawing.Size(75, 23);
-            this.btnNext.TabIndex = 114;
+            this.btnNext.TabIndex = 67;
             this.btnNext.Text = "Next";
             this.btnNext.UseVisualStyleBackColor = true;
             this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
@@ -429,7 +429,7 @@
             this.btnEdit.Location = new System.Drawing.Point(255, 370);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Size = new System.Drawing.Size(75, 23);
-            this.btnEdit.TabIndex = 115;
+            this.btnEdit.TabIndex = 63;
             this.btnEdit.Text = "Edit";
             this.btnEdit.UseVisualStyleBackColor = true;
             this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
@@ -439,7 +439,7 @@
             this.btnSave.Location = new System.Drawing.Point(336, 370);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
-            this.btnSave.TabIndex = 116;
+            this.btnSave.TabIndex = 63;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
@@ -449,7 +449,7 @@
             this.btnDelete.Location = new System.Drawing.Point(417, 370);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(75, 23);
-            this.btnDelete.TabIndex = 117;
+            this.btnDelete.TabIndex = 66;
             this.btnDelete.Text = "Delete";
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
@@ -459,7 +459,7 @@
             this.btnAdd.Location = new System.Drawing.Point(498, 370);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(75, 23);
-            this.btnAdd.TabIndex = 118;
+            this.btnAdd.TabIndex = 54;
             this.btnAdd.Text = "Add";
             this.btnAdd.UseVisualStyleBackColor = true;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
@@ -478,7 +478,7 @@
             this.groupBoxEquipment.Location = new System.Drawing.Point(12, 161);
             this.groupBoxEquipment.Name = "groupBoxEquipment";
             this.groupBoxEquipment.Size = new System.Drawing.Size(561, 74);
-            this.groupBoxEquipment.TabIndex = 119;
+            this.groupBoxEquipment.TabIndex = 60;
             this.groupBoxEquipment.TabStop = false;
             this.groupBoxEquipment.Text = "Equipment Details";
             // 
@@ -526,7 +526,7 @@
             this.comboBoxEquipment.Location = new System.Drawing.Point(76, 18);
             this.comboBoxEquipment.Name = "comboBoxEquipment";
             this.comboBoxEquipment.Size = new System.Drawing.Size(313, 21);
-            this.comboBoxEquipment.TabIndex = 111;
+            this.comboBoxEquipment.TabIndex = 60;
             this.comboBoxEquipment.SelectedIndexChanged += new System.EventHandler(this.comboBoxEquipment_SelectedIndexChanged);
             // 
             // numQuantity
@@ -534,7 +534,7 @@
             this.numQuantity.Location = new System.Drawing.Point(455, 19);
             this.numQuantity.Name = "numQuantity";
             this.numQuantity.Size = new System.Drawing.Size(100, 20);
-            this.numQuantity.TabIndex = 7;
+            this.numQuantity.TabIndex = 61;
             this.numQuantity.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.numQuantity.Value = new decimal(new int[] {
             1,
@@ -549,7 +549,7 @@
             this.txtNotes.Location = new System.Drawing.Point(12, 344);
             this.txtNotes.Name = "txtNotes";
             this.txtNotes.Size = new System.Drawing.Size(561, 20);
-            this.txtNotes.TabIndex = 120;
+            this.txtNotes.TabIndex = 62;
             this.txtNotes.Text = "Notes";
             this.txtNotes.TextChanged += new System.EventHandler(this.txtNotes_TextChanged);
             // 
@@ -559,7 +559,7 @@
             this.checkBoxOffCampus.Location = new System.Drawing.Point(220, 58);
             this.checkBoxOffCampus.Name = "checkBoxOffCampus";
             this.checkBoxOffCampus.Size = new System.Drawing.Size(81, 17);
-            this.checkBoxOffCampus.TabIndex = 121;
+            this.checkBoxOffCampus.TabIndex = 53;
             this.checkBoxOffCampus.Text = "Off Campus";
             this.checkBoxOffCampus.UseVisualStyleBackColor = true;
             this.checkBoxOffCampus.CheckedChanged += new System.EventHandler(this.checkBoxOffCampus_CheckedChanged);
@@ -571,7 +571,7 @@
             this.checkBoxReturned.Location = new System.Drawing.Point(307, 58);
             this.checkBoxReturned.Name = "checkBoxReturned";
             this.checkBoxReturned.Size = new System.Drawing.Size(73, 17);
-            this.checkBoxReturned.TabIndex = 123;
+            this.checkBoxReturned.TabIndex = 54;
             this.checkBoxReturned.Text = "Returned:";
             this.checkBoxReturned.UseVisualStyleBackColor = true;
             this.checkBoxReturned.CheckedChanged += new System.EventHandler(this.checkBoxReturned_CheckedChanged);
@@ -583,7 +583,7 @@
             this.dateTimeReturned.Location = new System.Drawing.Point(378, 56);
             this.dateTimeReturned.Name = "dateTimeReturned";
             this.dateTimeReturned.Size = new System.Drawing.Size(189, 20);
-            this.dateTimeReturned.TabIndex = 124;
+            this.dateTimeReturned.TabIndex = 55;
             this.dateTimeReturned.Visible = false;
             this.dateTimeReturned.ValueChanged += new System.EventHandler(this.dateTimeReturned_ValueChanged);
             // 
@@ -592,7 +592,7 @@
             this.btnPrint.Location = new System.Drawing.Point(498, 370);
             this.btnPrint.Name = "btnPrint";
             this.btnPrint.Size = new System.Drawing.Size(75, 23);
-            this.btnPrint.TabIndex = 125;
+            this.btnPrint.TabIndex = 64;
             this.btnPrint.Text = "Print";
             this.btnPrint.UseVisualStyleBackColor = true;
             this.btnPrint.Visible = false;
