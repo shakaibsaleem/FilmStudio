@@ -38,7 +38,7 @@ namespace FilmStudio
                     new Microsoft.Reporting.WinForms.ReportParameter("DueOn",myBooking.DueOn.ToString("dd/MM/yy ddd hh:mm tt")),
                     new Microsoft.Reporting.WinForms.ReportParameter("HabibID",myBooking.Student.HabibID),
                     new Microsoft.Reporting.WinForms.ReportParameter("Name",myBooking.Student.Name),
-                    new Microsoft.Reporting.WinForms.ReportParameter("Contact",myBooking.Student.Contact),
+                    new Microsoft.Reporting.WinForms.ReportParameter("Project",myBooking.Project),
                     new Microsoft.Reporting.WinForms.ReportParameter("Email",myBooking.Student.Email),
                     new Microsoft.Reporting.WinForms.ReportParameter("OffCampus",myBooking.OffCampus ? "Yes" : "No"),
                     new Microsoft.Reporting.WinForms.ReportParameter("Course",myBooking.Enrolment.Course.CourseName),
