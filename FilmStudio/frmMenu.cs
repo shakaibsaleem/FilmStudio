@@ -198,8 +198,8 @@ namespace FilmStudio
             //rd.Close();
 
             cmd.CommandText = "select BookingID,IssueDate,DueDate,ReturnDate,BookedBy,Notes " +
-                    "from Bookings where IssueDate < '" + frmBooking.DateOf(DateTime.Now) +
-                    "' and DueDate > '" + frmBooking.DateOf(DateTime.Now) + "'";
+                    "from Bookings where IssueDate <= '" + frmBooking.DateOf(DateTime.Now.AddDays(2)) +
+                    "' and DueDate >= '" + frmBooking.DateOf(DateTime.Now.AddDays(-1)) + "'";
             cmd.ExecuteNonQuery();
             DataTable dt = new DataTable();
             SqlDataAdapter da = new SqlDataAdapter(cmd);
