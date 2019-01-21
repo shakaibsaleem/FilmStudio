@@ -503,7 +503,7 @@ namespace FilmStudio
                 {
                     email.User = rd[0].ToString();
                     email.Passkey = rd[1].ToString();
-                    MessageBox.Show(email.User + "\n" + email.Passkey);
+                    MessageBox.Show("Sending email from: " + email.User + "\nPlease wait a few seconds after closing this message.","Email sending");
                 }
                 else
                 {
@@ -552,11 +552,11 @@ namespace FilmStudio
 
                 if (isSent)
                 {
-                    MessageBox.Show("Email has been sent");
+                    MessageBox.Show("Booking confirmation has been emailed successfully.","Email sent");
                 }
                 else
                 {
-                    MessageBox.Show("Email could NOT be sent");
+                    MessageBox.Show("Email could NOT be sent","Error");
                 }
             }
         }
@@ -1850,12 +1850,30 @@ namespace FilmStudio
 
         public static DateTime DateTimeOf(string date, string time)
         {
-            DateTime dateTime;
-            dateTime = Convert.ToDateTime(date);
-            date = dateTime.ToString("dd-MM-yyyy");
-            dateTime = Convert.ToDateTime(date + " " + time);
+            DateTime dateTime1;
+            DateTime dateTime2;
+            dateTime1 = Convert.ToDateTime(date);
+
+            //DateTime d = DateTime.TryParseExact(date, "");
+
+            //MessageBox.Show("Date = " + date + "\nTime = " + time + "\ndateTime = " + dateTime1.ToString(), "1");
+
+            try
+            {
+                date = dateTime1.ToString("M/d/yyyy");
+                dateTime2 = Convert.ToDateTime(date + " " + time);
+            }
+            catch (Exception)
+            {
+                date = dateTime1.ToString("dd/MM/yyyy");
+                dateTime2 = Convert.ToDateTime(date + " " + time);
+            }
+            //MessageBox.Show("Date = " + date + "\nTime = " + time + "\ndateTime = " + dateTime2.ToString(), "3");
+
+            //MessageBox.Show("4");
+            //Convert.ToDateTime()
             //MessageBox.Show(dateTime.ToString());
-            return dateTime;
+            return dateTime2;
         }
 
         public static string TimeOf(DateTime dateTime)
