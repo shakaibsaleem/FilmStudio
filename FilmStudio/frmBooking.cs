@@ -34,7 +34,6 @@ namespace FilmStudio
             con = myCon.con;
             CurrentUser = currentUser;
             myBooking = new Booking(CurrentUser);
-            myItems = new List<MyItem>();
             state = "Empty";
         }
 
@@ -45,7 +44,6 @@ namespace FilmStudio
             con = myCon.con;
             CurrentUser = currentUser;
             myBooking = new Booking(CurrentUser);
-            myItems = new List<MyItem>();
             LoadRecord(id);
             state = "View";
         }
@@ -728,6 +726,7 @@ namespace FilmStudio
 
         private void btnPrint_Click(object sender, EventArgs e)
         {
+            myItems = new List<MyItem>();
             string myDesc = "";
             int myQuantity = 0;
 
@@ -1315,6 +1314,7 @@ namespace FilmStudio
                 dateTimeDue.Enabled = true;
 
                 txtNotes.ReadOnly = false;
+                txtAssignment.ReadOnly = false;
 
                 listViewBooking.Enabled = true;
 
@@ -1863,8 +1863,9 @@ namespace FilmStudio
                 date = dateTime1.ToString("M/d/yyyy");
                 dateTime2 = Convert.ToDateTime(date + " " + time);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                MessageBox.Show(ex.Message, "The system date format should be month/date/year");
                 date = dateTime1.ToString("dd/MM/yyyy");
                 dateTime2 = Convert.ToDateTime(date + " " + time);
             }
@@ -1880,6 +1881,11 @@ namespace FilmStudio
         {
             string str = dateTime.ToString("HH:mm:00");
             return str;
+        }
+
+        private void txtAssignment_TextChanged(object sender, EventArgs e)
+        {
+            myBooking.Project = txtAssignment.Text;
         }
     }
 }

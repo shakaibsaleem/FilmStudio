@@ -196,6 +196,7 @@
             this.txtAssignment.Name = "txtAssignment";
             this.txtAssignment.Size = new System.Drawing.Size(100, 20);
             this.txtAssignment.TabIndex = 57;
+            this.txtAssignment.TextChanged += new System.EventHandler(this.txtAssignment_TextChanged);
             // 
             // lblEquipment
             // 
