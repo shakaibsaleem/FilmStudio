@@ -491,25 +491,38 @@ namespace FilmStudio
             {
                 EmailHandler email = new EmailHandler();
 
-                SqlCommand cmd = new SqlCommand();
-                cmd.Connection = con;
-                cmd.CommandType = CommandType.Text;
-                cmd.CommandText = "select top 1 Username,Passkey from EmailAccount";
-                SqlDataReader rd = cmd.ExecuteReader();
+                try
+                {
+                    StreamReader ps = new StreamReader("C:\\Users\\Public\\passkey.txt");
+                    StreamReader id = new StreamReader("C:\\Users\\Public\\id.txt");
+                    email.User = id.ReadLine();
+                    email.Passkey = ps.ReadLine();
+                }
+                catch (Exception)
+                {
+                    SqlCommand cmd = new SqlCommand();
+                    cmd.Connection = con;
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = "select top 1 Username,Passkey from EmailAccount";
+                    SqlDataReader rd = cmd.ExecuteReader();
 
-                if (rd.Read())
+                    if (rd.Read())
+                    {
+                        email.User = rd[0].ToString();
+                        email.Passkey = rd[1].ToString();
+                        rd.Close();
+                    }
+                    else
+                    {
+                        rd.Close();
+                        MessageBox.Show("No valid account found","Email not sent");
+                        return;
+                    }
+                }
+                finally
                 {
-                    email.User = rd[0].ToString();
-                    email.Passkey = rd[1].ToString();
                     MessageBox.Show("Sending email from: " + email.User + "\nPlease wait a few seconds after closing this message.","Email sending");
-                }
-                else
-                {
-                    StreamReader r = new StreamReader("C:\\Users\\Public\\passkey.txt");
-                    email.User = "ms01036@st.habib.edu.pk";
-                    email.Passkey = r.ReadLine();
-                }
-                rd.Close();
+                }                
 
                 string subject = "Your booking has been confirmed";
                 string body = "Dear " + txtName.Text + ",\n\nThis is to confirm" +
@@ -532,19 +545,16 @@ namespace FilmStudio
                 if (myBooking.BookedBy == "Instructor")
                 {
                     recipient = myBooking.Instructor.Email;
-                    //recipient = "kr03917@st.habib.edu.pk";
                     isSent = email.Send(recipient: recipient, subject: subject, body: body);
                 }
                 else if (myBooking.BookedBy == "Student")
                 {
                     recipient = myBooking.Student.Email;
-                    //recipient = "kr03917@st.habib.edu.pk";
                     isSent = email.Send(recipient: recipient, subject: subject, body: body);
                 }
                 else if (myBooking.BookedBy == "Staff")
                 {
                     recipient = myBooking.Staff.Email;
-                    //recipient = "kr03917@st.habib.edu.pk";
                     isSent = email.Send(recipient: recipient, subject: subject, body: body);
                 }
 
