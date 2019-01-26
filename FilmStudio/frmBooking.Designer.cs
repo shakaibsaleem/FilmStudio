@@ -84,6 +84,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.groupBoxBooking.SuspendLayout();
             this.groupBoxBookedBy.SuspendLayout();
             this.groupBoxEquipment.SuspendLayout();
@@ -548,11 +549,10 @@
             // 
             // txtNotes
             // 
-            this.txtNotes.Location = new System.Drawing.Point(12, 344);
+            this.txtNotes.Location = new System.Drawing.Point(56, 344);
             this.txtNotes.Name = "txtNotes";
-            this.txtNotes.Size = new System.Drawing.Size(561, 20);
+            this.txtNotes.Size = new System.Drawing.Size(517, 20);
             this.txtNotes.TabIndex = 62;
-            this.txtNotes.Text = "Notes";
             this.txtNotes.TextChanged += new System.EventHandler(this.txtNotes_TextChanged);
             // 
             // checkBoxOffCampus
@@ -660,11 +660,21 @@
             this.textBox1.TabIndex = 0;
             this.textBox1.Text = resources.GetString("textBox1.Text");
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(12, 347);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(38, 13);
+            this.label5.TabIndex = 128;
+            this.label5.Text = "Notes:";
+            // 
             // frmBooking
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(585, 400);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnPrint);
             this.Controls.Add(this.dateTimeReturned);
@@ -764,5 +774,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label5;
     }
 }
