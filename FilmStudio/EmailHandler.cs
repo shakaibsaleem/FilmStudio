@@ -28,8 +28,8 @@ namespace FilmStudio
             server.Port = 587;
             server.ConnectType = SmtpConnectType.ConnectSSLAuto;
 
-            mail.From = "ms01036@st.habib.edu.pk";
-            mail.To = "kr03917@st.habib.edu.pk";
+            mail.From = "";
+            mail.To = "";
             mail.Subject = "Ignore this email";
             mail.TextBody = "Testing 1 2 3";
         }
@@ -53,23 +53,24 @@ namespace FilmStudio
             mail.TextBody = body;
         }
 
-        public bool Send()
-        {
-            server.Password = Passkey;
-            server.User = User;
-            try
-            {
-                client.SendMail(server, mail);
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
+        //public bool Send()
+        //{
+        //    server.Password = Passkey;
+        //    server.User = User;
+        //    try
+        //    {
+        //        client.SendMail(server, mail);
+        //        return true;
+        //    }
+        //    catch
+        //    {
+        //        return false;
+        //    }
+        //}
 
         public bool Send(string recipient, string subject, string body)
         {
+            mail.From = User;
             mail.To = recipient;
             mail.Subject = subject;
             mail.TextBody = body;
