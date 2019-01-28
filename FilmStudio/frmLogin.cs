@@ -45,7 +45,7 @@ namespace FilmStudio
                 CurrentUser.Name = rd[1].ToString();
                 CurrentUser.Username = rd[2].ToString();
                 CurrentUser.Passkey = rd[3].ToString();
-                CurrentUser.IsAdmin = rd[4].ToString() == "1";
+                CurrentUser.IsAdmin = rd[4].ToString() == "True";
             }
             else
             {
