@@ -237,6 +237,22 @@ namespace FilmStudio
                     cmd.Transaction = tran;
                     cmd.CommandType = CommandType.Text;
 
+                    cmd.CommandText = "select EnrolmentID from Enrolments where " +
+                        "CourseID = " + myEnrolment.Course.ID + " and " +
+                        "StudentID = " + myEnrolment.Student.ID + " and " +
+                        "InstructorID = " + myEnrolment.Instructor.ID + " and " +
+                        "Term = '" + myEnrolment.Term + "'";
+                    rd = cmd.ExecuteReader();
+                    if (rd.Read())
+                    {
+                        string tempID = rd[0].ToString();
+                        MessageBox.Show("The details provided match an existing record: " +
+                            tempID, "Duplicate entry");
+                        rd.Close();
+                        return;
+                    }
+                    rd.Close();
+
                     cmd.CommandText = "insert into Enrolments (CourseID,StudentID" +
                         ",InstructorID,Term) values (" + myEnrolment.Course.ID + "," +
                         myEnrolment.Student.ID + "," + myEnrolment.Instructor.ID + ",'" +
