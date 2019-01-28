@@ -16,33 +16,31 @@ namespace FilmStudio
         public Equipment myEquipment;
         mySQLcon myCon;
         SqlConnection con;
+        string state;
+        User CurrentUser;
 
         public frmEquipment()
         {
             InitializeComponent();
-            //myEquipment = new Equipment(1,2,0, "Black Magic 4K cinema", "Blackmagic Design", "CINECAMPROD4KEF","");
+            myCon = new mySQLcon();
+            con = myCon.con;
             myEquipment = new Equipment();
+            state = "Empty";
         }
 
-        //public frmEquipment(Equipment eq)
-        //{
-        //    InitializeComponent();
-        //    //myEquipment = new Equipment(eq.Id, eq.QtyAvailable, eq.QtyBooked, eq.Description, eq.Make, eq.Model, eq.Remarks);
-        //    myEquipment = new Equipment(eq.ID, eq.QtyAvailable, eq.QtyBooked, eq.Description, eq.Remarks);
-        //}
+        public frmEquipment(string id, User currentUser)
+        {
+            InitializeComponent();
+            myCon = new mySQLcon();
+            con = myCon.con;
+            myEquipment = new Equipment();
+            //LoadRecord(id);
+            state = "View";
+        }
 
         private void frmEquipment_Load(object sender, EventArgs e)
         {
-            myCon = new mySQLcon();
-            con = myCon.con;
-
-            //txtItemId.Text = myEquipment.ID.ToString();
-            //txtQtyAvailable.Text = myEquipment.QtyAvailable.ToString();
-            //txtQtyBooked.Text = myEquipment.QtyBooked.ToString();
-            ////txtMake.Text = myEquipment.Make.ToString();
-            ////txtModel.Text = myEquipment.Model.ToString();
-            //txtDescription.Text = myEquipment.Description.ToString();
-            //txtRemarks.Text = myEquipment.Remarks.ToString();
+            //UpdateFields(state);
         }
 
         private void btnClose_Click(object sender, EventArgs e)
