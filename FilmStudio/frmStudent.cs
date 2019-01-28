@@ -76,6 +76,25 @@ namespace FilmStudio
                     cmd.Transaction = tran;
                     cmd.CommandType = CommandType.Text;
 
+                    cmd.CommandText = "select StudentID,Name,Contact,Email," +
+                        "HabibID from Students where HabibID = '" + myStudent.HabibID +
+                        "' or Email = '" + myStudent.Email + "'";
+                    rd = cmd.ExecuteReader();
+                    if (rd.Read())
+                    {
+                        string tempID = rd[0].ToString();
+                        string tempName = rd[1].ToString();
+                        string tempContact = rd[2].ToString();
+                        string tempEmail = rd[3].ToString();
+                        string tempHabibID = rd[4].ToString();
+                        MessageBox.Show("The Email or HabibID provided matches an existing record:\n" +
+                            tempID + "\n" + tempName + "\n" + tempContact + "\n" + tempEmail + "\n" +
+                            tempHabibID, "Duplicate entry");
+                        rd.Close();
+                        return;
+                    }
+                    rd.Close();
+
                     cmd.CommandText = "insert into Students (Name,Contact," +
                         "Email,HabibID) values ('" + myStudent.Name + "','" +
                         myStudent.Contact + "','" +
@@ -96,8 +115,11 @@ namespace FilmStudio
                     //UpdateFields(state);
 
                     //temp scene
-                    MessageBox.Show(myStudent.Name +
-                        " has been added", "Student added");
+                    MessageBox.Show(myStudent.Name + " has been added", "Student added");
+
+                    frmEnrolment enrolment = new frmEnrolment(currentUser: CurrentUser);
+                    enrolment.Show();
+
                     Close();
                 }
                 catch (Exception ex)
