@@ -45,28 +45,34 @@
             // 
             // comboBoxStudent
             // 
+            this.comboBoxStudent.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.comboBoxStudent.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBoxStudent.FormattingEnabled = true;
             this.comboBoxStudent.Location = new System.Drawing.Point(100, 12);
             this.comboBoxStudent.Name = "comboBoxStudent";
-            this.comboBoxStudent.Size = new System.Drawing.Size(163, 21);
+            this.comboBoxStudent.Size = new System.Drawing.Size(244, 21);
             this.comboBoxStudent.TabIndex = 0;
             this.comboBoxStudent.SelectedIndexChanged += new System.EventHandler(this.comboBoxStudent_SelectedIndexChanged);
             // 
             // comboBoxCourse
             // 
+            this.comboBoxCourse.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.comboBoxCourse.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBoxCourse.FormattingEnabled = true;
             this.comboBoxCourse.Location = new System.Drawing.Point(100, 39);
             this.comboBoxCourse.Name = "comboBoxCourse";
-            this.comboBoxCourse.Size = new System.Drawing.Size(163, 21);
+            this.comboBoxCourse.Size = new System.Drawing.Size(244, 21);
             this.comboBoxCourse.TabIndex = 1;
             this.comboBoxCourse.SelectedIndexChanged += new System.EventHandler(this.comboBoxCourse_SelectedIndexChanged);
             // 
             // comboBoxInstructor
             // 
+            this.comboBoxInstructor.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.comboBoxInstructor.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBoxInstructor.FormattingEnabled = true;
             this.comboBoxInstructor.Location = new System.Drawing.Point(100, 66);
             this.comboBoxInstructor.Name = "comboBoxInstructor";
-            this.comboBoxInstructor.Size = new System.Drawing.Size(163, 21);
+            this.comboBoxInstructor.Size = new System.Drawing.Size(244, 21);
             this.comboBoxInstructor.TabIndex = 2;
             this.comboBoxInstructor.SelectedIndexChanged += new System.EventHandler(this.comboBoxInstructor_SelectedIndexChanged);
             // 
@@ -110,7 +116,7 @@
             // 
             this.txtTerm.Location = new System.Drawing.Point(100, 93);
             this.txtTerm.Name = "txtTerm";
-            this.txtTerm.Size = new System.Drawing.Size(163, 20);
+            this.txtTerm.Size = new System.Drawing.Size(244, 20);
             this.txtTerm.TabIndex = 7;
             this.txtTerm.TextChanged += new System.EventHandler(this.txtTerm_TextChanged);
             // 
@@ -122,6 +128,7 @@
             this.btnStudent.TabIndex = 8;
             this.btnStudent.Text = "Add New";
             this.btnStudent.UseVisualStyleBackColor = true;
+            this.btnStudent.Visible = false;
             this.btnStudent.Click += new System.EventHandler(this.btnStudent_Click);
             // 
             // btnCourse
@@ -132,6 +139,7 @@
             this.btnCourse.TabIndex = 9;
             this.btnCourse.Text = "Add New";
             this.btnCourse.UseVisualStyleBackColor = true;
+            this.btnCourse.Visible = false;
             this.btnCourse.Click += new System.EventHandler(this.btnCourse_Click);
             // 
             // btnInstructor
@@ -142,6 +150,7 @@
             this.btnInstructor.TabIndex = 10;
             this.btnInstructor.Text = "Add New";
             this.btnInstructor.UseVisualStyleBackColor = true;
+            this.btnInstructor.Visible = false;
             this.btnInstructor.Click += new System.EventHandler(this.btnInstructor_Click);
             // 
             // btnEnrolment
