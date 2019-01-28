@@ -270,6 +270,8 @@
             // 
             // comboBoxInstructor
             // 
+            this.comboBoxInstructor.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.comboBoxInstructor.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBoxInstructor.DropDownHeight = 80;
             this.comboBoxInstructor.FormattingEnabled = true;
             this.comboBoxInstructor.IntegralHeight = false;
@@ -281,6 +283,8 @@
             // 
             // comboBoxID
             // 
+            this.comboBoxID.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.comboBoxID.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBoxID.DropDownHeight = 80;
             this.comboBoxID.FormattingEnabled = true;
             this.comboBoxID.IntegralHeight = false;
@@ -292,6 +296,8 @@
             // 
             // comboBoxCourse
             // 
+            this.comboBoxCourse.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.comboBoxCourse.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBoxCourse.DropDownHeight = 80;
             this.comboBoxCourse.FormattingEnabled = true;
             this.comboBoxCourse.IntegralHeight = false;
@@ -523,6 +529,8 @@
             // 
             // comboBoxEquipment
             // 
+            this.comboBoxEquipment.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.comboBoxEquipment.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBoxEquipment.DropDownHeight = 80;
             this.comboBoxEquipment.FormattingEnabled = true;
             this.comboBoxEquipment.IntegralHeight = false;
