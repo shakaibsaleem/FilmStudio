@@ -78,6 +78,22 @@ namespace FilmStudio
                     cmd.Transaction = tran;
                     cmd.CommandType = CommandType.Text;
 
+                    cmd.CommandText = "select CourseID, CourseName, CourseCode " +
+                        "from Courses where CourseName = '" + myCourse.CourseName +
+                        "' or CourseCode = '" + myCourse.CourseCode + "'";
+                    rd = cmd.ExecuteReader();
+                    if (rd.Read())
+                    {
+                        string tempID = rd[0].ToString();
+                        string tempName = rd[1].ToString();
+                        string tempCode = rd[2].ToString();
+                        MessageBox.Show("The name or code provided matches an existing record:\n" +
+                            tempID + " " + tempName + " " + tempCode, "Duplicate entry");
+                        rd.Close();
+                        return;
+                    }
+                    rd.Close();
+
                     cmd.CommandText = "insert into Courses (CourseName,CourseCode) values ('" +
                         myCourse.CourseName + "','" + myCourse.CourseCode + "')";
                     cmd.ExecuteNonQuery();
