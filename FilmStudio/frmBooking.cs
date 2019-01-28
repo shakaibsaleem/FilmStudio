@@ -1273,7 +1273,7 @@ namespace FilmStudio
                 btnPrint.Visible = true;
                 btnPrint.Enabled = false;
 
-                btnAddEquipment.Enabled = true;
+                btnAddEquipment.Enabled = false;
                 btnClose.Enabled = true;
                 btnDelete.Enabled = true;
                 btnEdit.Enabled = false;
