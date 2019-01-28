@@ -448,7 +448,7 @@ namespace FilmStudio
                 MessageBox.Show(ex.Message, "Error in LoadRecord()");
                 return;
             }
-            myUser.IsAdmin = str1 == "1";
+            myUser.IsAdmin = str1 == "True";
 
             txtName.Text = myUser.Name;
             txtPass.Text = myUser.Passkey;
