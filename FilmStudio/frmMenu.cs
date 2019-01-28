@@ -42,6 +42,7 @@ namespace FilmStudio
             if (CurrentUser.IsAdmin)
             {
                 comboBoxType.Items.Add("User");
+                comboBoxType.Items.Add("EmailAccount");
             }
             rbtnAdd.Select();
             comboBoxType.SelectedIndex = 0;
@@ -126,6 +127,11 @@ namespace FilmStudio
                 if (type == "Booking")
                 {
                     frmSearch frm = new frmSearch(type, CurrentUser);
+                    frm.Show();
+                }
+                else if (type == "EmailAccount")
+                {
+                    frmEmailDetails frm = new frmEmailDetails(currentUser: CurrentUser);
                     frm.Show();
                 }
             }
