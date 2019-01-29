@@ -179,6 +179,7 @@ namespace FilmStudio
                 tran.Commit();
                 state = "View";
                 UpdateFields(state);
+                MessageBox.Show(myUser.Name + " has been deleted.");
             }
             catch (Exception ex)
             {

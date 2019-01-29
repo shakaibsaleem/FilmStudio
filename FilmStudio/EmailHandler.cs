@@ -28,7 +28,8 @@ namespace FilmStudio
             server.Port = 587;
             server.ConnectType = SmtpConnectType.ConnectSSLAuto;
 
-            mail.From = "";
+            //mail.From = "";
+            mail.From = "filmstudio@habib.edu.pk";
             mail.To = "";
             mail.Subject = "Ignore this email";
             mail.TextBody = "Testing 1 2 3";
@@ -47,7 +48,8 @@ namespace FilmStudio
             server.Port = 587;
             server.ConnectType = SmtpConnectType.ConnectSSLAuto;
 
-            mail.From = sender;
+            //mail.From = sender;
+            mail.From = "filmstudio@habib.edu.pk";
             mail.To = recipient;
             mail.Subject = subject;
             mail.TextBody = body;
@@ -70,7 +72,7 @@ namespace FilmStudio
 
         public bool Send(string recipient, string subject, string body)
         {
-            mail.From = User;
+            mail.From = "filmstudio@habib.edu.pk";
             mail.To = recipient;
             mail.Subject = subject;
             mail.TextBody = body;

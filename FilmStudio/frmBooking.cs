@@ -246,14 +246,14 @@ namespace FilmStudio
 
                     if (0 == i)
                     {
-                        cmd.CommandText = "insert into BookingsByInstructors (InstructorID,BookingID) values (" + 
+                        cmd.CommandText = "insert into BookingsByInstructors (InstructorID,BookingID) values (" +
                             myBooking.Instructor.ID + "," + myBooking.ID + ")";
                         cmd.ExecuteNonQuery();
                     }
-                    else if (1==i)
+                    else if (1 == i)
                     {
                         cmd.CommandText = "update BookingsByInstructors set InstructorID = " +
-                            myBooking.Instructor.ID + 
+                            myBooking.Instructor.ID +
                             " where BookingID = " + myBooking.ID;
                         cmd.ExecuteNonQuery();
                     }
@@ -283,11 +283,11 @@ namespace FilmStudio
 
                     if (0 == i)
                     {
-                        cmd.CommandText = "insert into BookingsByStudents (EnrolmentID,BookingID,Project) values (" + 
+                        cmd.CommandText = "insert into BookingsByStudents (EnrolmentID,BookingID,Project) values (" +
                             myBooking.Enrolment.ID + "," + myBooking.ID + ",'" + txtAssignment.Text + "')";
                         cmd.ExecuteNonQuery();
                     }
-                    else if (1==i)
+                    else if (1 == i)
                     {
                         cmd.CommandText = "update BookingsByStudents set EnrolmentID = " +
                             myBooking.Enrolment.ID + ",Project = '" + txtAssignment.Text +
@@ -353,7 +353,7 @@ namespace FilmStudio
 
                 cmd.CommandText = "update Bookings set " +
                     "   UserID = " + myBooking.User.ID +
-                    " , OffCampus=" + (myBooking.OffCampus ? "1" : "0")+
+                    " , OffCampus=" + (myBooking.OffCampus ? "1" : "0") +
                     " , Notes = '" + myBooking.Notes +
                     "', BookedBy = '" + myBooking.BookedBy +
                     "', BookingDate = '" + DateOf(myBooking.BookedOn) +
@@ -399,7 +399,7 @@ namespace FilmStudio
                     }
                     else
                     {
-                        MessageBox.Show("Invalid value of description: " + myDescription,"Error in fetching equipment details");
+                        MessageBox.Show("Invalid value of description: " + myDescription, "Error in fetching equipment details");
                         myItemID = "1";
                         qtyTotal = 0;
                     }
@@ -412,7 +412,7 @@ namespace FilmStudio
                     {
                         oldQuantity = Convert.ToInt32(rd[0].ToString());
                         rd.Close();
-                        cmd.CommandText = "update BookedItems set QuantityBooked = " + myQuantity + 
+                        cmd.CommandText = "update BookedItems set QuantityBooked = " + myQuantity +
                             " where BookingID = " + myBooking.ID + " and EquipmentID = " + myItemID;
                         cmd.ExecuteNonQuery();
                     }
@@ -469,7 +469,7 @@ namespace FilmStudio
                     //    cmd.ExecuteNonQuery();
                     //}
                     //rd.Close();
-                    cmd.CommandText = "delete from BookedItems where EquipmentID = " 
+                    cmd.CommandText = "delete from BookedItems where EquipmentID = "
                         + id + " and BookingID = " + myBooking.ID;
                     cmd.ExecuteNonQuery();
                 }
@@ -484,60 +484,61 @@ namespace FilmStudio
                 MessageBox.Show(ex.Message, "Error in Save");
             }
 
-            DialogResult dialogResult =  MessageBox.Show("Do you want to send email" +
-                " confirming the booking?","Send email?",MessageBoxButtons.YesNo);
+            DialogResult dialogResult = MessageBox.Show("Do you want to send email" +
+                " confirming the booking?", "Send email?", MessageBoxButtons.YesNo);
 
             if (dialogResult == DialogResult.Yes)
             {
                 EmailHandler email = new EmailHandler();
 
-                try
-                {
-                    StreamReader ps = new StreamReader("C:\\Users\\Public\\passkey.txt");
-                    StreamReader id = new StreamReader("C:\\Users\\Public\\id.txt");
-                    email.User = id.ReadLine();
-                    email.Passkey = ps.ReadLine();
-                }
-                catch (Exception)
-                {
-                    SqlCommand cmd = new SqlCommand();
-                    cmd.Connection = con;
-                    cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = "select top 1 Username,Passkey from EmailAccount";
-                    SqlDataReader rd = cmd.ExecuteReader();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = "select top 1 Username,Passkey from EmailAccount";
+                SqlDataReader rd = cmd.ExecuteReader();
 
-                    if (rd.Read())
-                    {
-                        email.User = rd[0].ToString();
-                        email.Passkey = rd[1].ToString();
-                        rd.Close();
-                    }
-                    else
-                    {
-                        rd.Close();
-                        MessageBox.Show("No valid account found","Email not sent");
-                        return;
-                    }
-                }
-                finally
+                if (rd.Read())
                 {
-                    MessageBox.Show("Sending email from: " + email.User + "\nPlease wait a few seconds after closing this message.","Email sending");
-                }                
+                    email.User = rd[0].ToString();
+                    email.Passkey = rd[1].ToString();
+                    rd.Close();
+                }
+                else
+                {
+                    rd.Close();
+                    MessageBox.Show("No valid account found", "Email not sent");
+                    return;
+                }
+                MessageBox.Show("Sending email from: " + email.User + "\nPlease wait a few seconds after closing this message.", "Email sending");
 
-                string subject = "Your booking has been confirmed";
-                string body = "Dear " + txtName.Text + ",\n\nThis is to confirm" +
-                    " your booking of the following equipment. Please review " +
-                    "the following details and let us know in case of any issues.\n" +
-                    "\nIssue Date: " + myBooking.IssuedOn.ToString("dddd dd-MM-yyyy") +
-                    "\nDue On: " + myBooking.DueOn.ToString("hh:mm tt dddd dd-MM-yyyy") +
-                    "\nOff Campus: " + (myBooking.OffCampus ? "Yes" : "No") +
-                    "\n\nEquipment Details:\n";
+                string subject = "Film Studio Booking Confirmation";
+                string body = "Dear " + txtName.Text + ",\n" +
+                    "\n" +
+                    "This is a confirmation of your booking on the following date/time.\n" +
+                    "\n" +
+                    "Issue Date: " + myBooking.IssuedOn.ToString("dddd dd-MM-yyyy") + "\n" +
+                    "Due On: " + myBooking.DueOn.ToString("hh:mm tt dddd dd-MM-yyyy") + "\n" +
+                    "Off Campus: " + (myBooking.OffCampus ? "Yes" : "No") + "\n" +
+                    "\n" +
+                    "Equipment Details:\n";
                 foreach (ListViewItem item in listViewBooking.Items)
                 {
                     body = body + item.SubItems[0].Text + ", Quantity = " + item.SubItems[1].Text + "\n";
                 }
 
-                body = body + "\nRegards,\nFilmStudio@HU";
+                body = body + "\n" +
+                    "Note:\n" +
+                    "\n" +
+                    "1. Please check all equipment is functional before checking it out of the Studio.\n" +
+                    "\n" +
+                    "2. Kindly make sure all batteries are charged and the data from sd cards is copied before the equipment is returned.\n" +
+                    "\n" +
+                    "3. Kindly ensure timely return of the above mentioned equipment, failure to do so may result in a penalty.\n" +
+                    "\n" +
+                    "\n" +
+                    "Film Studio Management\n" +
+                    "\n" +
+                    "This is a system generated email. Please do not reply to this email.\n";
 
                 string recipient = "";
                 bool isSent = false;
@@ -560,11 +561,11 @@ namespace FilmStudio
 
                 if (isSent)
                 {
-                    MessageBox.Show("Booking confirmation has been emailed successfully.","Email sent");
+                    MessageBox.Show("Booking confirmation has been emailed successfully.", "Email sent");
                 }
                 else
                 {
-                    MessageBox.Show("Email could NOT be sent","Error");
+                    MessageBox.Show("Email could NOT be sent", "Error");
                 }
             }
         }
