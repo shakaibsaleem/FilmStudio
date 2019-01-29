@@ -1,3 +1,5 @@
+not printing if assignment too long
+
 frmUser edit/save
 
 offcampus/returned/date in booking
