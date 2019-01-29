@@ -1,3 +1,9 @@
+student name show in menu
+
+fix assignemtn bug
+
+quantity based on hours
+
 check tab order
 
 date time format issue
