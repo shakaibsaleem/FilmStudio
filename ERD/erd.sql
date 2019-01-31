@@ -210,7 +210,7 @@ GO
 CREATE TABLE BookingsByStudents (
   BookingID INTEGER  NOT NULL  ,
   EnrolmentID INTEGER  NOT NULL  ,
-  Project VARCHAR(20)      ,
+  Project VARCHAR(200)      ,
 PRIMARY KEY(BookingID, EnrolmentID)    ,
   FOREIGN KEY(EnrolmentID)
     REFERENCES Enrolments(EnrolmentID),
