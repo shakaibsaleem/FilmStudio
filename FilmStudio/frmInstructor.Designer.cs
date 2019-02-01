@@ -146,7 +146,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmInstructor";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "frmInstructor";
+            this.Text = "Instructor";
             this.Load += new System.EventHandler(this.frmInstructor_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -48,13 +48,42 @@ namespace FilmStudio
 
             parametersList.Add(new Microsoft.Reporting.WinForms.ReportParameter("IssuedOn", myBooking.IssuedOn.ToString("dd/MM/yy ddd hh:mm tt")));
             parametersList.Add(new Microsoft.Reporting.WinForms.ReportParameter("DueOn", myBooking.DueOn.ToString("dd/MM/yy ddd hh:mm tt")));
-            parametersList.Add(new Microsoft.Reporting.WinForms.ReportParameter("HabibID", myBooking.Student.HabibID));
-            parametersList.Add(new Microsoft.Reporting.WinForms.ReportParameter("Name", myBooking.Student.Name));
-            parametersList.Add(new Microsoft.Reporting.WinForms.ReportParameter("Project", myBooking.Project));
-            parametersList.Add(new Microsoft.Reporting.WinForms.ReportParameter("Email", myBooking.Student.Email));
-            parametersList.Add(new Microsoft.Reporting.WinForms.ReportParameter("OffCampus", myBooking.OffCampus ? "Yes" : "No"));
-            parametersList.Add(new Microsoft.Reporting.WinForms.ReportParameter("Course", myBooking.Enrolment.Course.CourseName));
-            parametersList.Add(new Microsoft.Reporting.WinForms.ReportParameter("Instructor", myBooking.Enrolment.Instructor.Name));
+
+            if (myBooking.BookedBy == "Student")
+            {
+                parametersList.Add(new Microsoft.Reporting.WinForms.ReportParameter("HabibID", myBooking.Student.HabibID));
+                parametersList.Add(new Microsoft.Reporting.WinForms.ReportParameter("Name", myBooking.Student.Name));
+                parametersList.Add(new Microsoft.Reporting.WinForms.ReportParameter("Project", myBooking.Project));
+                parametersList.Add(new Microsoft.Reporting.WinForms.ReportParameter("Email", myBooking.Student.Email));
+                parametersList.Add(new Microsoft.Reporting.WinForms.ReportParameter("OffCampus", myBooking.OffCampus ? "Yes" : "No"));
+                parametersList.Add(new Microsoft.Reporting.WinForms.ReportParameter("Course", myBooking.Enrolment.Course.CourseName));
+                parametersList.Add(new Microsoft.Reporting.WinForms.ReportParameter("Instructor", myBooking.Enrolment.Instructor.Name));
+            }
+            else if (myBooking.BookedBy == "Instructor")
+            {
+                parametersList.Add(new Microsoft.Reporting.WinForms.ReportParameter("HabibID", myBooking.Instructor.HabibID));
+                parametersList.Add(new Microsoft.Reporting.WinForms.ReportParameter("Name", myBooking.Instructor.Name));
+                parametersList.Add(new Microsoft.Reporting.WinForms.ReportParameter("Project", "NA"));
+                parametersList.Add(new Microsoft.Reporting.WinForms.ReportParameter("Email", myBooking.Instructor.Email));
+                parametersList.Add(new Microsoft.Reporting.WinForms.ReportParameter("OffCampus", myBooking.OffCampus ? "Yes" : "No"));
+                parametersList.Add(new Microsoft.Reporting.WinForms.ReportParameter("Course", "NA"));
+                parametersList.Add(new Microsoft.Reporting.WinForms.ReportParameter("Instructor", "NA"));
+            }
+            else if (myBooking.BookedBy == "Staff")
+            {
+                parametersList.Add(new Microsoft.Reporting.WinForms.ReportParameter("HabibID", myBooking.Staff.HabibID));
+                parametersList.Add(new Microsoft.Reporting.WinForms.ReportParameter("Name", myBooking.Staff.Name));
+                parametersList.Add(new Microsoft.Reporting.WinForms.ReportParameter("Project", "NA"));
+                parametersList.Add(new Microsoft.Reporting.WinForms.ReportParameter("Email", myBooking.Staff.Email));
+                parametersList.Add(new Microsoft.Reporting.WinForms.ReportParameter("OffCampus", myBooking.OffCampus ? "Yes" : "No"));
+                parametersList.Add(new Microsoft.Reporting.WinForms.ReportParameter("Course", "NA"));
+                parametersList.Add(new Microsoft.Reporting.WinForms.ReportParameter("Instructor", "NA"));
+            }
+            else
+            {
+                MessageBox.Show("Unexpected value for booked by","Error in load report");
+            }
+
             parametersList.Add(new Microsoft.Reporting.WinForms.ReportParameter("Notes", myBooking.Notes));
 
             int c = myItems.Count;

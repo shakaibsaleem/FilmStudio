@@ -37,7 +37,7 @@ namespace FilmStudio
             comboBoxType.Items.Add("Enrolment");
             comboBoxType.Items.Add("Equipment");
             comboBoxType.Items.Add("Instructor");
-            //comboBoxType.Items.Add("Staff");
+            comboBoxType.Items.Add("Staff");
             comboBoxType.Items.Add("Student");
             if (CurrentUser.IsAdmin)
             {
@@ -155,6 +155,11 @@ namespace FilmStudio
                 else if (type == "Instructor")
                 {
                     frmInstructor frm = new frmInstructor(CurrentUser);
+                    frm.Show();
+                }
+                else if (type == "Staff")
+                {
+                    frmStaff frm = new frmStaff(CurrentUser);
                     frm.Show();
                 }
                 else if (type == "Student")
