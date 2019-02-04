@@ -1,3 +1,5 @@
+CHECK BTNADD EQUIPMENT
+
 not printing if assignment too long
 
 frmUser edit/save
