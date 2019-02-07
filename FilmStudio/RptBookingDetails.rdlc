@@ -1262,7 +1262,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>Film Studio's Signature</Value>
+                      <Value>Film Studio's Approval</Value>
                       <Style />
                     </TextRun>
                   </TextRuns>
@@ -1305,7 +1305,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>Student's Signature</Value>
+                      <Value>Received</Value>
                       <Style />
                     </TextRun>
                   </TextRuns>
