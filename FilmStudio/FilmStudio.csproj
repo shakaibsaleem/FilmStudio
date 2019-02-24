@@ -93,6 +93,12 @@
   <ItemGroup>
     <Compile Include="Booking.cs" />
     <Compile Include="Course.cs" />
+    <Compile Include="EmailManual.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EmailManual.Designer.cs">
+      <DependentUpon>EmailManual.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmEmailDetails.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -183,6 +189,9 @@
     <Compile Include="Staff.cs" />
     <Compile Include="Student.cs" />
     <Compile Include="User.cs" />
+    <EmbeddedResource Include="EmailManual.resx">
+      <DependentUpon>EmailManual.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmEmailDetails.resx">
       <DependentUpon>frmEmailDetails.cs</DependentUpon>
     </EmbeddedResource>

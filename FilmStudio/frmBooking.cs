@@ -489,7 +489,7 @@ namespace FilmStudio
 
             if (dialogResult == DialogResult.Yes)
             {
-                EmailHandler email = new EmailHandler();
+                /*EmailHandler email = new EmailHandler();
 
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = con;
@@ -510,7 +510,7 @@ namespace FilmStudio
                     return;
                 }
                 MessageBox.Show("Sending email from: " + email.User + "\nPlease wait a few seconds after closing this message.", "Email sending");
-
+                */
                 string subject = "Film Studio Booking Confirmation";
                 string body = "Dear " + txtName.Text + ",\n" +
                     "\n" +
@@ -546,17 +546,17 @@ namespace FilmStudio
                 if (myBooking.BookedBy == "Instructor")
                 {
                     recipient = myBooking.Instructor.Email;
-                    isSent = email.Send(recipient: recipient, subject: subject, body: body);
+                    //isSent = email.Send(recipient: recipient, subject: subject, body: body);
                 }
                 else if (myBooking.BookedBy == "Student")
                 {
                     recipient = myBooking.Student.Email;
-                    isSent = email.Send(recipient: recipient, subject: subject, body: body);
+                    //isSent = email.Send(recipient: recipient, subject: subject, body: body);
                 }
                 else if (myBooking.BookedBy == "Staff")
                 {
                     recipient = myBooking.Staff.Email;
-                    isSent = email.Send(recipient: recipient, subject: subject, body: body);
+                    //isSent = email.Send(recipient: recipient, subject: subject, body: body);
                 }
 
                 if (isSent)
@@ -565,7 +565,19 @@ namespace FilmStudio
                 }
                 else
                 {
-                    MessageBox.Show("Email could NOT be sent", "Error");
+                    DialogResult dr = MessageBox.Show("Please send email manually!",
+                        "Email could NOT be sent.", MessageBoxButtons.OKCancel);
+                    /*\n\nTo: " + recipient +
+                        "\nSubject: " + subject + "\n\n" + body,
+                        "Error sending email");*/
+                    if (dr == DialogResult.OK)
+                    {
+                        EmailManual frm = new EmailManual();
+                        frm.to = recipient;
+                        frm.subject = subject;
+                        frm.body = body;
+                        frm.Show();
+                    }
                 }
             }
         }
@@ -1476,7 +1488,7 @@ namespace FilmStudio
                     str1 = rd[7].ToString();
                     str2 = rd[8].ToString();
                     myBooking.DueOn = DateTimeOf(date: str1, time: str2);
-                    myBooking.OffCampus = rd[9].ToString() == "1";
+                    myBooking.OffCampus = rd[9].ToString() == "True";
 
                     str1 = rd[10].ToString();
                     str2 = rd[11].ToString();
